@@ -17,6 +17,7 @@ body{
     height: 100vh;
     width: 100vw;
     position: fixed;
+    top:0;
     background-color: #272727;
     z-index: 99999;
 }
@@ -28,12 +29,71 @@ body{
     transform: translateY(-50%);
 } /*  koniec loading screen */
 
+.bg-dark2{
+    background-color: #26272b;
+}
 
 
 
+
+
+
+/* news box */
+.news-box{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin:0;
+    padding:0;
+}
+.card{
+    position: relative;
+}
+
+.card:before, .card:after{
+    z-index: -1;
+    position: absolute;
+    content: "";
+    bottom: 15px;
+    left: 10px;
+    width: 50%;
+    top: 80%;
+    max-width:300px;
+    background: #777;
+    -webkit-box-shadow: 0 15px 10px #777;
+    -moz-box-shadow: 0 15px 10px #777;
+    box-shadow: 0 15px 10px #777;
+    -webkit-transform: rotate(-3deg);
+    -moz-transform: rotate(-3deg);
+    -o-transform: rotate(-3deg);
+    -ms-transform: rotate(-3deg);
+    transform: rotate(-3deg);
+}
+.card:after{
+    -webkit-transform: rotate(3deg);
+    -moz-transform: rotate(3deg);
+    -o-transform: rotate(3deg);
+    -ms-transform: rotate(3deg);
+    transform: rotate(3deg);
+    right: 10px;
+    left: auto;
+}
+
+
+
+.card-content{
+    font-size: 0.8rem;
+}
+.card-title{
+    font-size: 1.2rem;
+}
 .category-text{
-    font-family: 'Modak', cursive;
-    font-size: 3rem;
+    color:White;
+    font-size: 2rem;
+    border-radius: 0 15px 0 15px;
+    background: rgb(38,39,43);
+    background: linear-gradient(90deg, rgba(38,39,43,1) 0%, rgba(4,4,10,1) 35%, rgba(5,11,13,1) 100%);
+    margin-top:5rem;
 }
 
 .content{
@@ -50,93 +110,13 @@ body{
     margin:0;
     padding: 0;
     height: auto;
+    
 }
 
+/* koniec news box */
 
 
 
-
-.banner {
-    position: relative;
-    width: 100%;
-    height: 30rem;
-    padding: 0 5%;
-    overflow: hidden;
-    backface-visibility: hidden;
-  }
-  
-  /* Default image container */
-.banner .background {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    transform: translate3d(0,0,0) scale(1.25);
-    background-size: cover;
-  }
-  
-  /* Loaded image container */
-.banner .background {
-    transform: scale(1);
-    transition: 6.5s transform;
-  }
-  
-  /* Other stuff */
-.banner h1 {
-    color: #EEE;
-    margin: 0;
-    line-height: 40rem;
-    text-transform: uppercase;
-    text-shadow: 0 0 .3rem black;
-  }
-  
-
-
-
-
-
-.collapse-content .fa.fa-heart:hover {
-    color: #f44336 !important;
-  }
-  .collapse-content .fa.fa-share-alt:hover {
-    color: #0d47a1 !important;
-  }
-
-
-
-/* menu button bar w nav */
-.nav{
-    height: 45px;
-    width: 45px;
-    background: none;
-    position: fixed;
-    z-index: 99998;
-    top:0;
-}
-
-.menu-button{
-    position: absolute;
-    left: 0;
-    background:none;
-    border:none;
-    text-decoration: none;
-    font-size: 175%;
-    outline:0;
-    padding: 0;
-    color:#26272b;
-    cursor: pointer;
-}
-.menu-button:active{
-    border: none;
-    text-decoration: none;
-    background:none;
-    outline:0;
-}
-.menu-button:focus{
-    outline:0;
-} /*  koniec menu button bar w nav */
 
 
 /* footer */
@@ -267,3 +247,69 @@ body{
 }/* koniec footer */
 
 
+/* navbar */
+.dropdown-toggle::after {
+    display: none;
+}
+.text-decoration-none{
+    text-decoration: none!important;
+}
+/* koniec navbar */
+
+
+
+/* pagination */
+.pagination .active a {
+    color: #143361;
+    background-color: transparent;
+    font-weight: 600;
+}
+.pagination .active a:hover {
+    background-color: transparent;
+    color: #143361;
+    border: 0px;
+}
+.pagination .active a:focus {
+    background-color: transparent;
+    color: #143361;
+    outline: none;
+}
+.pagination li a {
+    border: 1px;
+    margin-left: 0px;
+    color: #707070;
+    padding: 7px 2px;
+    margin: 0px 20px;
+}
+.pagination li a:hover {
+    background-color: transparent;
+    color: #4a90e2;
+    padding-bottom: 2px;
+    border-bottom: 1px solid;
+}
+.pagination li a:focus {
+    outline: none;
+    background-color: transparent;
+   /*color:#707070;
+   */
+}
+.pagination li:first-child a, .pagination li:last-child a {
+    border: 2px solid #143361 !important;
+    border-radius: 6px;
+    margin: 0px;
+    padding: 6px 12px;
+    border: 2px solid;
+    font-size: 14px;
+    color: #143361;
+}
+.pagination li:first-child a:hover, .pagination li:last-child a:hover {
+    text-decoration: none !important;
+    color: #fff;
+    background-color: #143361;
+}
+.pagination li:first-child a:focus, .pagination li:last-child a:focus {
+    outline: none;
+}
+
+
+/* koniec pagination */

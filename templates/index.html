@@ -1,27 +1,35 @@
 {% extends 'extends/base.html' %}
 {% block content %}
 {% load static %}
-<style>
-    .background{
-        background:black url('{% static "images/logo.png" %}') no-repeat center center;
-        background-size: cover;
-        background-position: 0, 0;
-    }
-</style>
+
 {% include "includes/loading.html" %}
 
 <div class="container-fluid content">
 {% include "includes/navbar.html" %}
-<header class="banner">
-    <span class="background"></span>
-    <h1>Szkoły lider</h1>
-  </header>
 
 
-    <div class="content-text mt-5 row">
-        <div class="col-sm-12 category-text">Nowości</div>
-        <div class="col-sm-12 mt-1 mb-1 row">
-            <div class="col-sm-3 mt-1 mb-1">
+
+    <div class="content-text">
+
+        <div class="col-md-8 row news-box">
+
+            <div class="category-text col-md-12">Nowości</div>
+
+            <div class="card text-center col-sm-12 mt-1 mb-1 ">
+                <div class="card-header">
+                  Główna Nowość
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Tytuł</h5>
+                  <p class="card-text">Text</p>
+                  <a href="#" class="btn btn-primary">Podstrona</a>
+                </div>
+                <div class="card-footer text-muted">
+                  Czas
+                </div>
+              </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
                 <div class="card promoting-card">
                     <div class="card-body d-flex flex-row">
                     <div>
@@ -37,12 +45,144 @@
                     </div>
                     <div class="card-body">
                     <div class="collapse-content">
-                        <p class="card-text" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
+                        <p class="card-text card-content" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
                         <button class="btn btn-primary">Zobacz Więcej!</button>
                     </div>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
+                <div class="card promoting-card">
+                    <div class="card-body d-flex flex-row">
+                    <div>
+                        <h4 class="card-title font-weight-bold mb-2">Junior Culinary Cap 2020</h4>
+                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
+                    </div>
+                    </div>
+                    <div class="view overlay">
+                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020JCC&file=JuniorCulinaryCap010.jpg" alt="Card image cap">
+                    <a href="#!">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                    </div>
+                    <div class="card-body">
+                    <div class="collapse-content">
+                        <p class="card-text card-content" >5 lutego 2020r.  Arek Woźniak III miejsce, Tobiasz Baluk wyróżnienie w Ogólnopolskim Konkursie Kulinarnym Junior Culinary Cap 2020. Podziękowania i mega gratulacje</p>
+                        <button class="btn btn-primary">Zobacz Więcej!</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
+                <div class="card promoting-card">
+                    <div class="card-body d-flex flex-row">
+                    <div>
+                        <h4 class="card-title font-weight-bold mb-2">Pączkożercy!</h4>
+                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
+                    </div>
+                    </div>
+                    <div class="view overlay">
+                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020Paczki&file=pczki1.jpg" alt="Card image cap">
+                    <a href="#!">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                    </div>
+                    <div class="card-body">
+                    <div class="collapse-content">
+                        <p class="card-text card-content" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
+                        <button class="btn btn-primary">Zobacz Więcej!</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
+                <div class="card promoting-card">
+                    <div class="card-body d-flex flex-row">
+                    <div>
+                        <h4 class="card-title font-weight-bold mb-2">Pączkożercy!</h4>
+                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
+                    </div>
+                    </div>
+                    <div class="view overlay">
+                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020Paczki&file=pczki1.jpg" alt="Card image cap">
+                    <a href="#!">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                    </div>
+                    <div class="card-body">
+                    <div class="collapse-content">
+                        <p class="card-text card-content" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
+                        <button class="btn btn-primary">Zobacz Więcej!</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
+                <div class="card promoting-card">
+                    <div class="card-body d-flex flex-row">
+                    <div>
+                        <h4 class="card-title font-weight-bold mb-2">Pączkożercy!</h4>
+                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
+                    </div>
+                    </div>
+                    <div class="view overlay">
+                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020Paczki&file=pczki1.jpg" alt="Card image cap">
+                    <a href="#!">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                    </div>
+                    <div class="card-body">
+                    <div class="collapse-content">
+                        <p class="card-text card-content" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
+                        <button class="btn btn-primary">Zobacz Więcej!</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
+                <div class="card promoting-card">
+                    <div class="card-body d-flex flex-row">
+                    <div>
+                        <h4 class="card-title font-weight-bold mb-2">Pączkożercy!</h4>
+                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
+                    </div>
+                    </div>
+                    <div class="view overlay">
+                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020Paczki&file=pczki1.jpg" alt="Card image cap">
+                    <a href="#!">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                    </div>
+                    <div class="card-body">
+                    <div class="collapse-content">
+                        <p class="card-text card-content" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
+                        <button class="btn btn-primary">Zobacz Więcej!</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div aria-label="Page navigation" class="col-sm-12 d-flex justify-content-center">
+              <ul class="pagination d-flex justify-content-center">
+                <li>
+                  <a href="#" aria-label="Previous">
+                    <span aria-hidden="true"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>
+                  </a>
+                </li>
+                <li class="active"><a href="#">01</a></li>
+                <li><a href="#">02</a></li>
+                <li><a href="#">03</a></li>
+                <li><a>...</a></li>
+                <li>
+                  <a href="#" aria-label="Next">
+                    <span aria-hidden="true"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+
+
         </div>
 
 
