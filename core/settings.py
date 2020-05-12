@@ -25,7 +25,7 @@ SECRET_KEY = 'mwpk!08p4j9gh57!tq)e%h(nkmf$x_d0(7v2#$xbc34-obnt(h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.28',]
+ALLOWED_HOSTS = ['192.168.1.28', '127.0.0.1']
 
 TEMPLATE_DIRS = [ 
     os.path.join(BASE_DIR, 'templates'),

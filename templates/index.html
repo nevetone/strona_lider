@@ -1,11 +1,53 @@
 {% extends 'extends/base.html' %}
 {% block content %}
-<div class="content" id="content">
-<div class="console"></div>
+{% load static %}
+<style>
+    .background{
+        background:black url('{% static "images/logo.png" %}') no-repeat center center;
+        background-size: cover;
+        background-position: 0, 0;
+    }
+</style>
+{% include "includes/loading.html" %}
 
-<div class="start">
+<div class="container-fluid content">
+{% include "includes/navbar.html" %}
+<header class="banner">
+    <span class="background"></span>
+    <h1>Szkoły lider</h1>
+  </header>
 
 
+    <div class="content-text mt-5 row">
+        <div class="col-sm-12 category-text">Nowości</div>
+        <div class="col-sm-12 mt-1 mb-1 row">
+            <div class="col-sm-3 mt-1 mb-1">
+                <div class="card promoting-card">
+                    <div class="card-body d-flex flex-row">
+                    <div>
+                        <h4 class="card-title font-weight-bold mb-2">Pączkożercy!</h4>
+                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
+                    </div>
+                    </div>
+                    <div class="view overlay">
+                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020Paczki&file=pczki1.jpg" alt="Card image cap">
+                    <a href="#!">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                    </div>
+                    <div class="card-body">
+                    <div class="collapse-content">
+                        <p class="card-text" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
+                        <button class="btn btn-primary">Zobacz Więcej!</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% include "includes/footer.html" %}
 </div>
-</div>
+
 {% endblock content %}
