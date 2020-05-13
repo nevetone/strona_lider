@@ -15,22 +15,31 @@
         <div class="col-md-8 row news-box">
 
             <div class="category-text col-md-12">Nowości</div>
-            {% for news in queryset2 %}
-            <div class="card text-center col-sm-12 mt-1 mb-1 ">
-                <div class="card-header">
-                  {{ news.title }}
+        {% for news in queryset2 %}
+        <div class="card text-center col-sm-12 mt-1 mb-1 ">
+            <div class="card-header">
+              {{ news.title }}
+            </div>
+            <div class="card-body row">
+                {% if news.has_thumbnail is True %}
+                <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 main-news-image">
+                    <img src="{{ news.thumbnail.url }}" alt="">
                 </div>
-                <div class="card-body">
-                  <p class="card-text">{{ news.overview }}</p>
-                    {% if news.has_own_web %}
-                    <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Podstrona</a>
-                    {% endif %}
+                <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <p class="card-text">{{ news.overview }}</p>
                 </div>
-                <div class="card-footer text-muted">
-                  {{ news.timestamp }}
-                </div>
-              </div>
-              {% endfor %}
+                {% else %}
+              <p class="card-text">{{ news.overview }}</p>
+              {% endif %}
+              {% if news.has_own_web %}
+              <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Podstrona</a>
+              {% endif %}
+            </div>
+            <div class="card-footer text-muted">
+              {{ news.timestamp }}
+            </div>
+          </div>
+          {% endfor %}
 
               {% for news in queryset1 %}
             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">

@@ -1,12 +1,20 @@
-from django.shortcuts import render, get_object_or_404
-from .models import News, MainNews
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import News, MainNews, Author
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .forms import NewsForm, MainNewsForm
+from django.urls import reverse
 
+
+def get_author(user):
+    qs = Author.objects.filter(user=user)
+    if qs.exists():
+        return qs[0]
+    return None
 
 # Create your views here.
 def index(request):
     template = 'index.html'
-    queryset1 = News.objects.all()
+    queryset1 = News.objects.order_by('-timestamp')
     queryset2 = MainNews.objects.filter(featured=True)
     page_request_var = 'page'
     paginator = Paginator(queryset1, 6)
@@ -31,16 +39,57 @@ def index(request):
 
 def news(request):
     template = 'news.html'
-    queryset1 = News.objects.all()
-    context={'queryset1':queryset1}
+    queryset1 = News.objects.order_by('-timestamp')
+    queryset2 = MainNews.objects.filter(featured=True)
+    context={'queryset1':queryset1, 'queryset2':queryset2,}
     return render(request, template, context)
 
 def post(request, slug):
     template = 'one.html'
     
-    post = get_object_or_404(News, id=slug)
+    post = get_object_or_404(News, web_name=slug)
     
     context={
         'post':post,
     }
     return render(request, template, context)
+
+def post_create(request):
+    form = NewsForm(request.POST or None, request.FILES or None)
+    if request.method == "POST":
+        if form.is_valid():
+            form.instance.author = get_author(request.user)
+            form.save()
+            if not form.instance.has_own_web:
+                return redirect(reverse("index"))
+            
+            return redirect(reverse("post", kwargs={
+                'slug': form.instance.web_name
+            }))
+            
+    context = {
+        'form':form
+    }
+    return render(request, "news_create.html", context)
+
+def post_update(request, slug):
+    post = get_object_or_404(News, web_name=slug)
+    form = NewsForm(request.POST or None,request.FILES or None,instance=post)
+    if request.method == "POST":
+        if form.is_valid():
+            form.instance.author = get_author(request.user)
+            form.save()
+            return redirect(reverse("post", kwargs={
+                'slug': form.instance.web_name
+            }))
+            
+    context = {
+        'form':form
+    }
+    return render(request, "news_create.html", context)
+
+def post_delete(request, slug):
+    if request.user.is_authenticated:
+        post = get_object_or_404(News, web_name=slug)
+        post.delete()
+    return redirect(reverse("index"))

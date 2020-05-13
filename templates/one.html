@@ -4,24 +4,46 @@
 {% include 'includes/loading.html' %}
 <div class="container-fluid content">
     {% include "includes/navbar.html" %}
-    <div class="content-text">
-        <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 row news-site row">
-        <div class="offset-2 col-8 news-image">
-        <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" />
+    <div class="content-text ">
+        <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12 col-xs-12 row news-site">
+        
+            <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12 news-image">
+                <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" />
+            </div>
+
+            <div class="col-xl-4 col-lg-10 col-md-12 col-sm-12 col-xs-12">
+
+                {% if user.is_authenticated %}
+                <div class="col-xl-12 col-lg-8 col-6 col-md-6 col-sm-4 m-1 p-1 row" style="text-decotarion:none; color:white">
+                    <a href="{% url 'post-update' slug=post.web_name %}" class="col-sm-4 btn btn-secondary m-1">
+                        Edytuj
+                    </a>
+                    <a href="{% url 'post-delete' slug=post.web_name %}" class="col-sm-4 btn btn-danger m-1">
+                        Usuń
+                    </a>
+                </div>
+                {% endif %}
+                
+            
+                <div class="col-sm-12 m-1 p-1"><h2> {{ post.title }}
+                    {% for cat in post.category.all %}
+                        <p class="badge badge-primary">{{ cat.title }}</p>
+                    {% endfor %}
+                 </h2></div>
+
+                <div class="col-sm-12 m-1 p-1"><p>Autor: {{ post.author.user.username }} | {{ post.timestamp }}  </p></div>
+                <div class="col-sm-12 m-1 p-1"><h4> {{ post.overview }} </h4></div>
+                    
+                    
+                    {% if post.content %}
+            </div>
+                <div class="col-xl-12 col-lg-10 col-md-12 col-sm-12 col-xs-12"><h4> {{ post.content|safe }} </h4></div>
+            </div>
         </div>
-        {% for cat in post.category.all %}
-        <div class="offset-2 col-8"><p class="badge badge-primary">{{ cat.title }}</p></div>
-        {% endfor %}
-        <div class="offset-2 col-8"><h2> {{ post.title }} </h2></div>
-        <div class="offset-2 col-8"><p> {{ post.author.user.username }} | {{ post.timestamp }}  </p></div>
-        {% if post.content %}
-        <div class="offset-2 col-8"><h4> {{ post.content|safe }} </h4></div>
-        {% else %}
-        <div class="offset-2 col-8"><h4> {{ post.overview }} </h4></div>
         {% endif %}
         </div>
-    {% include "includes/footer.html" %}
     </div>
+    {% include "includes/footer.html" %}
 </div>
 
 {% endblock content %}

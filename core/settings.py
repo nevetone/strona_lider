@@ -42,9 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'tinymce',
+    'crispy_forms',
     
     'news',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -110,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'pl-pl'
+LANGUAGE_CODE = 'pl-PL'
 
 TIME_ZONE = 'Europe/Warsaw'
 
@@ -131,8 +134,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/static_root/')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/static_files/'),]
 
 
+
+
 TINYMCE_DEFAULT_CONFIG = {
-    'width':1000,
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',
@@ -158,3 +162,4 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': True,
     'statusbar': True,
 }
+

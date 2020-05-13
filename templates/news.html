@@ -3,7 +3,7 @@
 {% include 'includes/loading.html' %}
 <div class="container-fluid content">
     {% include "includes/navbar.html" %}
-<div class="content-text" style="top:150px;">
+<div class="content-text" style="margin-top:150px;">
     <div class="col-12">
         <div class="offset-2 col-8">
             filtr
@@ -15,8 +15,17 @@
             <div class="card-header">
               {{ news.title }}
             </div>
-            <div class="card-body">
+            <div class="card-body row">
+                {% if news.has_thumbnail is True %}
+                <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 main-news-image">
+                    <img src="{{ news.thumbnail.url }}" alt="">
+                </div>
+                <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <p class="card-text">{{ news.overview }}</p>
+                </div>
+                {% else %}
               <p class="card-text">{{ news.overview }}</p>
+              {% endif %}
               {% if news.has_own_web %}
               <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Podstrona</a>
               {% endif %}
