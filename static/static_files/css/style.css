@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Muli&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Modak&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 *{
     margin:0;
     padding:0;
@@ -46,6 +46,23 @@ body{
     margin:0;
     padding:0;
 }
+.news-site{
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin:0;
+    padding:0;
+    margin-top:100px;
+    margin-bottom:100px;
+}
+.news-image img{
+    width: 100%;
+    max-height: 600px;
+    border-radius: 5%;
+}
+
+
 .card{
     position: relative;
 }
@@ -79,7 +96,9 @@ body{
     left: auto;
 }
 
-
+.overlay img{
+    max-height: 300px;
+}
 
 .card-content{
     font-size: 0.8rem;
@@ -88,18 +107,17 @@ body{
     font-size: 1.2rem;
 }
 .category-text{
+    font-family: 'Roboto', sans-serif;
     color:White;
     font-size: 2rem;
     border-radius: 0 15px 0 15px;
-    background: rgb(38,39,43);
-    background: linear-gradient(90deg, rgba(38,39,43,1) 0%, rgba(4,4,10,1) 35%, rgba(5,11,13,1) 100%);
+    background-color: #26272b;
     margin-top:5rem;
 }
 
 .content{
     position: relative;
     height:auto;
-    min-height: 100%;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -111,16 +129,17 @@ body{
     padding: 0;
     height: auto;
     
-}
-
-/* koniec news box */
+} /* koniec news box */
 
 
-
-
+/* inne loga */
+.other-logo img{
+    width: 100%;
+} /* koniec inne loga */
 
 /* footer */
 .site-footer{
+    z-index: 9999;
     position: relative;
     background-color:#26272b;
     padding:45px 0 20px;
@@ -252,7 +271,12 @@ body{
     display: none;
 }
 .text-decoration-none{
-    text-decoration: none!important;
+    text-decoration: none !important;
+}
+.logo{
+    border-radius: 20%;
+    height: 2rem;
+    width: 4rem;
 }
 /* koniec navbar */
 
@@ -313,3 +337,26 @@ body{
 
 
 /* koniec pagination */
+.menu{
+    display: none;
+}
+
+@media(min-width:1200px){
+.menu{
+    z-index: 999;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    display: block;
+}
+.menu .menu-content{
+    height: 90%;
+    margin: 0;
+    padding: 0;
+}
+.menu-content a{
+    height: auto;
+}
+}

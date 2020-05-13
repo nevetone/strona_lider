@@ -6,6 +6,7 @@
 
 <div class="container-fluid content">
 {% include "includes/navbar.html" %}
+{% include "includes/menu.html" %}
 
 
 
@@ -14,178 +15,86 @@
         <div class="col-md-8 row news-box">
 
             <div class="category-text col-md-12">Nowości</div>
-
+            {% for news in queryset2 %}
             <div class="card text-center col-sm-12 mt-1 mb-1 ">
                 <div class="card-header">
-                  Główna Nowość
+                  {{ news.title }}
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title">Tytuł</h5>
-                  <p class="card-text">Text</p>
-                  <a href="#" class="btn btn-primary">Podstrona</a>
+                  <p class="card-text">{{ news.overview }}</p>
+                    {% if news.has_own_web %}
+                    <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Podstrona</a>
+                    {% endif %}
                 </div>
                 <div class="card-footer text-muted">
-                  Czas
+                  {{ news.timestamp }}
                 </div>
               </div>
+              {% endfor %}
 
+              {% for news in queryset1 %}
             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
                 <div class="card promoting-card">
                     <div class="card-body d-flex flex-row">
                     <div>
-                        <h4 class="card-title font-weight-bold mb-2">Pączkożercy!</h4>
-                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
+                        <h4 class="card-title font-weight-bold mb-2">{{ news.title }}</h4>
+                        <p class="card-text m-0"><i class="far fa-clock pr-2"></i>{{ news.timestamp }}</p>
+                        {% for cat in news.category.all %}
+                        <p class="card-text badge badge-success">{{ cat.title }}</p>
+                        {% endfor %}
                     </div>
                     </div>
                     <div class="view overlay">
-                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020Paczki&file=pczki1.jpg" alt="Card image cap">
+                    <img class="card-img-top rounded-0" src="{{ news.thumbnail.url }}" alt="Card image cap">
                     <a href="#!">
                         <div class="mask rgba-white-slight"></div>
                     </a>
                     </div>
                     <div class="card-body">
                     <div class="collapse-content">
-                        <p class="card-text card-content" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
-                        <button class="btn btn-primary">Zobacz Więcej!</button>
+                        <p class="card-text card-content" >{{ news.overview }}</p>
+                        {% if news.has_own_web %}
+                        <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Zobacz Więcej!</a>
+                        {% endif %}
                     </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
-                <div class="card promoting-card">
-                    <div class="card-body d-flex flex-row">
-                    <div>
-                        <h4 class="card-title font-weight-bold mb-2">Junior Culinary Cap 2020</h4>
-                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
-                    </div>
-                    </div>
-                    <div class="view overlay">
-                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020JCC&file=JuniorCulinaryCap010.jpg" alt="Card image cap">
-                    <a href="#!">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
-                    </div>
-                    <div class="card-body">
-                    <div class="collapse-content">
-                        <p class="card-text card-content" >5 lutego 2020r.  Arek Woźniak III miejsce, Tobiasz Baluk wyróżnienie w Ogólnopolskim Konkursie Kulinarnym Junior Culinary Cap 2020. Podziękowania i mega gratulacje</p>
-                        <button class="btn btn-primary">Zobacz Więcej!</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
-                <div class="card promoting-card">
-                    <div class="card-body d-flex flex-row">
-                    <div>
-                        <h4 class="card-title font-weight-bold mb-2">Pączkożercy!</h4>
-                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
-                    </div>
-                    </div>
-                    <div class="view overlay">
-                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020Paczki&file=pczki1.jpg" alt="Card image cap">
-                    <a href="#!">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
-                    </div>
-                    <div class="card-body">
-                    <div class="collapse-content">
-                        <p class="card-text card-content" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
-                        <button class="btn btn-primary">Zobacz Więcej!</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
-                <div class="card promoting-card">
-                    <div class="card-body d-flex flex-row">
-                    <div>
-                        <h4 class="card-title font-weight-bold mb-2">Pączkożercy!</h4>
-                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
-                    </div>
-                    </div>
-                    <div class="view overlay">
-                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020Paczki&file=pczki1.jpg" alt="Card image cap">
-                    <a href="#!">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
-                    </div>
-                    <div class="card-body">
-                    <div class="collapse-content">
-                        <p class="card-text card-content" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
-                        <button class="btn btn-primary">Zobacz Więcej!</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
-                <div class="card promoting-card">
-                    <div class="card-body d-flex flex-row">
-                    <div>
-                        <h4 class="card-title font-weight-bold mb-2">Pączkożercy!</h4>
-                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
-                    </div>
-                    </div>
-                    <div class="view overlay">
-                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020Paczki&file=pczki1.jpg" alt="Card image cap">
-                    <a href="#!">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
-                    </div>
-                    <div class="card-body">
-                    <div class="collapse-content">
-                        <p class="card-text card-content" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
-                        <button class="btn btn-primary">Zobacz Więcej!</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
-                <div class="card promoting-card">
-                    <div class="card-body d-flex flex-row">
-                    <div>
-                        <h4 class="card-title font-weight-bold mb-2">Pączkożercy!</h4>
-                        <p class="card-text"><i class="far fa-clock pr-2"></i>07/24/2018</p>
-                    </div>
-                    </div>
-                    <div class="view overlay">
-                    <img class="card-img-top rounded-0" src="https://galeria.lider24.eu/components/com_eventgallery/helpers/image.php?&mode=full&folder=2020Paczki&file=pczki1.jpg" alt="Card image cap">
-                    <a href="#!">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
-                    </div>
-                    <div class="card-body">
-                    <div class="collapse-content">
-                        <p class="card-text card-content" >Jak co roku, również dzisiaj w naszej szkole odbył się konkurs "kto szybciej zje pączka". Zwycięzcom gratulujemy, a wszystkim pozostałym życzymy słodkiego tłustego czwartku </p>
-                        <button class="btn btn-primary">Zobacz Więcej!</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
 
-            <div aria-label="Page navigation" class="col-sm-12 d-flex justify-content-center">
+            <div aria-label="Page navigation" class="mt-5 mb-5 col-sm-12 d-flex justify-content-center">
               <ul class="pagination d-flex justify-content-center">
                 <li>
-                  <a href="#" aria-label="Previous">
+                {% if queryset1.has_previous %}
+                  <a href="?{{page_request_var}}={{ queryset1.previous_page_number }}" aria-label="Previous">
                     <span aria-hidden="true"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>
                   </a>
+                {% endif %}
                 </li>
-                <li class="active"><a href="#">01</a></li>
-                <li><a href="#">02</a></li>
-                <li><a href="#">03</a></li>
-                <li><a>...</a></li>
+                {% if queryset1.has_previous %}
+                <li><a href="?{{page_request_var}}={{ queryset1.previous_page_number }}">{{ queryset1.previous_page_number }}</a></li>
+                <li class="active"><a  href="?{{page_request_var}}={{ queryset1.number }}">{{ queryset1.number }}</a></li>
+                {% if queryset1.has_next %}
+                <li><a href="?{{page_request_var}}={{ queryset1.next_page_number }}">{{ queryset1.next_page_number }}</a></li>
+                {% endif %}
+                {% else %}
+                <li class="active"><a href="?page=1">{{ queryset1.number }}</a></li>
+                <li><a  href="?{{page_request_var}}={{ queryset1.next_page_number }}">{{ queryset1.next_page_number }}</a></li>
+                {% if queryset1.has_next %}
+                <li><a href="?{{page_request_var}}=3">3</a></li>
+                {% endif %}
+                {% endif %}
                 <li>
-                  <a href="#" aria-label="Next">
+                {% if queryset1.has_next %}
+                  <a href="?{{page_request_var}}={{ queryset1.next_page_number }}" aria-label="Next">
                     <span aria-hidden="true"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
                   </a>
+                {% endif %}
                 </li>
               </ul>
             </div>
 
-
-
         </div>
-
-
     </div>
 {% include "includes/footer.html" %}
 </div>

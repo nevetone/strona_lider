@@ -1,0 +1,1 @@
+from tinymce import TintMCE

@@ -1,0 +1,27 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+{% load static %}
+{% include 'includes/loading.html' %}
+<div class="container-fluid content">
+    {% include "includes/navbar.html" %}
+    <div class="content-text">
+        <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 row news-site row">
+        <div class="offset-2 col-8 news-image">
+        <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" />
+        </div>
+        {% for cat in post.category.all %}
+        <div class="offset-2 col-8"><p class="badge badge-primary">{{ cat.title }}</p></div>
+        {% endfor %}
+        <div class="offset-2 col-8"><h2> {{ post.title }} </h2></div>
+        <div class="offset-2 col-8"><p> {{ post.author.user.username }} | {{ post.timestamp }}  </p></div>
+        {% if post.content %}
+        <div class="offset-2 col-8"><h4> {{ post.content|safe }} </h4></div>
+        {% else %}
+        <div class="offset-2 col-8"><h4> {{ post.overview }} </h4></div>
+        {% endif %}
+        </div>
+    {% include "includes/footer.html" %}
+    </div>
+</div>
+
+{% endblock content %}
