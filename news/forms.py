@@ -20,4 +20,4 @@ class MainNewsForm(forms.ModelForm):
     
     class Meta:
         model = MainNews
-        fields = ('title', 'overview','thumbnail', 'category','web_name', 'has_own_web','has_gallery','gallery',)
+        fields = ('title', 'overview','thumbnail', 'category','web_name', 'has_own_web','content','has_gallery','gallery',)

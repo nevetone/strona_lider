@@ -515,7 +515,7 @@ form .btn{
     background-color: #26272b;
     color:white;
     left: 50%;
-    border-radius: 15px;
+    text-align: center;
     transform: translateX(-50%);
     margin-bottom: 0;
 }

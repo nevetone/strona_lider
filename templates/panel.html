@@ -21,29 +21,79 @@
 <h4 class="pt-2">Aktualne Nowości</h4>
 <h6 class="text-secondary">* Uwaga, aktualizowanie zmieni także jego autora </h6>
 
-<table class="table table-striped table-dark">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Tytuł</th>
-        <th scope="col">Autor</th>
-        <th scope="col">Zarządzanie</th>
-    </tr>
-    </thead>
-    <tbody>
-        <tr>{% for post in news %}
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ post.title }}</td>
-            <td>{{ post.author }}</td>
-            <td>
-                {% if post.web_name %}
-                <a class="btn btn-success" href="{% url 'post-update' slug=post.web_name %}">Zaktualizuj</a>
-                <a class="btn btn-danger" href="{% url 'post-delete' slug=post.web_name %}">Usuń</a>
-                {% endif %}
-            </td>
-        </tr>{% endfor %}
-    </tbody>
-</table>
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-news-tab" data-toggle="tab" href="#nav-news" role="tab" aria-controls="nav-home" aria-selected="true">Nowości</a>
+    <a class="nav-item nav-link" id="nav-mainnews-tab" data-toggle="tab" href="#nav-mainnews" role="tab" aria-controls="nav-mainnews" aria-selected="false">Główna Nowość</a>
+    <a class="nav-item nav-link" id="nav-content-tab" data-toggle="tab" href="#nav-content" role="tab" aria-controls="nav-content" aria-selected="false">Podstrony</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-news" role="tabpanel" aria-labelledby="nav-news-tab">
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Data</th>
+                <th scope="col">Zarządzanie</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>{% for post in news %}
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ post.title }}</td>
+                    {% if post.author.username %}
+                    <td><span class="text-warning">{{ post.author.username }}</span></td>
+                    {% else %}
+                    <td><span class="text-warning">{{ post.author.user.username }}</span></td>
+                    {% endif %}
+                    <td>{{ post.timestamp }}</td>
+                    <td>
+                        {% if post.web_name %}
+                        <a class="btn btn-success btn-block" href="{% url 'post-update' slug=post.web_name %}">Zaktualizuj</a>
+                        <a class="btn btn-danger btn-block" href="{% url 'post-delete' slug=post.web_name %}">Usuń</a>
+                        {% endif %}
+                    </td>
+                </tr>{% endfor %}
+            </tbody>
+        </table>
+  </div>
+  <div class="tab-pane fade" id="nav-mainnews" role="tabpanel" aria-labelledby="nav-mainnews-tab">
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Data</th>
+                <th scope="col">Zarządzanie</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>{% for post in mainnews %}
+                    <td>{{ post.title }}</td>
+                    {% if post.author.username %}
+                    <td><span class="text-warning">{{ post.author.username }}</span></td>
+                    {% else %}
+                    <td><span class="text-warning">{{ post.author.user.username }}</span></td>
+                    {% endif %}
+                    <td>{{ post.timestamp }}</td>
+                    <td>
+                        {% if post.web_name %}
+                        <a class="btn btn-success btn-block" href="{% url 'main-post-update' slug=post.web_name %}">Zaktualizuj</a>
+                        <a class="btn btn-danger btn-block" href="{% url 'post-freez' slug=post.web_name %}">Wstrzymaj</a>
+                        {% endif %}
+                    </td>
+                </tr>{% endfor %}
+            </tbody>
+        </table>
+  </div>
+  <div class="tab-pane fade" id="nav-content" role="tabpanel" aria-labelledby="nav-content-tab">
+  
+  </div>
+</div>
 
 
 

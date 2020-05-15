@@ -85,7 +85,7 @@ def post_update(request, slug):
             return redirect(reverse("post", kwargs={
                 'slug': form.instance.web_name
             }))
-            
+
     context = {
         'form':form
     }
@@ -96,3 +96,26 @@ def post_delete(request, slug):
     post = get_object_or_404(News, web_name=slug)
     post.delete()
     return redirect(reverse("index"))
+
+@login_required
+def post_freez(request, slug):
+    post = get_object_or_404(MainNews, web_name=slug)
+    post.featured = False
+    post.save()
+    return redirect(reverse("index"))
+
+@login_required
+def post_main_update(request, slug):
+    post2 = get_object_or_404(MainNews, web_name=slug)
+    form2 = MainNewsForm(request.POST or None,request.FILES or None,instance=post2)
+    if request.method == "POST":
+        if form2.is_valid():
+            form2.instance.author = get_author(request.user)
+            form2.save()
+            return redirect(reverse("post", kwargs={
+                'slug': form2.instance.web_name
+            }))
+    context = {
+        'form':form2
+    }
+    return render(request, "news_create.html", context)

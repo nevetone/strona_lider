@@ -31,6 +31,7 @@ def login_view(request):
 def user_view(request):
     username = Author.objects.get(user = request.user)
     qs = News.objects.order_by('-timestamp')
+    qs2 = MainNews.objects.all()
     
     
     
@@ -39,7 +40,7 @@ def user_view(request):
     else:
         username = username.user.username
         
-    context={'username':username, 'news':qs }
+    context={'username':username, 'news':qs, 'mainnews':qs2 }
     return render(request, "panel.html", context)
 
 @login_required
