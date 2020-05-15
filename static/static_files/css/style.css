@@ -4,10 +4,10 @@
     margin:0;
     padding:0;
     box-sizing: border-box;
-    font-family: 'Muli', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 body{
-    background-color: #ffffff;
+    background-color: #f5f5f5;
     height:auto;
     font-size: 20px;
     position: relative;
@@ -47,12 +47,14 @@ body{
     margin:0;
     padding:0;
 }
+
 .news-site{
     font-family: 'Roboto', sans-serif;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
     margin:0;
+    min-height: 60vh;
     padding:0;
     margin-top:100px;
     margin-bottom:100px;
@@ -118,7 +120,7 @@ body{
 
 .content{
     position: relative;
-    height:auto;
+    min-height:100vh;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -352,11 +354,13 @@ body{
     right: 0;
     height: 100%;
     display: block;
+    padding: 0;
 }
 .menu .menu-content{
-    height: 90%;
+    height: auto;
     margin: 0;
     padding: 0;
+    padding-bottom: 30px;
 }
 .menu-content a{
     height: auto;
@@ -371,7 +375,7 @@ body{
     overflow: hidden;
     padding: 15px 30px;
     border-radius: 3px;
-    font: bold 2rem sans-serif;
+    font: bold 1.5rem sans-serif;
     text-transform: uppercase;
     text-decoration: none;
     letter-spacing: 1px;
@@ -397,7 +401,7 @@ body{
 }
 
 .menu-button-content .span-div2{
-    font-size: 0.9rem;
+    font-size: 0.6rem;
     padding: 5px;
     width: 70%;
 }
@@ -422,6 +426,16 @@ body{
 
 }
 
+@media(min-width:1650px){
+    .menu-button{
+        font-size: 2rem;
+    }
+    .menu-button-content .span-div2{
+        font-size: 0.9rem;
+    }
+}
+
+
 code img{
     width: 100%;
 }
@@ -430,3 +444,91 @@ code img{
     width: 100%;
     max-height: 100%;
 }
+
+
+
+
+
+
+/* form */
+
+.login-view{
+    padding-top:100px;
+}
+
+
+.global-container{
+	height:150%;
+    display: flex;
+    margin-top:20px;
+	align-items: center;
+	justify-content: center;
+}
+
+.global-container .login-form{
+    position: relative;
+    margin-top:75px;
+}
+
+.card-text form{
+	padding-top: 10px;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.card-title{ 
+    font-weight:300; 
+}
+
+form .btn{
+	font-size: 14px;
+	margin-top:20px;
+}
+
+
+.login-form{ 
+	width:330px;
+	margin:20px;
+}
+
+.sign-up{
+	text-align:center;
+	padding:20px 0 0;
+}
+
+.alert{
+	margin-bottom:-30px;
+	font-size: 13px;
+	margin-top:20px;
+}
+
+/* koniec form */
+
+/* user panel */
+.panel-view{
+    min-height: 100vh;
+    padding-top: 75px;
+
+}
+
+.panel-view-title{
+    background-color: #26272b;
+    color:white;
+    left: 50%;
+    border-radius: 15px;
+    transform: translateX(-50%);
+    margin-bottom: 0;
+}
+.panel-view-title h2{
+    margin:0;
+}
+
+.panel-view-content{
+    margin-top: 0;
+    color:black;
+    box-shadow: -1px 3px 30px 0px rgba(0,0,0,0.75);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* koniec user panel */

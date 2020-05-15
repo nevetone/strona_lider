@@ -15,11 +15,14 @@
 
                 {% if user.is_authenticated %}
                 <div class="col-xl-12 col-lg-8 col-6 col-md-6 col-sm-4 m-1 p-1 row" style="text-decotarion:none; color:white">
-                    <a href="{% url 'post-update' slug=post.web_name %}" class="col-sm-4 btn btn-secondary m-1">
+                    <a href="{% url 'post-update' slug=post.web_name %}" class="col-sm-4 btn btn-success">
                         Edytuj
                     </a>
-                    <a href="{% url 'post-delete' slug=post.web_name %}" class="col-sm-4 btn btn-danger m-1">
+                    <a href="{% url 'post-delete' slug=post.web_name %}" class="col-sm-4 btn btn-danger">
                         Usuń
+                    </a>
+                    <a href="{% url 'panel' %}" class="col-sm-4 btn btn-secondary">
+                        Panel
                     </a>
                 </div>
                 {% endif %}
@@ -31,7 +34,14 @@
                     {% endfor %}
                  </h2></div>
 
-                <div class="col-sm-12 m-1 p-1"><p>Autor: {{ post.author.user.username }} | {{ post.timestamp }}  </p></div>
+                          {% if post.author.username %}
+                          <div class="col-sm-12 m-1 p-1"><p>Autor: {{ post.author.username }} | {{ post.timestamp }}  </p></div>
+                          {% else %}
+                          <div class="col-sm-12 m-1 p-1"><p>Autor: {{ post.author.user.username }} | {{ post.timestamp }}  </p></div>
+                          {% endif %}
+
+
+                
                 <div class="col-sm-12 m-1 p-1"><h4> {{ post.overview }} </h4></div>
                     
                     

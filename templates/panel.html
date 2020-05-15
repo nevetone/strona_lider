@@ -1,0 +1,61 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+<div class="container-fluid content">
+{% include 'includes/navbar.html' %}
+<div class="panel-view">
+
+<div class="panel-view-title col-xl-9 col-lg-10 col-md-11 col-sm-12 col-xs-12">
+<h2>ADMIN PANEL</h2>
+</div>
+<div class="panel-view-content col-xl-8 col-lg-9 col-md-10 col-sm-11 col-xs-11 pb-3">
+<h4 class="pt-2">Piszesz jako  <span class="text-danger">{{ username }}</span></h4>
+<h5> Jeżeli chcesz zmienć swoją nazwę, wpisz poniżej nową </h5>
+
+<form method="POST" action="{% url 'change_username' %}" >
+{% csrf_token %}
+<input name="new_username" id="new_username" class="input-group-lg" type="text">
+<input type="submit" class="btn btn-success border-dark m-0" value="Zatwierdź">
+<h6 class="text-secondary">* Uwaga, zmiana nie wymaga potwierdzenia </h6>
+</form></br>
+
+<h4 class="pt-2">Aktualne Nowości</h4>
+<h6 class="text-secondary">* Uwaga, aktualizowanie zmieni także jego autora </h6>
+
+<table class="table table-striped table-dark">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tytuł</th>
+        <th scope="col">Autor</th>
+        <th scope="col">Zarządzanie</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>{% for post in news %}
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ post.title }}</td>
+            <td>{{ post.author }}</td>
+            <td>
+                {% if post.web_name %}
+                <a class="btn btn-success" href="{% url 'post-update' slug=post.web_name %}">Zaktualizuj</a>
+                <a class="btn btn-danger" href="{% url 'post-delete' slug=post.web_name %}">Usuń</a>
+                {% endif %}
+            </td>
+        </tr>{% endfor %}
+    </tbody>
+</table>
+
+
+
+
+
+
+</div>
+
+</div>
+
+
+</div>
+{% include 'includes/footer.html' %}
+</div>
+{% endblock content %}

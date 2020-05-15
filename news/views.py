@@ -3,6 +3,7 @@ from .models import News, MainNews, Author
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import NewsForm, MainNewsForm
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 
 def get_author(user):
@@ -54,6 +55,7 @@ def post(request, slug):
     }
     return render(request, template, context)
 
+@login_required
 def post_create(request):
     form = NewsForm(request.POST or None, request.FILES or None)
     if request.method == "POST":
@@ -72,6 +74,7 @@ def post_create(request):
     }
     return render(request, "news_create.html", context)
 
+@login_required
 def post_update(request, slug):
     post = get_object_or_404(News, web_name=slug)
     form = NewsForm(request.POST or None,request.FILES or None,instance=post)
@@ -88,8 +91,8 @@ def post_update(request, slug):
     }
     return render(request, "news_create.html", context)
 
+@login_required
 def post_delete(request, slug):
-    if request.user.is_authenticated:
-        post = get_object_or_404(News, web_name=slug)
-        post.delete()
+    post = get_object_or_404(News, web_name=slug)
+    post.delete()
     return redirect(reverse("index"))

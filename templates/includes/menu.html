@@ -2,48 +2,75 @@
 <div class="menu col-md-2 p-3 ">
     <div class="menu-content col-sm-12 shadow mt-5">
         <div class="col-sm-12">
+        {% if user.is_authenticated %}
+            <div class="menu-button">
+                <a href="{% url 'logout' %}" class="m-0">
+                    <div class="menu-button-content">
+                        <div class="span-div">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </div>
+                        <div class="span-div2">
+                            Wyloguj
+                        </div>
+                    </div>
+                </a>
+            </div>
+
 
             <div class="menu-button">
-            <a href="#" class="m-0">
-            <div class="menu-button-content">
-            <div class="span-div">
-            <i class="fas fa-book-open"></i>
+                <a href="{% url 'panel' %}" class="m-0">
+                    <div class="menu-button-content">
+                        <div class="span-div">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="span-div2">
+                            Panel Użytkownika
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="span-div2">
-            Plan Lekcji
-            </div>
-            </div>
-            </a>
+
+{% endif %}
+
+            <div class="menu-button">
+                <a href="#" class="m-0">
+                    <div class="menu-button-content">
+                        <div class="span-div">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="span-div2">
+                            Plan Lekcji
+                        </div>
+                    </div>
+                </a>
             </div>
 
             <div class="menu-button">
-            <a href="#" class="m-0">
-            <div class="menu-button-content">
-            <div class="span-div">
-            <i class="fas fa-book"></i>
-            </div>
-            <div class="span-div2">
-            Dziennik Elektroniczny
-            </div>
-            </div>
-            </a>
+                <a href="#" class="m-0">
+                    <div class="menu-button-content">
+                        <div class="span-div">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="span-div2">
+                            Dziennik Elektroniczny
+                        </div>
+                    </div>
+                </a>
             </div>
 
             
             <div class="menu-button">
-            <a href="#" class="m-0">
-            <div class="menu-button-content">
-            <div class="span-div">
-            <i class="fab fa-connectdevelop"></i>
+                <a href="#" class="m-0">
+                    <div class="menu-button-content">
+                        <div class="span-div">
+                            <i class="fab fa-connectdevelop"></i>
+                        </div>
+                        <div class="span-div2">
+                            Kursy
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="span-div2">
-            Kursy
-            </div>
-            </div>
-            </a>
-            </div>
-
-
         </div>
         {% include 'includes/partnerzy.html' %}
     </div>

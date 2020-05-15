@@ -29,7 +29,7 @@ class News(models.Model):
     thumbnail = models.ImageField(null=True, blank=True)
     category = models.ManyToManyField("Category")
     has_own_web = models.BooleanField(default=False)
-    web_name = models.CharField(max_length=50, blank=True )
+    web_name = models.CharField(max_length=50, unique=True)
     has_gallery = models.BooleanField(default=False)
     gallery = models.ManyToManyField("Gallery", blank=True)
     

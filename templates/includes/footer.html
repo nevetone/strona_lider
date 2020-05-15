@@ -46,7 +46,11 @@
             <div class="col-md-4 col-sm-6 col-xs-12">
                 
                 <ul class="social-icons">
-                    <li>Logowanie: <a href="#"><i class="far fa-user"></i></a></li>
+                {% if user.is_authenticated %}
+                <li>Wyloguj: <a href="{% url 'logout' %}"><i class="far fa-user"></i></a></li>
+                {% else %}
+                <li>Logowanie: <a href="{% url 'login' %}"><i class="far fa-user"></i></a></li>
+                {% endif %}
                     <li>Facebook: <a class="facebook" href="https://www.facebook.com/cusliderlublin"><i class="fab fa-facebook-f"></i></a></li>
                     <li>Kontakt: <a href="#"><i class="fas fa-feather-alt"></i></a></li>
                 </ul>
