@@ -8,7 +8,12 @@
 <h2>ADMIN PANEL</h2>
 </div>
 <div class="panel-view-content col-xl-8 col-lg-9 col-md-10 col-sm-11 col-xs-11 pb-3">
-<h4 class="pt-2">Piszesz jako  <span class="text-danger">{{ username }}</span></h4>
+<h4 class="pt-2">Piszesz jako  
+<span class="text-danger">{{ username }}</span>
+
+<a class="btn btn-primary float-right" href='{% url 'post-create' %}'> Stwórz Post </a>
+
+</h4>
 <h5> Jeżeli chcesz zmienć swoją nazwę, wpisz poniżej nową </h5>
 
 <form method="POST" action="{% url 'change_username' %}" >

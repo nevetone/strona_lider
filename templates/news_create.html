@@ -10,12 +10,15 @@
     
 
     {% if user.is_authenticated %}
-    <div class="col-6 offset-3 mt-5" >
+    <div class="col-xl-6 col-lg-7 col-md-8 col-sm-10 col-xs-12 create-form pt-5 pb-5 mt-5" >
+        <a href="{% url 'panel' %}" class="btn btn-primary mb-3"> Wróć do Panelu </a>
+        <h4> {{ title }} </h4>
+        <h5 class="text-secondary"> Pola z * są wymagane, a bez opcjonalne </h5>
         {{ form.media }}
         <form method="POST" action="." enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form|crispy }}
-            <button type="submit">Stwórz</button>
+            <button type="submit" class="btn btn-dark btn-block">Zapisz</button>
         </form>
     </div>
     {% else %}

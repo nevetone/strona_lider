@@ -58,6 +58,7 @@ def post(request, slug):
 @login_required
 def post_create(request):
     form = NewsForm(request.POST or None, request.FILES or None)
+    title = "Stwórz Post"
     if request.method == "POST":
         if form.is_valid():
             form.instance.author = get_author(request.user)
@@ -70,7 +71,7 @@ def post_create(request):
             }))
             
     context = {
-        'form':form
+        'form':form, 'title':title
     }
     return render(request, "news_create.html", context)
 
@@ -78,6 +79,7 @@ def post_create(request):
 def post_update(request, slug):
     post = get_object_or_404(News, web_name=slug)
     form = NewsForm(request.POST or None,request.FILES or None,instance=post)
+    title = "Edytuj Post"
     if request.method == "POST":
         if form.is_valid():
             form.instance.author = get_author(request.user)
@@ -87,7 +89,7 @@ def post_update(request, slug):
             }))
 
     context = {
-        'form':form
+        'form':form, 'title':title
     }
     return render(request, "news_create.html", context)
 
@@ -108,6 +110,7 @@ def post_freez(request, slug):
 def post_main_update(request, slug):
     post2 = get_object_or_404(MainNews, web_name=slug)
     form2 = MainNewsForm(request.POST or None,request.FILES or None,instance=post2)
+    title = "Edytuj Główny Post"
     if request.method == "POST":
         if form2.is_valid():
             form2.instance.author = get_author(request.user)
@@ -116,6 +119,6 @@ def post_main_update(request, slug):
                 'slug': form2.instance.web_name
             }))
     context = {
-        'form':form2
+        'form':form2, 'title':title
     }
     return render(request, "news_create.html", context)

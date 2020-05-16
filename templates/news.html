@@ -57,14 +57,16 @@
                 </div>
                 </div>
                 <div class="view overlay">
-                <img class="card-img-top rounded-0" src="{{ news.thumbnail.url }}" alt="Card image cap">
+                    {% if news.has_thumbnail %}
+                    <img class="card-img-top rounded-0" src="{{ news.thumbnail.url }}" alt="Card image cap">
+                    {% endif %}
                 <a href="#!">
                     <div class="mask rgba-white-slight"></div>
                 </a>
                 </div>
                 <div class="card-body">
                 <div class="collapse-content">
-                    <p class="card-text card-content" >{{ news.overview }}</p>
+                    <p class="card-text card-content" {% if not news.has_thumbnail %} style="font-size:1rem" {% endif %} >{{ news.overview }}</p>
                     {% if news.has_own_web %}
                     <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Zobacz Więcej!</a>
                     {% endif %}
