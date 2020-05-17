@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.urls import reverse
 from .forms import LoginForm
-from news.models import Author, News, MainNews
+from news.models import Author, News, MainNews, Files, AllFiles, AllWebs, Webs, Pictures, Gallery
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -28,7 +28,7 @@ def login_view(request):
     return render(request, "login.html", context)
 
 @login_required
-def user_view(request):
+def user_news_view(request):
     username = Author.objects.get(user = request.user)
     qs = News.objects.order_by('-timestamp')
     qs2 = MainNews.objects.all()
@@ -44,6 +44,13 @@ def user_view(request):
     return render(request, "panel.html", context)
 
 @login_required
+def user_view(request):
+
+    context={}
+    return render(request, "main-panel.html", context)
+
+
+@login_required
 def change_username(request):
     username = Author.objects.get(user = request.user)
     
@@ -52,4 +59,4 @@ def change_username(request):
         username.username = new_username
         username.save()
         
-    return HttpResponseRedirect('/panel/')
+    return HttpResponseRedirect('/panel/news/')

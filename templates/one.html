@@ -3,83 +3,88 @@
 {% load static %}
 {% include 'includes/loading.html' %}
 <div class="container-fluid content">
-    {% include "includes/navbar.html" %}
-    <div class="content-text ">
-        <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12 col-xs-12 row news-site">
-            
-                {% if post.has_thumbnail %}
-                <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12 news-image">
+{% include "includes/navbar.html" %}
+    <div class="content-text">
+        <div class="col-xl-9 col-lg-10 col-md-10 col-sm-12 col-xs-12 news-site">
+
+            {% if post.has_thumbnail %}
+                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-12 col-xs-12 p-3 news-image float-left">
                     <img class="card-img-top rounded-0" src="{{ post.thumbnail.url }}" alt="Card image cap">
                 </div>
-                {% endif %}
-
-            
-        {% if post.has_thumbnail %}
-            <div class="col-xl-4 col-lg-10 col-md-12 col-sm-12 col-xs-12">
-        {% else %}
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        {% endif %}
                 {% if user.is_authenticated %}
-
-                {% if post.has_thumbnail %}
-                <div class="col-xl-12 col-lg-8 col-md-6 col-sm-4 m-1 p-1 row" style="text-decotarion:none; color:white">
-                    <a href="{% url 'post-update' slug=post.web_name %}" class="col-sm-4 btn btn-success">
+                <div class="col-xl-4 col-lg-4 col-md-10 col-sm-11 float-left" style="text-decotarion:none; color:white">
+                    <a href="{% url 'post-update' slug=post.web_name %}" class="col-xs-4 btn btn-success">
                         Edytuj
                     </a>
-                    <a href="{% url 'post-delete' slug=post.web_name %}" class="col-sm-4 btn btn-danger">
+                    <a href="{% url 'post-delete' slug=post.web_name %}" class="col-xs-4 btn btn-danger">
                         Usuń
                     </a>
-                    <a href="{% url 'panel' %}" class="col-sm-4 btn btn-secondary">
+                    <a href="{% url 'panel' %}" class="col-xs-4 btn btn-secondary">
                         Panel
                     </a>
                 </div>
-                {% else %}
-                <div class="col-xl-6 col-lg-7 col-md-8 col-sm-8 col-xs-8 row m-0 pb-5" style="text-decotarion:none; color:white">
-                    <a href="{% url 'post-update' slug=post.web_name %}" class="col-sm-4 btn btn-success float-left">
+                {% endif %}
+                <h3 class="one-news-title col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 float-left"> {{ post.title }}
+                {% for cat in post.category.all %}
+                    <span class="badge badge-primary">{{ cat.title }}</span>
+                {% endfor %}
+                </h3>
+                    {% if post.author.username %}
+                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 float-left"><p>Autor: <span class="text-danger">{{ post.author.username }}</span> | {{ post.timestamp }}  </p></div>
+                    {% else %}
+                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 float-left"><p>Autor: <span class="text-danger">{{ post.author.user.username }}</span> | {{ post.timestamp }}  </p></div>
+                    {% endif %}
+
+                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 float-left post-overwiew">
+                    {{ post.overview|capfirst }}
+                </div>
+
+                {% if post.content %}
+                    <div class="col-xl-12 col-lg-10 col-md-12 col-sm-12 col-xs-12 content-news ">{{ post.content|safe }}</div>
+                {% endif %}
+
+
+
+
+            {% else %}
+                {% if user.is_authenticated %}
+                <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 col-xs-12" style="text-decotarion:none; color:white">
+                    <a href="{% url 'post-update' slug=post.web_name %}" class="col-xs-4 btn btn-success ml-1">
                         Edytuj
                     </a>
-                    <a href="{% url 'post-delete' slug=post.web_name %}" class="col-sm-4 btn btn-danger float-left">
+                    <a href="{% url 'post-delete' slug=post.web_name %}" class="col-xs-4 btn btn-danger ml-1">
                         Usuń
                     </a>
-                    <a href="{% url 'panel' %}" class="col-sm-4 btn btn-secondary float-left">
+                    <a href="{% url 'panel' %}" class="col-xs-4 btn btn-secondary ml-1">
                         Panel
                     </a>
                 </div>
-
                 {% endif %}
+                <div class="col-sm-12 mt-2">
+                    <h3 class="one-news-title"> {{ post.title }}
+                        {% for cat in post.category.all %}
+                            <span class="badge badge-primary">{{ cat.title }}</span>
+                        {% endfor %}
+                    </h3>
+                </div>
+                    {% if post.author.username %}
+                        <div class="col-sm-12"><p>Autor: <span class="text-danger">{{ post.author.username }}</span> | {{ post.timestamp }}  </p></div>
+                            {% else %}
+                        <div class="col-sm-12"><p>Autor: <span class="text-danger">{{ post.author.user.username }}</span> | {{ post.timestamp }}  </p></div>
+                    {% endif %}
+
+                <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 ">
+                    {{ post.overview|capfirst }}
+                </div>
+                {% if post.content %}
+                    <div class="col-xl-12 col-lg-10 col-md-12 col-sm-12 col-xs-12 content-news">{{ post.content|safe }}</div>
                 {% endif %}
-                
-                {% if post.has_thumbnail %}
-                <div class="col-sm-12 m-1 p-1"><h2> {{ post.title }}
-                {% else %}
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"><h2> {{ post.title }}
-                {% endif %}
+                </div>
 
-                    {% for cat in post.category.all %}
-                        <p class="badge badge-primary">{{ cat.title }}</p>
-                    {% endfor %}
-                 </h2></div>
+            {% endif %}
 
-                          {% if post.author.username %}
-                          <div class="col-sm-12 m-1 p-1"><p>Autor: <span class="text-danger">{{ post.author.username }}</span> | {{ post.timestamp }}  </p></div>
-                          {% else %}
-                          <div class="col-sm-12 m-1 p-1"><p>Autor: <span class="text-danger">{{ post.author.user.username }}</span> | {{ post.timestamp }}  </p></div>
-                          {% endif %}
-
-
-                
-                <div class="col-sm-12 m-1 p-1"><h4> {{ post.overview }} </h4></div>
-                    
-                    
-                    {% if post.content %}
-            </div>
-                <div class="col-xl-12 col-lg-10 col-md-12 col-sm-12 col-xs-12"><h4> {{ post.content|safe }} </h4></div>
-            </div>
-        </div>
-        {% endif %}
-        </div>
+        </div> 
     </div>
-    {% include "includes/footer.html" %}
+{% include "includes/footer.html" %}
 </div>
-
 {% endblock content %}

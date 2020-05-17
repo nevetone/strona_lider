@@ -1,0 +1,37 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+<div class="container-fluid content">
+{% include 'includes/navbar.html' %}
+<div class="panel-view">
+
+<div class="col-sm-8 row news-buttons ">
+<a href="{% url 'panel-news' %}" class="panel-button draw text-decoration-none news-buttons">
+Zarządzaj Nowościami
+</a>
+</div>
+
+<div class="col-sm-8 row news-buttons ">
+<a href="{% url 'panel-news' %}" class="panel-button draw text-decoration-none news-buttons">
+Zarządzaj Galeriami
+</a>
+</div>
+
+<div class="col-sm-8 row news-buttons ">
+<a href="{% url 'panel-news' %}" class="panel-button draw text-decoration-none news-buttons">
+Zarządzaj Załączmikami
+</a>
+</div>
+
+<div class="col-sm-8 row news-buttons ">
+<a href="{% url 'panel-news' %}" class="panel-button draw text-decoration-none news-buttons">
+Zarządzaj Stronami
+</a>
+</div>
+
+
+
+</div>
+</div>
+{% include 'includes/footer.html' %}
+</div>
+{% endblock content %}

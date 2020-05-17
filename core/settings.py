@@ -138,6 +138,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/static_files/'),]
 
 
 TINYMCE_DEFAULT_CONFIG = {
+    'width' : "900",
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',

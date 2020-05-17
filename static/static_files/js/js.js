@@ -15,6 +15,6 @@ $(document).ready(function(){
             });
             }
 
-
+        $('#mceu_30').css('width', 'auto');
     
 });
