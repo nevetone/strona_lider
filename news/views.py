@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import NewsForm, MainNewsForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-
+from django.http import Http404
 
 def get_author(user):
     qs = Author.objects.filter(user=user)
@@ -48,10 +48,25 @@ def news(request):
 def post(request, slug):
     template = 'one.html'
     
-    post = get_object_or_404(News, web_name=slug)
+    try:
+        post = News.objects.get(web_name=slug)
+    except:
+        post = None
+    try:
+        mainpost = MainNews.objects.get(web_name=slug)
+    except:
+        mainpost = None
+
+    if post:
+        content = post
+    elif mainpost:
+        content = mainpost
+    else:
+        raise Http404
+
     
     context={
-        'post':post,
+        'post':content,
     }
     return render(request, template, context)
 

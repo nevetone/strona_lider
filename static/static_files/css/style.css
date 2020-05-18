@@ -648,8 +648,9 @@ form .btn{
     box-sizing: border-box;
     margin: 1em;
     padding: 1em 2em;
-    box-shadow: inset 0 0 0 2px #f45e61;
-    color: #f45e61;
+    box-shadow: inset 0 0 0 2px #0b579e;
+    background: linear-gradient(-45deg, #23a6d5, #23d5ab);
+    color: #000000;
     font-size: inherit;
     font-weight: 700;
     position: relative;
@@ -664,6 +665,12 @@ form .btn{
     width: 100%;
     height: 100%;
 }
+
+.panel-button:hover{
+    background: linear-gradient(-45deg, #ece1de, #ebdfc6);
+    transition: color 0.25s;
+}
+
 .draw {
     transition: color 0.25s;
 }
@@ -681,21 +688,93 @@ form .btn{
     right: 0;
 }
 .draw:hover {
-    color: #24135f;
+    color: #b80808;
 }
 .draw:hover::before, .draw:hover::after {
     width: 100%;
     height: 100%;
 }
 .draw:hover::before {
-    border-top-color: #24135f;
-    border-right-color: #24135f;
+    border-top-color: #b80808;
+    border-right-color: #b80808;
     transition: width 0.25s ease-out, height 0.25s ease-out 0.25s;
 }
 .draw:hover::after {
-    border-bottom-color: #24135f;
-    border-left-color: #24135f;
+    border-bottom-color: #b80808;
+    border-left-color: #b80808;
     transition: border-color 0s ease-out 0.5s, width 0.25s ease-out 0.5s, height 0.25s ease-out 0.75s
-
+}
 
 /* koniec button w panel  */
+
+/* galleria */
+
+
+.gallery-content{
+    position: relative;
+    min-height: 100vh;
+    left:50%;
+    transform: translateX(-50%);
+    width: 100%;
+
+}
+
+.gallery-card-content{
+    position: relative;
+    width: 100%;
+    height: auto;
+    -webkit-box-shadow: 0px 0px 25px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 0px 25px 0px rgba(0,0,0,1);
+    box-shadow: 0px 0px 25px 0px rgba(0,0,0,1);
+}
+
+.gallery-card-image{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.gallery-card-title{
+    position: relative;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+    color:Black;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.gallery-card-overview{
+    position: relative;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+    color:Black;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.gallery-card-date{
+    position: relative;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+    color:black;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.gallery-card-image::after{
+    position: absolute;
+    left:0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    -webkit-box-shadow: inset 0px 0px 190px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 190px 0px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 190px 0px rgba(0,0,0,0.75);
+}
+.gallery-card-image img{
+    max-width: 100%;
+    max-height: 600px;
+}
+/* koneic galeria */
+
+

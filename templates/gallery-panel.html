@@ -1,0 +1,60 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+<div class="container-fluid content">
+{% include 'includes/navbar.html' %}
+<div class="panel-view">
+
+<div class="panel-view-content col-xl-8 col-lg-9 col-md-10 col-sm-11 col-xs-11 p-3 mb-3">
+<div class="row col-sm-12 pt-1">
+<a class="btn btn-secondary float-left" href='{% url 'panel' %}'> Wróć do Opcji </a>
+</div>
+<h4 class="pt-2 row col-sm-12">Piszesz jako: 
+<span class="text-danger pl-2"> {{ username }}</span>
+</h4>
+<h5> Jeżeli chcesz zmienć swoją nazwę, wpisz poniżej nową </h5>
+
+<form method="POST" action="{% url 'change_username' %}" >
+{% csrf_token %}
+<input name="new_username" id="new_username" class="input-group-lg" type="text">
+<input type="submit" class="btn btn-success border-dark m-0" value="Zatwierdź">
+<h6 class="text-secondary">* Uwaga, zmiana nie wymaga potwierdzenia </h6>
+</form></br>
+
+<div class="col-sm-12 row">
+<h4 class="pt-2">Galeria</h4><a class="btn btn-primary ml-2" href='{% url 'galeria-create' %}'> Stwórz nową Galerię </a>
+</div>
+<h6 class="text-secondary">* Uwaga, aktualizowanie zmieni także jego autora </h6>
+
+
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Data</th>
+                <th scope="col">Zarządzanie</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>{% for one in gallery %}
+                    <td>{{ one.gallery_name }}</td>
+                    {% if one.author.username %}
+                    <td><span class="text-warning">{{ one.author.username }}</span></td>
+                    {% else %}
+                    <td><span class="text-warning">{{ one.author.user.username }}</span></td>
+                    {% endif %}
+                    <td>{{ one.timestamp }}</td>
+                    <td>
+                        <a class="btn btn-success btn-block" href="{% url 'galeria-update' slug=one.gallery_name %}">Zaktualizuj</a>
+                        <a class="btn btn-danger btn-block" href="{% url 'galeria-delete' slug=one.gallery_name %}">Usuń</a>
+                    </td>
+                </tr>{% endfor %}
+            </tbody>
+        </table>
+</div>
+</div>
+</div>
+</div>
+{% include 'includes/footer.html' %}
+</div>
+{% endblock content %}

@@ -59,7 +59,7 @@ class MainNews(models.Model):
     category = models.ManyToManyField("Category")
     has_own_web = models.BooleanField(default=False)
     web_name = models.CharField(max_length=50, blank=True )
-    featured = models.BooleanField(default=True)
+    featured = models.BooleanField(default=False, null=True, blank=True)
     has_gallery = models.BooleanField(default=False)
     gallery = models.ManyToManyField("Gallery", blank=True)
     
@@ -72,8 +72,20 @@ class MainNews(models.Model):
         return self.title
     
 class Gallery(models.Model):
-    gallery_name = models.CharField(max_length=50)
-    pictures = models.ManyToManyField("Pictures", blank=True)
+    gallery_name = models.CharField(max_length=50, unique=True)
+    pictures = models.ManyToManyField("Pictures")
+    overview = models.CharField(max_length=1000, default="Nie posiada opisu")
+    author = models.ForeignKey("Author", on_delete=models.CASCADE, null=True)
+    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    
+    def get_absolute_url(self):
+        return reverse("galeria", kwargs={"slug": self.gallery_name})
+    
+    def get_update_url(self):
+        return reverse("galeria-update", kwargs={"slug": self.gallery_name})
+    
+    def get_delete_url(self):
+        return reverse("galeria-delete", kwargs={"slug": self.gallery_name})
     
     def __str__(self):
         return self.gallery_name
@@ -81,6 +93,9 @@ class Gallery(models.Model):
 class Pictures(models.Model):
     picture_title = models.CharField(max_length=50)
     picture = models.ImageField()
+    author = models.ForeignKey("Author", on_delete=models.CASCADE, null=True)
+    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    has_gallery = models.BooleanField(default=False)
     
     def __str__(self):
         return self.picture_title
@@ -90,6 +105,8 @@ class Webs(models.Model):
     web_content = HTMLField(null=True, blank=True)
     pictures = models.ManyToManyField("Pictures", blank=True)
     web_filles = models.ManyToManyField("Files", blank=True)
+    author = models.ForeignKey("Author", on_delete=models.CASCADE, null=True)
+    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
     
     def __str__(self):
         return self.web_name
@@ -97,6 +114,8 @@ class Webs(models.Model):
 class AllWebs(models.Model):
     picture_title = models.CharField(max_length=50)
     pictures = models.ManyToManyField("Pictures", blank=True)
+    author = models.ForeignKey("Author", on_delete=models.CASCADE, null=True)
+    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
     
     def __str__(self):
         return self.picture_title
@@ -104,6 +123,8 @@ class AllWebs(models.Model):
 class AllFiles(models.Model):
     all_files_name = models.CharField(max_length=50)
     files = models.ManyToManyField("Files", blank=True)
+    author = models.ForeignKey("Author", on_delete=models.CASCADE, null=True)
+    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
     
     def __str__(self):
         return self.all_files_name
@@ -111,6 +132,8 @@ class AllFiles(models.Model):
 class Files(models.Model):
     file_name = models.CharField(max_length=50)
     file = models.FileField()
+    author = models.ForeignKey("Author", on_delete=models.CASCADE, null=True)
+    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
     
     def __str__(self):
         return self.file_name

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     
     'news',
     'auth_user',
+    'gallery',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

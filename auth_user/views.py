@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, Http404
+from django.shortcuts import render, HttpResponseRedirect, Http404, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.urls import reverse
@@ -51,6 +51,22 @@ def user_view(request):
 
 
 @login_required
+def user_gallery_view(request):
+    username = Author.objects.get(user = request.user)
+    qs = Gallery.objects.order_by('-timestamp')
+    
+    
+    
+    if username.username:
+        username = username.username
+    else:
+        username = username.user.username
+        
+    context={'username':username, 'gallery':qs }
+    return render(request, "gallery-panel.html", context)
+
+
+@login_required
 def change_username(request):
     username = Author.objects.get(user = request.user)
     
@@ -59,4 +75,4 @@ def change_username(request):
         username.username = new_username
         username.save()
         
-    return HttpResponseRedirect('/panel/news/')
+    return redirect(reverse("panel"))
