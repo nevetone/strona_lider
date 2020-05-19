@@ -2,33 +2,90 @@
 {% block content %}
 <div class="container-fluid content">
 {% include 'includes/navbar.html' %}
-<div class="panel-view">
+<div class="panel-view row m-0 p-0">
 
-<div class="col-sm-8 row news-buttons ">
+
+
+<div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 float-left mt-5 pt-5">
+<h4 class="text-center w-100 text-white"> Menu </h4>
+
+<div class="col-sm-12 row news-buttons ">
 <a href="{% url 'panel-news' %}" class="panel-button draw text-decoration-none news-buttons">
 Zarządzaj Nowościami
 </a>
 </div>
 
-<div class="col-sm-8 row news-buttons ">
+<div class="col-sm-12 row news-buttons ">
 <a href="{% url 'panel-gallery' %}" class="panel-button draw text-decoration-none news-buttons">
 Zarządzaj Galeriami
 </a>
 </div>
 
-<div class="col-sm-8 row news-buttons ">
+<div class="col-sm-12 row news-buttons ">
 <a href="" class="panel-button draw text-decoration-none news-buttons">
-Zarządzaj Załączmikami
+Zarządzaj Załącznikami
 </a>
 </div>
 
-<div class="col-sm-8 row news-buttons ">
+<div class="col-sm-12 row news-buttons ">
 <a href="" class="panel-button draw text-decoration-none news-buttons">
-Zarządzaj Stronami
+Zarządzaj Podstronami
 </a>
+</div>
 </div>
 
 
+<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 float-left mt-5 pt-5 border-left border-right border-secondary">
+<h4 class="w-100 text-center text-white"> Panel Administracyjny </h4>
+
+<h4 class="row col-sm-12 text-danger">Piszesz jako: 
+<span class="text-white pl-2"> {{ username }}</span>
+</h4>
+<h5 class="text-secondary"> Jeżeli chcesz zmienć swoją nazwę, wpisz poniżej nową </h5>
+
+<form method="POST" action="{% url 'change_username' %}" >
+{% csrf_token %}
+<input name="new_username" id="new_username" class="input-group-lg" type="text">
+<input type="submit" class="btn btn-success border-dark m-0" value="Zatwierdź">
+<h6 class="text-secondary">* Uwaga, zmiana nie wymaga potwierdzenia </h6>
+</form></br>
+
+
+
+
+</div>
+
+
+
+<div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 float-left mt-5 pt-5">
+
+<h4 class="text-center w-100 text-white"> Szybkie skróty </h4>
+
+<div class="col-sm-12 row news-buttons">
+<a href="{% url 'post-create' %}" class="panel-button draw text-decoration-none news-buttons">
+Stwórz Nowość
+</a>
+</div>
+
+<div class="col-sm-12 row news-buttons">
+<a href="{% url 'main-post-update' slug="glowna" %}" class="panel-button draw text-decoration-none news-buttons">
+Edytuj Główną Nowość
+</a>
+</div>
+
+<div class="col-sm-12 row news-buttons">
+<a href="{% url 'galeria-create' %}" class="panel-button draw text-decoration-none news-buttons">
+Stwórz Galerię
+</a>
+</div>
+
+<div class="col-sm-12 row news-buttons">
+<a href="" class="panel-button draw text-decoration-none news-buttons">
+Stwórz Podstronę
+</a>
+</div>
+
+</div>
 
 </div>
 </div>

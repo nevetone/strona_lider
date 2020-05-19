@@ -74,6 +74,7 @@ class MainNews(models.Model):
 class Gallery(models.Model):
     gallery_name = models.CharField(max_length=50, unique=True)
     pictures = models.ManyToManyField("Pictures")
+    category = models.ManyToManyField("Category", blank=True)
     overview = models.CharField(max_length=1000, default="Nie posiada opisu")
     author = models.ForeignKey("Author", on_delete=models.CASCADE, null=True)
     timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)

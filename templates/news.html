@@ -27,7 +27,9 @@
               <p class="card-text">{{ news.overview }}</p>
               {% endif %}
               {% if news.has_own_web %}
-              <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Podstrona</a>
+              <div class="col-sm-12 d-flex justify-content-center">
+                <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Podstrona</a>
+              </div>
               {% endif %}
             </div>
             <div class="card-footer text-muted">

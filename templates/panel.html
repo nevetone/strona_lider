@@ -4,31 +4,22 @@
 {% include 'includes/navbar.html' %}
 <div class="panel-view">
 
-<div class="panel-view-content col-xl-8 col-lg-9 col-md-10 col-sm-11 col-xs-11 p-3 mb-3">
-<div class="row col-sm-12 pt-1">
+<div class="panel-view-content col-xl-8 col-lg-9 col-md-10 col-sm-11 col-xs-11 p-3 pt-3">
+<div class="row col-sm-12 mt-5">
 <a class="btn btn-secondary float-left" href='{% url 'panel' %}'> Wróć do Opcji </a>
 </div>
-<h4 class="pt-2 row col-sm-12">Piszesz jako: 
-<span class="text-danger pl-2"> {{ username }}</span>
-</h4>
-<h5> Jeżeli chcesz zmienć swoją nazwę, wpisz poniżej nową </h5>
 
-<form method="POST" action="{% url 'change_username' %}" >
-{% csrf_token %}
-<input name="new_username" id="new_username" class="input-group-lg" type="text">
-<input type="submit" class="btn btn-success border-dark m-0" value="Zatwierdź">
-<h6 class="text-secondary">* Uwaga, zmiana nie wymaga potwierdzenia </h6>
-</form></br>
 
-<div class="col-sm-12 row">
-<h4 class="pt-2">Aktualne Nowości</h4><a class="btn btn-primary ml-2" href='{% url 'post-create' %}'> Stwórz Post </a>
+<div class="col-sm-12">
+<h4 class="mt-5 text-white">Aktualne Nowości</h4>
 </div>
+<a class="btn btn-primary mb-2 float-right" href='{% url 'post-create' %}'> Stwórz nowy Post </a>
 <h6 class="text-secondary">* Uwaga, aktualizowanie zmieni także jego autora </h6>
 
 <nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-news-tab" data-toggle="tab" href="#nav-news" role="tab" aria-controls="nav-home" aria-selected="true">Nowości</a>
-    <a class="nav-item nav-link" id="nav-mainnews-tab" data-toggle="tab" href="#nav-mainnews" role="tab" aria-controls="nav-mainnews" aria-selected="false">Główna Nowość</a>
+  <div class="nav nav-tabs border-0" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active text-decoration-none" id="nav-news-tab" data-toggle="tab" href="#nav-news" role="tab" aria-controls="nav-home" aria-selected="true">Nowości</a>
+    <a class="nav-item nav-link text-decoration-none" id="nav-mainnews-tab" data-toggle="tab" href="#nav-mainnews" role="tab" aria-controls="nav-mainnews" aria-selected="false">Główna Nowość</a>
   </div>
 </nav>
 <div class="tab-content panel-tab" id="nav-tabContent">

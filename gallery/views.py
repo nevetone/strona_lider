@@ -25,13 +25,17 @@ def gallery_view(request):
     return render(request, template, context)
 
 # Create your views here.
-def one_gallery(request,slug):
-    template = "gallery.html"
-    gallery = Gallery.objects.order_by('-timestamp')
+def one_gallery(request, slug):
+    template = "one_gallery.html"
+    gallery_images = get_object_or_404(Gallery, gallery_name=slug)
+    images = []
+    iamges_count = gallery_images.pictures.count()
     
+    for image in gallery_images.pictures.all():
+        images.append(image)
     
     context={
-        'all_gallery':gallery,
+        'images':images, 'gallery':gallery_images, 'iamges_count':iamges_count
     }
     return render(request, template, context)
 

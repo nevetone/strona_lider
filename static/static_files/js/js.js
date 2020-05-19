@@ -17,4 +17,36 @@ $(document).ready(function(){
 
         $('#mceu_30').css('width', 'auto');
     
+
+
+
+
+
+
+
+
+
+    $('.gallery-image').click(function(){
+        tab = $(".show_image_tab")
+        src = $(this).attr('src');
+
+        $('.image-big-src').attr('src', src);
+        console.log(src);
+
+        $(tab).css({
+            display: 'block',
+        });
+        $(tab).animate({
+            opacity:1,
+        },200);
+    });
+    $('.close_image').click(function(){
+        $(".show_image_tab").css({
+            display: 'none',
+            opacity:0,
+        });
+    });
+
+
+
 });

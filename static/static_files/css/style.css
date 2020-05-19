@@ -560,7 +560,7 @@ form .btn{
 /* user panel */
 .panel-view{
     min-height: 100vh;
-    padding-top: 75px;
+    background-color: #26272b;
     
 }
 
@@ -648,9 +648,9 @@ form .btn{
     box-sizing: border-box;
     margin: 1em;
     padding: 1em 2em;
-    box-shadow: inset 0 0 0 2px #0b579e;
-    background: linear-gradient(-45deg, #23a6d5, #23d5ab);
-    color: #000000;
+    box-shadow: inset 0 0 0 2px #858585;
+    background: linear-gradient(-45deg, #272727, #26272b);
+    color: white;
     font-size: inherit;
     font-weight: 700;
     position: relative;
@@ -775,6 +775,91 @@ form .btn{
     max-width: 100%;
     max-height: 600px;
 }
+.gallery-image{
+    position: relative;
+    height: 80%;
+}
+
+.gallery-image img{
+    width: 100%;
+    height: auto;
+    opacity: 1;
+    z-index: 999999;
+    max-height: 600px;
+    cursor: pointer;
+    z-index: 1;
+    border:3px black solid;
+    border-radius: 3%;
+}
+
+.show_image{
+    position: relative;
+    opacity: 1;
+    left:50%;
+    margin-top:2%;
+    transform: translateX(-50%);
+    background-color: #e3e3e3;
+    min-height: 65%;
+    max-height: 95%;
+    width: 95%;
+
+}
+
+
+@media(min-width:1200px){
+    .show_image{
+        position: relative;
+        opacity: 1;
+        left:50%;
+        margin-top:2%;
+        transform: translateX(-50%);
+        background-color: #e3e3e3;
+        min-height: 65%;
+        max-height: 95%;
+        width: 50%;
+        z-index: 99999;
+    }
+}
+
+.show_image_tab{
+    display: none;
+    position: fixed;
+    opacity: 0;
+    left:50%;
+    transform: translateX(-50%);
+    height: 100vh;
+    width: 101%;
+    background-color: rgba(0, 0, 0, 0.911);
+    z-index: 99998;
+    margin:0;
+    padding: 0;
+}
+
+.image-big{
+    position: relative;
+    height: 90%;
+}
+
+.image-big img{
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-height: 800px;
+    max-width: 100%;
+    padding-bottom: 20px;
+}
+.image-title{
+    font-size: 1rem;
+}
+.close_image svg{
+    cursor: pointer;
+}
+.close-image{
+    position: relative;
+    width: 10%;
+}
+
+
 /* koneic galeria */
 
 

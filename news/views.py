@@ -52,10 +52,12 @@ def post(request, slug):
         post = News.objects.get(web_name=slug)
     except:
         post = None
+        main_post = True
     try:
         mainpost = MainNews.objects.get(web_name=slug)
     except:
         mainpost = None
+        main_post = False
 
     if post:
         content = post
@@ -64,9 +66,9 @@ def post(request, slug):
     else:
         raise Http404
 
-    
+    print(main_post)
     context={
-        'post':content,
+         'main_post':main_post, 'post':content,
     }
     return render(request, template, context)
 

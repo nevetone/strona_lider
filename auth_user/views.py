@@ -29,40 +29,34 @@ def login_view(request):
 
 @login_required
 def user_news_view(request):
-    username = Author.objects.get(user = request.user)
     qs = News.objects.order_by('-timestamp')
     qs2 = MainNews.objects.all()
     
     
-    
+        
+    context={'news':qs, 'mainnews':qs2 }
+    return render(request, "panel.html", context)
+
+@login_required
+def user_view(request):
+    username = Author.objects.get(user = request.user)
     if username.username:
         username = username.username
     else:
         username = username.user.username
         
-    context={'username':username, 'news':qs, 'mainnews':qs2 }
-    return render(request, "panel.html", context)
-
-@login_required
-def user_view(request):
-
-    context={}
+    context={'username':username,}
     return render(request, "main-panel.html", context)
 
 
 @login_required
 def user_gallery_view(request):
-    username = Author.objects.get(user = request.user)
     qs = Gallery.objects.order_by('-timestamp')
     
     
     
-    if username.username:
-        username = username.username
-    else:
-        username = username.user.username
         
-    context={'username':username, 'gallery':qs }
+    context={'gallery':qs }
     return render(request, "gallery-panel.html", context)
 
 

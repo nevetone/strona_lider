@@ -14,7 +14,7 @@ class NewsForm(forms.ModelForm):
     overview = forms.CharField(required = True, label='Wiadomość')
     has_thumbnail = forms.BooleanField(required = False, label='Czy posiada zdjęcie główne')
     thumbnail = forms.ImageField(required = False, label='Zdjęcie główne ( jeżeli posiada zdjęcie )')
-    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Kategoria')
+    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
     web_name = forms.CharField(required = True, label='Nazwa Strony')
     has_own_web = forms.BooleanField(required = False, label='Czy posiada podstronę')
     has_gallery = forms.BooleanField(required = False, label='Czy posiada galerię')
@@ -33,8 +33,7 @@ class MainNewsForm(forms.ModelForm):
     overview = forms.CharField(required = True, label='Wiadomość')
     has_thumbnail = forms.BooleanField(required = False, label='Czy posiada zdjęcie główne')
     thumbnail = forms.ImageField(required = False, label='Zdjęcie główne ( jeżeli posiada zdjęcie )')
-    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Kategoria')
-    web_name = forms.CharField(required = True, label='Nazwa Strony')
+    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
     has_own_web = forms.BooleanField(required = False, label='Czy posiada podstronę')
     has_gallery = forms.BooleanField(required = False, label='Czy posiada galerię')
     gallery = forms.ModelMultipleChoiceField(queryset=Gallery.objects.all(), required = False, label='Wybierz galerię ( jeżeli posiada galerię )')
@@ -43,16 +42,17 @@ class MainNewsForm(forms.ModelForm):
     
     class Meta:
         model = MainNews
-        fields = ('featured', 'title', 'overview','has_thumbnail', 'thumbnail', 'category','web_name', 'has_own_web','content','has_gallery','gallery',)
+        fields = ('featured', 'title', 'overview','has_thumbnail', 'thumbnail', 'category', 'has_own_web','content','has_gallery','gallery',)
 
 
 
 class GalleryForm(forms.ModelForm):
     gallery_name = forms.CharField(required = True, label='Nazwa Galerii')
-    pictures = forms.ModelMultipleChoiceField(queryset=Pictures.objects.all(), required = True, label='Wybierz Nowe ( z L-Shift / L-Ctrl wybierasz kilka )')
+    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
+    pictures = forms.ModelMultipleChoiceField(queryset=Pictures.objects.all(), required = True, label='Wybierz Zdjęcia ( z L-Shift / L-Ctrl wybierasz kilka )')
     overview = forms.CharField(required = True, label='Opis Galerii')
     
     class Meta:
         model = Gallery
-        fields = ('gallery_name','overview','pictures')
+        fields = ('gallery_name','overview','pictures','category')
         
