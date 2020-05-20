@@ -3,12 +3,28 @@
 <div class="container-fluid content">
 {% include 'includes/navbar.html' %}
 
-<div class="show_image_tab">
+<div class="show_image_tab ">
     <div class="show_image col-sm-12 p-1">
-        <div class="w-100 col-sm-12 close-image" style="text-align:right; font-size:2.5rem;">
+
+        <div class="row col-sm-12 m-0 p-0">
+
+        <div class="arrow_back ml-3 mr-3" style="font-size:2.5rem;">
+        <i class="fas fa-arrow-left"></i>
+        
+        </div>
+        <div class="ml-1 mr-1 noselect" style="font-size:2.5rem;">
+        <span class="current_iamge"></span> / <span class="max_images"></span>
+        </div>
+        <div class="arrow_next ml-3 mr-3" style="font-size:2.5rem;">
+        <i class="fas fa-arrow-right"></i>
+        
+        </div>
+        <div class="close-image noselect" style="text-align:right; font-size:2.5rem;">
             <div class="close_image"><i class="fas fa-times-circle"></i></div>
         </div>
-        <div class="image-big col-sm-12">
+        </div>
+
+        <div class="image-big col-sm-12 noselect">
             <img class="image-big-src" src="" />
         </div>
         <div class="image-title">
@@ -17,18 +33,22 @@
     </div>
 </div>
 
-<div class="col-sm-12 row pt-5 pl-5 mt-5">
-<h4> Galeria: <span class="text-danger">{{ gallery.gallery_name }}</span> ({{ iamges_count }})</h4>
+<div class="col-sm-12 row pt-5 pl-5 mt-5 noselect">
+<div class="col-sm-12 m-0 p-0">
+<a href="{% url 'galeria' %}" class="btn btn-dark text-white"> Wróć do Galerii </a>
+</div>
+<h4> Galeria: <span class="text-danger">{{ gallery.gallery_name }}</span> (<span class="images_count">{{ iamges_count }}</span>)</h4>
 </div>
 
-<div class="gallery-content col-lg-10 col-md-11 col-sm-12 col-xs-12 p-0 m-0 pt-2 row">
+<div class="noselect gallery-content col-lg-10 col-md-11 col-sm-12 col-xs-12 p-0 m-0 pt-2 row">
 {% for iamge in images %}
 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12 gallery-image float-left mb-3">
 
-<img src="{{ iamge.picture.url }}" class="gallery-image col-sm-12 p-0" />
+<img src="{{ iamge.picture.url }}" id="image{{ forloop.counter }}" class="gallery-image col-sm-12 p-0" />
 
 </div>
 {% endfor %}
+
 
 </div>
 {% include 'includes/footer.html' %}

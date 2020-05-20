@@ -62,7 +62,10 @@ def post(request, slug):
     if post:
         content = post
     elif mainpost:
-        content = mainpost
+        if mainpost.has_own_web is False:
+            raise Http404
+        else:
+            content = mainpost
     else:
         raise Http404
 
@@ -120,6 +123,7 @@ def post_delete(request, slug):
 def post_freez(request, slug):
     post = get_object_or_404(MainNews, web_name=slug)
     post.featured = False
+    post.has_own_web = False
     post.save()
     return redirect(reverse("index"))
 
@@ -132,6 +136,9 @@ def post_main_update(request, slug):
         if form2.is_valid():
             form2.instance.author = get_author(request.user)
             form2.save()
+            if form2.instance.has_own_web is False:
+                return redirect(reverse("index"))
+            
             return redirect(reverse("post", kwargs={
                 'slug': form2.instance.web_name
             }))

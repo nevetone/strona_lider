@@ -34,7 +34,14 @@ body{
     background-color: #26272b;
 }
 
-
+.main_site{
+    display: none;
+}
+@media(min-width:800px){
+    .main_site{
+        display: inline;
+    }
+}
 
 
 
@@ -723,10 +730,11 @@ form .btn{
     position: relative;
     width: 100%;
     height: auto;
-    -webkit-box-shadow: 0px 0px 25px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 0px 0px 25px 0px rgba(0,0,0,1);
-    box-shadow: 0px 0px 25px 0px rgba(0,0,0,1);
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
+
 
 .gallery-card-image{
     position: relative;
@@ -778,6 +786,8 @@ form .btn{
 .gallery-image{
     position: relative;
     height: 80%;
+    border-radius: 3%;
+    
 }
 
 .gallery-image img{
@@ -788,8 +798,7 @@ form .btn{
     max-height: 600px;
     cursor: pointer;
     z-index: 1;
-    border:3px black solid;
-    border-radius: 3%;
+    box-shadow: 0 8px 4px -3px;
 }
 
 .show_image{
@@ -799,7 +808,7 @@ form .btn{
     margin-top:2%;
     transform: translateX(-50%);
     background-color: #e3e3e3;
-    min-height: 65%;
+    height: auto;
     max-height: 95%;
     width: 95%;
 
@@ -814,7 +823,7 @@ form .btn{
         margin-top:2%;
         transform: translateX(-50%);
         background-color: #e3e3e3;
-        min-height: 65%;
+        height: auto;
         max-height: 95%;
         width: 50%;
         z-index: 99999;
@@ -829,7 +838,7 @@ form .btn{
     transform: translateX(-50%);
     height: 100vh;
     width: 101%;
-    background-color: rgba(0, 0, 0, 0.911);
+    background-color: #26272b;
     z-index: 99998;
     margin:0;
     padding: 0;
@@ -855,11 +864,24 @@ form .btn{
     cursor: pointer;
 }
 .close-image{
-    position: relative;
-    width: 10%;
+    position: absolute;
+    right: 10px;
+}
+
+.arrow_next, .arrow_back{
+    cursor: pointer;
 }
 
 
+
+.noselect{
+    -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+    -khtml-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+  }
 /* koneic galeria */
 
 

@@ -32,6 +32,8 @@
 
 {% endif %}
 
+
+
             <div class="menu-button">
                 <a href="#" class="m-0">
                     <div class="menu-button-content">
@@ -71,6 +73,20 @@
                     </div>
                 </a>
             </div>
+
+            <div class="menu-button">
+                <a href="{% url 'galeria' %}" class="m-0">
+                    <div class="menu-button-content">
+                        <div class="span-div">
+                            <i class="far fa-image"></i>
+                        </div>
+                        <div class="span-div2">
+                            Galeria
+                        </div>
+                    </div>
+                </a>
+            </div>
+
         </div>
         {% include 'includes/partnerzy.html' %}
     </div>
