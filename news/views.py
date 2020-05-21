@@ -12,6 +12,7 @@ def get_author(user):
         return qs[0]
     return None
 
+
 # Create your views here.
 def index(request):
     template = 'index.html'

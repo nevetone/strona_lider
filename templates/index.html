@@ -33,11 +33,21 @@
               {% endif %}
 
               
-              {% if news.has_own_web %}
+              {% if news.has_own_web and news.has_gallery %}
+              <div class="col-sm-12 d-flex justify-content-center">
+              <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Podstrona</a>
+              <a href="{{ news.get_absolute_gallery_url }}" class="btn btn-primary ml-1">Galeria</a>
+              </div>
+              {% elif news.has_own_web %}
               <div class="col-sm-12 d-flex justify-content-center">
               <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Podstrona</a>
               </div>
+              {% elif news.has_gallery %}
+              <div class="col-sm-12 d-flex justify-content-center">
+              <a href="{{ news.get_absolute_gallery_url }}" class="btn btn-primary ml-1">Galeria</a>
+              </div>
               {% endif %}
+
 
 
             </div>
@@ -81,9 +91,14 @@
                     <div class="card-body">
                     <div class="collapse-content">
                         <p class="card-text card-content" {% if not news.has_thumbnail %} style="font-size:1rem" {% endif %} >{{ news.overview }}</p>
-                        {% if news.has_own_web %}
-                        <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Zobacz Więcej!</a>
-                        {% endif %}
+                          {% if news.has_own_web and news.has_gallery %}
+                          <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Zobacz Więcej!</a>
+                          <a href="{{ news.get_absolute_gallery_url }}" class="btn btn-primary m-1">Galeria</a>
+                          {% elif news.has_own_web %}
+                          <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Zobacz Więcej!</a>
+                          {% elif news.has_gallery %}
+                          <a href="{{ news.get_absolute_gallery_url }}" class="btn btn-primary ml-1">Galeria</a>
+                          {% endif %}
                     </div>
                     </div>
                 </div>

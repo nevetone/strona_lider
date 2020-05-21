@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from news.models import Gallery, Pictures
 from django.urls import reverse
-from news.forms import GalleryForm
+from news.forms import GalleryForm, ImagesCount
 from django.contrib.auth.decorators import login_required
 from news.models import Author
+from django.http import JsonResponse
 
 def get_author(user):
     qs = Author.objects.filter(user=user)
@@ -90,4 +91,35 @@ def gallery_delete(request, slug):
     gallery.delete()
     return redirect(reverse("index"))
 
+images_count = 0
+@login_required
+def add_image(request):
+    global images_count
+    if request.is_ajax and request.method == "POST":
+        images_count = request.POST.get('images_count')
+    context={
+        
+    }
+    return render(request, "add_files.html", context)
 
+@login_required
+def send_form_ajax(request):
+
+    
+
+    if request.is_ajax and request.method == "POST":
+        context={}
+        
+        clicked = str(request.POST.get('current_clicked'))
+        image_name = request.POST.get('image'+clicked+'_name')
+        image = request.FILES.get('image'+str(clicked))
+        save = Pictures(picture_title=image_name, picture=image, author=get_author(request.user))
+        save.save()
+        if image is not None and image_name is not None:
+            return JsonResponse({'clicked':clicked,}, status=200)
+        else:
+            return render(request, "add_files.html", context)
+    else:
+        return render(request, "add_files.html", context)
+
+    return render(request, "add_files.html", context)

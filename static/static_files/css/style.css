@@ -4,6 +4,7 @@
     margin:0;
     padding:0;
     box-sizing: border-box;
+    font: bold auto sans-serif;
     font-family: 'Roboto', sans-serif;
 }
 body{
@@ -138,6 +139,17 @@ body{
     border-radius: 0 15px 0 15px;
     background-color: #26272b;
     margin-top:5rem;
+}
+
+@media(min-width:1000px){
+    .category-text{
+        font-family: 'Roboto', sans-serif;
+        color:White;
+        font-size: 2rem;
+        border-radius: 0 15px 0 15px;
+        background-color: #26272b;
+        margin-top:5rem;
+    }
 }
 
 .content{
@@ -885,3 +897,192 @@ form .btn{
 /* koneic galeria */
 
 
+/* complete  */
+
+.loader-item p {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0 0 15px;
+    padding: 0;
+    text-align: center;
+    color: #1d221e;
+    font-size: 12px;
+    font-weight: 600;
+}
+.message {
+    font-size: 14px;
+    color: #228722;
+    text-align: center;
+    margin: 30px auto;
+    width: 60%;
+}
+.loader-item p.active {
+    font-weight: 600;
+}
+.loader-item p.inactive {
+    opacity: 0.5;
+}
+.loader-item p.complete {
+    font-weight: 600;
+    font-size: 2rem;
+}
+.loader-item {
+    display: inline-block;
+    position: relative;
+    margin: 0 5px;
+    vertical-align: middle;
+}
+.load-bullet {
+    width: 10px;
+    height: 10px;
+    background-color: #228722;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0px 3px;
+    position: relative;
+    top: 15px;
+}
+.loader-item.inactive .load-bullet {
+    background-color: #f6f6f6;
+}
+.loader-item.complete .load-bullet {
+    background-color: #f6f6f6;
+    animation-name: loader-bullet-complete;
+    animation-duration: 1.2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+.loader-item.complete .load-bullet:nth-child(1) {
+    animation-delay: 0.25s;
+}
+.loader-item.complete .load-bullet:nth-child(2) {
+    animation-delay: 0.75s;
+}
+.loader-item.complete .load-bullet:nth-child(3) {
+    animation-delay: 1.25s;
+}
+.loader-item.complete .load-bullet:nth-child(4) {
+    animation-delay: 1.75s;
+}
+.loader-item .icon {
+    font-size: 28px;
+    position: absolute;
+    top: 26px;
+    left: 26px;
+}
+.loader-item.active .icon {
+    color: rgba(34, 135, 34, 1);
+}
+/* Loader Icon Fade */
+.loader-item.complete .icon {
+    color: #fff;
+    animation-name: loader-fill-icon;
+    animation-duration: 1.2s;
+    animation-iteration-count: 1;
+}
+.loader-item.inactive .icon {
+    color: #1d221e;
+    opacity: 0.5;
+}
+.outer-circle {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: rgba(34, 135, 34, 0.2);
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
+}
+
+.outer-circle .fa-check{
+    position: absolute;
+    font-size: 4rem;
+    padding: 0;
+    margin: 0;
+    left:28%;
+    top:50%;
+    transform: translateX(-150%);
+    transform: translateY(-50%);
+}
+
+.loader-item.inactive .outer-circle {
+    background-color: #f6f6f6;
+}
+.inner-circle {
+    position: absolute;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    top: 16px;
+    left: 16px;
+}
+.loader-item.active .inner-circle {
+    background-color: transparent;
+}
+.loader-item.inactive .inner-circle {
+    background-color: transparent;
+}
+/* Complete Animation Fill */
+.loader-item.complete .inner-circle {
+    background-color: rgba(34, 135, 34, 1);
+    -webkit-animation-name: loader-fill;
+   /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.75s;
+   /* Safari 4.0 - 8.0 */
+    -webkit-iteration-count: 1;
+   /* Safari 4.0 - 8.0 */
+    animation-name: loader-fill;
+    animation-duration: 0.75s;
+    animation-iteration-count: 1;
+}
+/* Loader Rotation Animation */
+.ring {
+    display: block;
+    width: 120px;
+    height: 120px;
+    border: 3px solid #fff;
+    border-top: 3px solid #228722;
+    border-radius: 50%;
+    animation: ring 1.2s ease-in-out infinite;
+    position: relative;
+    top: -2px;
+    left: -2px;
+}
+/* Animations */
+@keyframes ring {
+    0% {
+        transform: rotate(0deg);
+   }
+    100% {
+        transform: rotate(360deg);
+   }
+}
+@keyframes loader-fill {
+    0% {
+        background-color: transparent;
+        transform: scale(0);
+        -webkit-transform: scale(0);
+   }
+    100% {
+        background-color: #228722;
+        transform: scale(1);
+        -webkit-transform: scale(1);
+   }
+}
+@keyframes loader-fill-icon {
+    0% {
+        opacity: 0;
+   }
+    100% {
+        opacity: 1;
+   }
+}
+@keyframes loader-bullet-complete {
+    0% {
+        background-color: #f6f6f6;
+   }
+    100% {
+        background-color: #228722;
+   }
+}
+
+/* koniec complete  */
