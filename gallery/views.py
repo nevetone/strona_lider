@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from news.models import Gallery, Pictures
+from news.models import Gallery, Pictures, Files
 from django.urls import reverse
 from news.forms import GalleryForm, ImagesCount
 from django.contrib.auth.decorators import login_required
@@ -89,37 +89,95 @@ def gallery_update(request, slug):
 def gallery_delete(request, slug):
     gallery = get_object_or_404(Gallery, gallery_name=slug)
     gallery.delete()
-    return redirect(reverse("index"))
+    return redirect(reverse("galeria-delete"))
 
-images_count = 0
+
+
+# images
 @login_required
 def add_image(request):
-    global images_count
-    if request.is_ajax and request.method == "POST":
-        images_count = request.POST.get('images_count')
-    context={
-        
-    }
-    return render(request, "add_files.html", context)
+    context={}
+    return render(request, "add_images.html", context)
+
+
 
 @login_required
 def send_form_ajax(request):
 
-    
-
     if request.is_ajax and request.method == "POST":
-        context={}
         
         clicked = str(request.POST.get('current_clicked'))
         image_name = request.POST.get('image'+clicked+'_name')
         image = request.FILES.get('image'+str(clicked))
+        
         save = Pictures(picture_title=image_name, picture=image, author=get_author(request.user))
         save.save()
         if image is not None and image_name is not None:
-            return JsonResponse({'clicked':clicked,}, status=200)
-        else:
-            return render(request, "add_files.html", context)
-    else:
-        return render(request, "add_files.html", context)
+            return JsonResponse({'clicked':clicked, 'error':'false',}, status=200)
 
-    return render(request, "add_files.html", context)
+    return redirect(reverse("add_image"))
+
+
+@login_required
+def images_view(request):
+    images = Pictures.objects.order_by('-timestamp')
+    
+    
+    context={
+        'images':images,
+    }
+    return render(request, 'images-panel.html', context)
+
+@login_required
+def image_delete(request, slug):
+    images = get_object_or_404(Pictures, picture=slug)
+    images.delete()
+    
+    
+    return redirect(reverse("panel-images"))
+
+
+
+
+# files
+
+@login_required
+def add_file(request):
+    context={}
+    return render(request, "add_file.html", context)
+
+
+@login_required
+def send_form_ajax_file(request):
+
+    if request.is_ajax and request.method == "POST":
+        
+        clicked = str(request.POST.get('current_clicked'))
+        file_name = request.POST.get('file'+clicked+'_name')
+        file = request.FILES.get('file'+str(clicked))
+        
+        save = Files(file_name=file_name, file=file, author=get_author(request.user))
+        save.save()
+        if file is not None and file_name is not None:
+            return JsonResponse({'clicked':clicked, 'error':'false',}, status=200)
+
+    return redirect(reverse("add_file"))
+
+
+@login_required
+def file_view(request):
+    files = Files.objects.order_by('-timestamp')
+    
+    
+    context={
+        'files':files,
+    }
+    return render(request, 'file-panel.html', context)
+
+@login_required
+def file_delete(request, slug):
+    files = get_object_or_404(Files, file=slug)
+    files.delete()
+    
+    
+    return redirect(reverse("panel-file"))

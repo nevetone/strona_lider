@@ -16,8 +16,8 @@
 <form method="POST" action="{% url 'add_image' %}" class="form_count">
 {% csrf_token %} 
 <label for="images_count"> Ile chcesz wgrać zdjęć </label>
-<input id="images_count" name="images_count" class="m-0 form-control"  type="number" min="1" max="100" />
-<button type="submit" class="btn btn-group-sm btn-primary m-1" id="do_form">Wykonaj</button>
+<input id="images_count" name="images_count" class="m-0 form-control"  type="number" min="1" max="100" required />
+<input type="submit" class="btn btn-group-sm btn-primary m-1" id="do_form" value="Wykonaj" />
 </form>
 
 
@@ -34,20 +34,17 @@
 
 $(document).ready(function(){
 
+
+
+
         var clickedBtnID 
         $(document).on("click",".clikced", function () {
             clickedBtnID = $(this).attr('id'); 
 
-
+                if($('.image'+clickedBtnID+'_name').val() == '' || $('.image'+clickedBtnID).val() == ''){
+                }else{
                 $(".form"+clickedBtnID).submit(function(e) {
                     e.preventDefault();
-                    
-                    
-                    
-                    if($('.image'+clickedBtnID).val() == '' && $('.image'+clickedBtnID+'_name').val() == '' ){
-
-                    }else{
-                        
                     var formData  = new FormData(this);
                     $.ajax({
                         data: formData,
@@ -68,35 +65,36 @@ $(document).ready(function(){
                                     `);
                                 };
                             });
-                            }, 
+                        }, 
+                        error: function(data){
+                            
+                        },
                         cache: false,
                         contentType: false,
                         processData: false,
                     });
-                    }
-
-
                     return false;
                 });
+                }
             });
 
         $('#do_form').click(function(){
             var images_count = parseInt($('#images_count').val());
             var form_html = $('.html_form');
-            if($('#images_count').val() >= 1 && $('#images_count').val() <= 100){
+            if($('#images_count').val() >= 1 && $('#images_count').val() <= 100 && $('#images_count').val() != ''){
                 form_html.css('opacity',0);
                 for(var i = 1; i <= images_count; i++){
                     $(form_html).append(`
                     <form class="md-form m-3 form${i.toString()}" method="POST" action="./ajax">
                     {% csrf_token %}
                     <div class="file-field border border-dark row m-0">
-                    <input id="images_count" name="image${i.toString()}_name" class="m-0 form-control" type="text" placeholder="Nazwa Zdjęcia" required />
+                    <input name="image${i.toString()}_name" class="image${i.toString()}_name m-0 form-control" type="text" placeholder="Nazwa Zdjęcia" required />
                     <div class="btn btn-primary btn-sm float-left col-sm-6 m-0">
                     <span>Zdjęcie: </span>
-                    <input name="image${i.toString()}" class="m-0" type="file" accept="image/x-png,image/gif,image/jpeg" required>
+                    <input name="image${i.toString()}" class="m-0 image${i.toString()}" type="file" accept="image/x-png,image/gif,image/jpeg" required>
                     </div>
                     <div class="col-sm-6 m-0 p-0">
-                    <button type="submit" class="btn btn-dark form-control m-0 clikced" id="${i}" name="button${i}" style="height:100%">Prześlij</button>
+                    <input type="submit" class="btn btn-dark form-control m-0 clikced" id="${i}" name="button${i}" style="height:100%" value="Prześlij" /> 
                     </div>
                     </div>
                     <input name="current_clicked" class="current_clicked" value="${i}" hidden />

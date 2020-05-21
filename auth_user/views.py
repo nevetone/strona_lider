@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.urls import reverse
 from .forms import LoginForm
-from news.models import Author, News, MainNews, Files, AllFiles, AllWebs, Webs, Pictures, Gallery
+from news.models import Author, News, MainNews, Files, Webs, Pictures, Gallery
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 

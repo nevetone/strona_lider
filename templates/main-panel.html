@@ -22,7 +22,13 @@ Zarządzaj Galeriami
 </div>
 
 <div class="col-sm-12 row news-buttons ">
-<a href="" class="panel-button draw text-decoration-none news-buttons">
+<a href="{% url 'panel-images' %}" class="panel-button draw text-decoration-none news-buttons">
+Zarządzaj Zdjęciami
+</a>
+</div>
+
+<div class="col-sm-12 row news-buttons ">
+<a href="{% url 'panel-file' %}" class="panel-button draw text-decoration-none news-buttons">
 Zarządzaj Załącznikami
 </a>
 </div>
@@ -82,6 +88,12 @@ Stwórz Galerię
 <div class="col-sm-12 row news-buttons">
 <a href="{% url 'add_image' %}" class="panel-button draw text-decoration-none news-buttons">
 Dodaj Zdjęcia
+</a>
+</div>
+
+<div class="col-sm-12 row news-buttons">
+<a href="{% url 'add_file' %}" class="panel-button draw text-decoration-none news-buttons">
+Dodaj Pliki
 </a>
 </div>
 

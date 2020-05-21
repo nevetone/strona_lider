@@ -108,6 +108,9 @@ class Pictures(models.Model):
     has_gallery = models.BooleanField(default=False)
     to_gallery = models.BooleanField(default=False)
     
+    def get_delete_url(self):
+        return reverse("image_delete", kwargs={"slug": str(self.picture)})
+    
     def __str__(self):
         return self.picture_title
     
@@ -122,29 +125,14 @@ class Webs(models.Model):
     def __str__(self):
         return self.web_name
     
-class AllWebs(models.Model):
-    picture_title = models.CharField(max_length=50)
-    pictures = models.ManyToManyField("Pictures", blank=True)
-    author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
-    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
-    
-    def __str__(self):
-        return self.picture_title
-    
-class AllFiles(models.Model):
-    all_files_name = models.CharField(max_length=50)
-    files = models.ManyToManyField("Files", blank=True)
-    author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
-    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
-    
-    def __str__(self):
-        return self.all_files_name
-    
 class Files(models.Model):
     file_name = models.CharField(max_length=50)
     file = models.FileField()
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    
+    def get_delete_url(self):
+        return reverse("file_delete", kwargs={"slug": str(self.file)})
     
     def __str__(self):
         return self.file_name

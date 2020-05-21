@@ -1,0 +1,92 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+<div class="container-fluid content">
+{% include 'includes/navbar.html' %}
+<div class="panel-view">
+
+<div class="panel-view-content col-xl-8 col-lg-9 col-md-10 col-sm-11 col-xs-11 p-3 pt-3">
+<div class="row col-sm-12 mt-5">
+<a class="btn btn-secondary float-left" href='{% url 'panel' %}'> Wróć do Opcji </a>
+</div>
+
+
+<div class="col-sm-12">
+<h4 class="mt-5 text-white">Zdjęcia</h4>
+</div>
+<a class="btn btn-primary float-right mb-3" href='{% url 'add_image' %}'> Dodaj zdjęcie </a>
+<h6 class="text-secondary">* Uwaga, usuwanie nie wymaga potwierdzenia </h6>
+
+        <table class="table table-striped table-dark panel-tab">
+            <thead>
+            <tr>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Data</th>
+                <th scope="col">Zarządzanie</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>{% for one in images %}
+                    <td>{{ one.picture_title }}</td>
+                    {% if one.author.username %}
+                    <td><span class="text-warning">{{ one.author.username }}</span></td>
+                    {% else %}
+                    <td><span class="text-warning">{{ one.author.user.username }}</span></td>
+                    {% endif %}
+                    <td>{{ one.timestamp }}</td>
+                    <td>
+                        <button type="button" id="{{ one.picture_title }}" name="{{ one.picture.url }}" class="name_{{ one.picture_title }} btn btn-primary form-control get_name" data-toggle="modal" data-target="#exampleModal">
+                        Pokarz Link
+                        </button>
+                        <a class="btn btn-danger btn-block" href="{% url 'image_delete' slug=one.picture %}">Usuń</a>
+                    </td>
+                </tr>{% endfor %}
+            </tbody>
+        </table>
+</div>
+</div>
+</div>
+</div>
+{% include 'includes/footer.html' %}
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade mt-5" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Link: <span class="text-danger image_name"></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+
+{% block jquery %}
+<script>
+$(document).ready(function(){
+
+$(document).on('click','.get_name',function(){
+    var id = $(this).attr('id'); 
+    var url = $(this).attr('name');
+    $('.image_name').text(id);
+    $('.modal-body').text(window.location.hostname+url)
+});
+
+
+
+});
+</script>
+{% endblock jquery %}

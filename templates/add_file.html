@@ -1,0 +1,129 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+{% load static %}
+{% include "includes/loading.html" %}
+<div class="container-fluid content">
+{% include "includes/navbar.html" %}
+<div class="gallery-content d-flex justify-content-center">
+<div class=" col-xl-10 col-md-10 col-sm-12 col-xs-12 mt-5 pt-5 html_form">
+<div class="col-sm-12 ml-0 pl-0 mb-3">
+<a href="{% url 'panel' %}" class="btn btn-dark ml-0" >Wróc do Panelu</a>
+</div>
+<h3 class="text-secondary"> Dodaj Pliki </h3>
+
+   
+
+<form method="POST" action="{% url 'add_file' %}" class="form_count">
+{% csrf_token %} 
+<label for="file_count"> Ile chcesz wgrać Plików </label>
+<input id="file_count" name="file_count" class="m-0 form-control"  type="number" min="1" max="100" required />
+<input type="submit" class="btn btn-group-sm btn-primary m-1" id="do_form" value="Wykonaj" />
+</form>
+
+
+
+</div>
+</div>
+{% include "includes/footer.html" %}
+</div>
+
+{% endblock content %}
+{% block jquery %}
+
+<script>
+
+$(document).ready(function(){
+
+
+
+
+        var clickedBtnID 
+        $(document).on("click",".clikced", function () {
+            clickedBtnID = $(this).attr('id'); 
+
+                if($('.file'+clickedBtnID+'_name').val() == '' || $('.file'+clickedBtnID).val() == ''){
+                }else{
+                $(".form"+clickedBtnID).submit(function(e) {
+                    e.preventDefault();
+                    var formData  = new FormData(this);
+                    $.ajax({
+                        data: formData,
+                        type: $(this).attr('method'),
+                        url: $(this).attr('action'),
+                        success: function(data){
+                            $('.form'+data.clicked).fadeOut(function(){
+                                this.remove();
+                                if($( ".md-form" ).length == 0){
+                                    $('.html_form').append(`
+                                    <div class="loader-item complete col-sm-12 row">
+                                        <p class="complete">Dodano Wszystkie</p>
+                                        <div class="outer-circle">
+                                        <div class="inner-circle"></div>
+                                        <i class="icon fas fa-check"></i>
+                                        </div>
+                                    </div>
+                                    `);
+                                };
+                            });
+                        }, 
+                        error: function(data){
+                            
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                    });
+                    return false;
+                });
+                }
+            });
+
+        $('#do_form').click(function(){
+            var file_count = parseInt($('#file_count').val());
+            var form_html = $('.html_form');
+            if($('#file_count').val() >= 1 && $('#file_count').val() <= 100 && $('#file_count').val() != ''){
+                form_html.css('opacity',0);
+                for(var i = 1; i <= file_count; i++){
+                    $(form_html).append(`
+                    <form class="md-form m-3 form${i.toString()}" method="POST" action="./ajax">
+                    {% csrf_token %}
+                    <div class="file-field border border-dark row m-0">
+                    <input name="file${i.toString()}_name" class="file${i.toString()}_name m-0 form-control" type="text" placeholder="Nazwa Pliku" required />
+                    <div class="btn btn-primary btn-sm float-left col-sm-6 m-0">
+                    <span>Zdjęcie: </span>
+                    <input name="file${i.toString()}" class="m-0 file${i.toString()}" type="file" required>
+                    </div>
+                    <div class="col-sm-6 m-0 p-0">
+                    <input type="submit" class="btn btn-dark form-control m-0 clikced" id="${i}" name="button${i}" style="height:100%" value="Prześlij" /> 
+                    </div>
+                    </div>
+                    <input name="current_clicked" class="current_clicked" value="${i}" hidden />
+                    </form>
+                    `
+                    );
+                $(form_html).animate({
+                    opacity: 1,
+                });
+                };
+                $('.form_count').css('display', 'none');
+            }
+        });
+
+    $('.form_count').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            data: $(this).serialize(),
+            type: $(this).attr('method'),
+            url: $(this).attr('action')
+        });
+        return false;
+    });
+
+    
+
+});
+
+</script>
+
+
+{% endblock jquery %}

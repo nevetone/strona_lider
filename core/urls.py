@@ -19,7 +19,7 @@ from news.views import index, news, post, post_update, post_delete, post_create,
 from django.conf import settings
 from django.conf.urls.static import static
 from auth_user.views import login_view, logout_view, user_view, user_gallery_view, change_username, user_news_view
-from gallery.views import gallery_view, gallery_create, gallery_delete, gallery_update, one_gallery, add_image, send_form_ajax
+from gallery.views import gallery_view, gallery_create, gallery_delete, gallery_update, one_gallery, add_image, send_form_ajax, images_view, image_delete, add_file, send_form_ajax_file, file_view, file_delete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -47,6 +47,16 @@ urlpatterns = [
     
     path('panel/add_image/', add_image, name="add_image"),
     path('panel/add_image/ajax', send_form_ajax, name="send_form_ajax"),
+    path('panel/images/', images_view, name="panel-images"),
+    path('panel/images/<slug>/delete/', image_delete, name="image_delete"),
+    
+    path('panel/add_file/', add_file, name="add_file"),
+    path('panel/add_file/ajax', send_form_ajax_file, name="send_form_ajax_file"),
+    path('panel/file/', file_view, name="panel-file"),
+    path('panel/file/<slug>/delete/', file_delete, name="file_delete"),
+    
+    
+    
     path('galeria/', gallery_view, name="gallery"),
     
     
