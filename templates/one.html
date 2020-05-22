@@ -42,7 +42,7 @@
                 {% endif %}
                 <h3 class="one-news-title col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 float-left"> {{ post.title }}
                 {% for cat in post.category.all %}
-                    <span class="badge badge-primary">{{ cat.title }}</span>
+                    <span class="badge badge-primary" style="background-color:{{ post.author.cat_color|safe }}; color:{{ post.author.cat_text_color|safe }};">{{ cat.title }}</span>
                 {% endfor %}
                 </h3>
                     {% if post.author.username %}
@@ -95,7 +95,7 @@
                 <div class="col-sm-12 mt-2">
                     <h3 class="one-news-title"> {{ post.title }}
                         {% for cat in post.category.all %}
-                            <span class="badge badge-primary">{{ cat.title }}</span>
+                            <span class="badge badge-primary" style="background-color:{{ post.author.cat_color|safe }}; color:{{ post.author.cat_text_color|safe }};">{{ cat.title }}</span>
                         {% endfor %}
                     </h3>
                 </div>

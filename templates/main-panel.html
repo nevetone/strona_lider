@@ -9,35 +9,63 @@
 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 float-left mt-5 pt-5">
 <h4 class="text-center w-100 text-white"> Menu </h4>
 
+
+{% if autor.rank.create_new %}
 <div class="col-sm-12 row news-buttons ">
 <a href="{% url 'panel-news' %}" class="panel-button draw text-decoration-none news-buttons">
 Zarządzaj Nowościami
 </a>
 </div>
+{% endif %}
 
+{% if autor.rank.create_gallery %}
 <div class="col-sm-12 row news-buttons ">
 <a href="{% url 'panel-gallery' %}" class="panel-button draw text-decoration-none news-buttons">
 Zarządzaj Galeriami
 </a>
 </div>
+{% endif %}
 
+
+{% if autor.rank.adding_images %}
 <div class="col-sm-12 row news-buttons ">
 <a href="{% url 'panel-images' %}" class="panel-button draw text-decoration-none news-buttons">
 Zarządzaj Zdjęciami
 </a>
 </div>
+{% endif %}
 
+{% if autor.rank.create_files %}
 <div class="col-sm-12 row news-buttons ">
 <a href="{% url 'panel-file' %}" class="panel-button draw text-decoration-none news-buttons">
 Zarządzaj Załącznikami
 </a>
 </div>
+{% endif %}
 
+{% if autor.rank.create_webs %}
 <div class="col-sm-12 row news-buttons ">
-<a href="" class="panel-button draw text-decoration-none news-buttons">
+<a href="{% url 'web_view' %}" class="panel-button draw text-decoration-none news-buttons">
 Zarządzaj Podstronami
 </a>
 </div>
+
+
+<div class="col-sm-12 row news-buttons ">
+<a href="{% url 'web_cat_view' %}" class="panel-button draw text-decoration-none news-buttons">
+Zarządzaj Kategoriami Stron
+</a>
+</div>
+{% endif %}
+
+{% if autor.rank.create_user %}
+<div class="col-sm-12 row news-buttons">
+<a href="{% url 'user_create' %}" class="panel-button draw text-decoration-none news-buttons">
+Stwórz Użytkownika
+</a>
+</div>
+{% endif %}
+
 </div>
 
 
@@ -47,7 +75,7 @@ Zarządzaj Podstronami
 <h4 class="row col-sm-12 text-danger">Piszesz jako: 
 <span class="text-white pl-2"> {{ username }}</span>
 </h4>
-<h5 class="text-secondary"> Jeżeli chcesz zmienć swoją nazwę, wpisz poniżej nową </h5>
+<h5 class="text-secondary"> Jeżeli chcesz zmienć swoją nazwę, wpisz poniżej nową i zatwierdź </h5>
 
 <form method="POST" action="{% url 'change_username' %}" >
 {% csrf_token %}
@@ -56,7 +84,20 @@ Zarządzaj Podstronami
 <h6 class="text-secondary">* Uwaga, zmiana nie wymaga potwierdzenia </h6>
 </form></br>
 
-
+<h5 class="text-secondary"> Jeżeli chcesz zmienć swój kolor Tagu, wybierz i zatwierdź </h5>
+<form method="POST" action="{% url 'change_tag_color' %}" class="text-white">
+{% csrf_token %}
+<label for="tag_color" >Kolor Tła</label>
+<input class="form-control-sm" type="color" id="cat_color" name="tag_color" value="{{ autor.cat_color|safe }}">
+<label for="cat_text_color">Kolor Tekstu</label>
+<input class="form-control-sm" type="color" id="cat_text_color" name="cat_text_color" value="{{ autor.cat_text_color|safe }}">
+<h3>
+<span class="text-secondary">Podgląd:</span>
+<span class="badge badge-primary tag" style="color:{{ autor.cat_text_color|safe }}; background-color:{{ autor.cat_color|safe }};">Nazwa Tag'u</span>
+</h3>
+<input type="submit" class="btn btn-success border-dark m-0" value="Zatwierdź">
+<h6 class="text-secondary">* Uwaga, zmiana nie wymaga potwierdzenia </h6>
+</form></br>
 
 
 </div>
@@ -67,41 +108,60 @@ Zarządzaj Podstronami
 
 <h4 class="text-center w-100 text-white"> Szybkie skróty </h4>
 
+{% if autor.rank.create_new %}
 <div class="col-sm-12 row news-buttons">
 <a href="{% url 'post-create' %}" class="panel-button draw text-decoration-none news-buttons">
 Stwórz Nowość
 </a>
 </div>
+{% endif %}
 
+
+{% if autor.rank.edit_main %}
 <div class="col-sm-12 row news-buttons">
 <a href="{% url 'main-post-update' slug="glowna" %}" class="panel-button draw text-decoration-none news-buttons">
 Edytuj Główną Nowość
 </a>
 </div>
+{% endif %}
 
+{% if autor.rank.create_gallery %}
 <div class="col-sm-12 row news-buttons">
 <a href="{% url 'galeria-create' %}" class="panel-button draw text-decoration-none news-buttons">
 Stwórz Galerię
 </a>
 </div>
+{% endif %}
 
+{% if autor.rank.adding_images %}
 <div class="col-sm-12 row news-buttons">
 <a href="{% url 'add_image' %}" class="panel-button draw text-decoration-none news-buttons">
 Dodaj Zdjęcia
 </a>
 </div>
+{% endif %}
 
+{% if autor.rank.create_files %}
 <div class="col-sm-12 row news-buttons">
 <a href="{% url 'add_file' %}" class="panel-button draw text-decoration-none news-buttons">
 Dodaj Pliki
 </a>
 </div>
+{% endif %}
 
+{% if autor.rank.create_webs %}
 <div class="col-sm-12 row news-buttons">
-<a href="" class="panel-button draw text-decoration-none news-buttons">
+<a href="{% url 'web_create' %}" class="panel-button draw text-decoration-none news-buttons">
 Stwórz Podstronę
 </a>
 </div>
+
+<div class="col-sm-12 row news-buttons">
+<a href="{% url 'user_create' %}" class="panel-button draw text-decoration-none news-buttons">
+Stwórz Kategorię Stron
+</a>
+</div>
+{% endif %}
 
 </div>
 
@@ -110,3 +170,23 @@ Stwórz Podstronę
 {% include 'includes/footer.html' %}
 </div>
 {% endblock content %}
+
+{% block jquery %}
+
+<script>
+$(document).ready(function(){
+
+    $(document).on("change" , "#cat_text_color" , function(){
+        $('.tag').css('color', $('#cat_text_color').val());
+    });
+
+    $(document).on("change" , "#cat_color" , function(){
+        $('.tag').css('background-color', $('#cat_color').val());
+    });
+
+    
+});
+
+</script>
+
+{% endblock jquery %}

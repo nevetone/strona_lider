@@ -29,7 +29,7 @@
         <div class="col-xs-12 gallery-card-title p-1 m-0 text-left">
         <h3 class="m-0">{{ gallery.gallery_name|upper }}
             {% for cat in gallery.category.all %}
-            <span class="badge badge-pill badge-info">{{ cat }}</span>
+            <span class="badge badge-pill badge-info" style="background-color:{{ gallery.author.cat_color|safe }}; color:{{ gallery.author.cat_text_color|safe }};">{{ cat }}</span>
             {% endfor %}
         </h3>
         </div>

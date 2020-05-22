@@ -1,0 +1,51 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+<div class="container-fluid content">
+{% include 'includes/navbar.html' %}
+<div class="panel-view">
+
+<div class="panel-view-content col-xl-8 col-lg-9 col-md-10 col-sm-11 col-xs-11 p-3 pt-3">
+<div class="row col-sm-12 mt-5">
+<a class="btn btn-secondary float-left" href='{% url 'panel' %}'> Wróć do Opcji </a>
+</div>
+
+
+<div class="col-sm-12">
+<h4 class="mt-5 text-white">Kategorie Stron</h4>
+</div>
+<a class="btn btn-primary float-right mb-3" href='{% url 'webs_cat_create' %}'> Stwórz nową Kategorię Strony </a>
+<h6 class="text-secondary">* Uwaga, aktualizowanie zmieni także jego autora oraz date opublikowania </h6>
+
+
+        <table class="table table-striped table-dark panel-tab">
+            <thead>
+            <tr>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Data</th>
+                <th scope="col">Zarządzanie</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>{% for one in webs %}
+                    <td>{{ one.web_name }}</td>
+                    {% if one.author.username %}
+                    <td><span class="text-warning">{{ one.author.username }}</span></td>
+                    {% else %}
+                    <td><span class="text-warning">{{ one.author.user.username }}</span></td>
+                    {% endif %}
+                    <td>{{ one.timestamp }}</td>
+                    <td>
+                        <a class="btn btn-success btn-block" href="{% url 'webs_cat_edit' slug=one.web_cat_name %}">Zaktualizuj</a>
+                        <a class="btn btn-danger btn-block" href="{% url 'webs_cat_delete' slug=one.web_cat_name %}">Usuń</a>
+                    </td>
+                </tr>{% endfor %}
+            </tbody>
+        </table>
+</div>
+</div>
+</div>
+</div>
+{% include 'includes/footer.html' %}
+</div>
+{% endblock content %}

@@ -16,7 +16,7 @@ class NewsForm(forms.ModelForm):
     overview = forms.CharField(required = True, label='Wiadomość')
     has_thumbnail = forms.BooleanField(required = False, label='Czy posiada zdjęcie główne')
     thumbnail = forms.ImageField(required = False, label='Zdjęcie główne ( jeżeli posiada zdjęcie )')
-    category = forms.ModelMultipleChoiceField(queryset=Category.objects.order_by('-timestamp'), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
+    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
     web_name = forms.CharField(required = True, label='Nazwa Strony')
     has_own_web = forms.BooleanField(required = False, label='Czy posiada podstronę')
     has_gallery = forms.BooleanField(required = False, label='Czy posiada galerię')
@@ -34,7 +34,7 @@ class MainNewsForm(forms.ModelForm):
     overview = forms.CharField(required = True, label='Wiadomość')
     has_thumbnail = forms.BooleanField(required = False, label='Czy posiada zdjęcie główne')
     thumbnail = forms.ImageField(required = False, label='Zdjęcie główne ( jeżeli posiada zdjęcie )')
-    category = forms.ModelMultipleChoiceField(queryset=Category.objects.order_by('-timestamp'), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
+    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
     has_own_web = forms.BooleanField(required = False, label='Czy posiada podstronę')
     has_gallery = forms.BooleanField(required = False, label='Czy posiada galerię')
     gallery = forms.ModelChoiceField(queryset=Gallery.objects.order_by('-timestamp'), required = False, label='Wybierz galerię ( jeżeli posiada galerię )')
@@ -49,7 +49,7 @@ class MainNewsForm(forms.ModelForm):
 
 class GalleryForm(forms.ModelForm):
     gallery_name = forms.CharField(required = True, label='Nazwa Galerii')
-    category = forms.ModelMultipleChoiceField(queryset=Category.objects.order_by('-timestamp'), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
+    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
     pictures = forms.ModelMultipleChoiceField(queryset=Pictures.objects.order_by('-timestamp'), required = True, label='Wybierz Zdjęcia ( z L-Shift / L-Ctrl wybierasz kilka )')
     overview = forms.CharField(required = True, label='Opis Galerii')
     

@@ -5,6 +5,7 @@ from news.forms import GalleryForm, ImagesCount
 from django.contrib.auth.decorators import login_required
 from news.models import Author
 from django.http import JsonResponse
+from django.http import Http404
 
 def get_author(user):
     qs = Author.objects.filter(user=user)
@@ -60,6 +61,12 @@ def gallery_create(request):
                 'slug': form.instance.gallery_name
             }))
             
+    user = get_author(request.user)
+    if user.rank.create_gallery:
+        pass
+    else:
+        raise Http404
+    
     context = {
         'form':form, 'title':title
     }
@@ -78,7 +85,13 @@ def gallery_update(request, slug):
             return redirect(reverse("galeria", kwargs={
                 'slug': form.instance.gallery_name
             }))
-
+            
+    user = get_author(request.user)
+    if user.rank.create_gallery:
+        pass
+    else:
+        raise Http404
+    
     context = {
         'form':form, 'title':title
     }
@@ -89,6 +102,14 @@ def gallery_update(request, slug):
 def gallery_delete(request, slug):
     gallery = get_object_or_404(Gallery, gallery_name=slug)
     gallery.delete()
+    
+            
+    user = get_author(request.user)
+    if user.rank.create_gallery:
+        pass
+    else:
+        raise Http404
+    
     return redirect(reverse("galeria-delete"))
 
 
@@ -97,6 +118,14 @@ def gallery_delete(request, slug):
 @login_required
 def add_image(request):
     context={}
+            
+    user = get_author(request.user)
+    if user.rank.adding_images:
+        pass
+    else:
+        raise Http404
+    
+    
     return render(request, "add_images.html", context)
 
 
@@ -115,12 +144,25 @@ def send_form_ajax(request):
         if image is not None and image_name is not None:
             return JsonResponse({'clicked':clicked, 'error':'false',}, status=200)
 
+    user = get_author(request.user)
+    if user.rank.adding_images:
+        pass
+    else:
+        raise Http404
+    
     return redirect(reverse("add_image"))
 
 
 @login_required
 def images_view(request):
     images = Pictures.objects.order_by('-timestamp')
+    
+    
+    user = get_author(request.user)
+    if user.rank.adding_images:
+        pass
+    else:
+        raise Http404
     
     
     context={
@@ -133,6 +175,12 @@ def image_delete(request, slug):
     images = get_object_or_404(Pictures, picture=slug)
     images.delete()
     
+    user = get_author(request.user)
+    if user.rank.adding_images:
+        pass
+    else:
+        raise Http404
+    
     
     return redirect(reverse("panel-images"))
 
@@ -144,6 +192,14 @@ def image_delete(request, slug):
 @login_required
 def add_file(request):
     context={}
+    
+    user = get_author(request.user)
+    if user.rank.create_files:
+        pass
+    else:
+        raise Http404
+    
+    
     return render(request, "add_file.html", context)
 
 
@@ -160,7 +216,13 @@ def send_form_ajax_file(request):
         save.save()
         if file is not None and file_name is not None:
             return JsonResponse({'clicked':clicked, 'error':'false',}, status=200)
-
+    
+    user = get_author(request.user)
+    if user.rank.create_files:
+        pass
+    else:
+        raise Http404
+    
     return redirect(reverse("add_file"))
 
 
@@ -168,6 +230,12 @@ def send_form_ajax_file(request):
 def file_view(request):
     files = Files.objects.order_by('-timestamp')
     
+    
+    user = get_author(request.user)
+    if user.rank.create_files:
+        pass
+    else:
+        raise Http404
     
     context={
         'files':files,
@@ -178,6 +246,13 @@ def file_view(request):
 def file_delete(request, slug):
     files = get_object_or_404(Files, file=slug)
     files.delete()
+    
+    
+    user = get_author(request.user)
+    if user.rank.create_files:
+        pass
+    else:
+        raise Http404
     
     
     return redirect(reverse("panel-file"))

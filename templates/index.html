@@ -76,7 +76,7 @@
 
                         <p class="card-text m-0"><i class="far fa-clock pr-2"></i>{{ news.timestamp }}</p>
                         {% for cat in news.category.all %}
-                        <p class="card-text badge badge-success">{{ cat.title }}</p>
+                        <p class="card-text badge badge-success" style="background-color:{{ news.author.cat_color|safe }}; color:{{ news.author.cat_text_color|safe }};">{{ cat.title }}</p>
                         {% endfor %}
                     </div>
                     </div>

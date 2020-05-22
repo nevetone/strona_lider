@@ -85,12 +85,18 @@ def post_create(request):
             form.instance.author = get_author(request.user)
             form.save()
             if not form.instance.has_own_web:
-                return redirect(reverse("index"))
+                return redirect(reverse("panel"))
             
             return redirect(reverse("post", kwargs={
                 'slug': form.instance.web_name
             }))
             
+    user = get_author(request.user)
+    if user.rank.create_new:
+        pass
+    else:
+        raise Http404
+    
     context = {
         'form':form, 'title':title
     }
@@ -108,7 +114,13 @@ def post_update(request, slug):
             return redirect(reverse("post", kwargs={
                 'slug': form.instance.web_name
             }))
-
+            
+    user = get_author(request.user)
+    if user.rank.create_new:
+        pass
+    else:
+        raise Http404
+    
     context = {
         'form':form, 'title':title
     }
@@ -118,7 +130,16 @@ def post_update(request, slug):
 def post_delete(request, slug):
     post = get_object_or_404(News, web_name=slug)
     post.delete()
-    return redirect(reverse("index"))
+    
+            
+    user = get_author(request.user)
+    if user.rank.create_new:
+        pass
+    else:
+        raise Http404
+    
+    
+    return redirect(reverse("panel-news"))
 
 @login_required
 def post_freez(request, slug):
@@ -126,7 +147,16 @@ def post_freez(request, slug):
     post.featured = False
     post.has_own_web = False
     post.save()
-    return redirect(reverse("index"))
+    
+            
+    user = get_author(request.user)
+    if user.rank.create_new:
+        pass
+    else:
+        raise Http404
+    
+    
+    return redirect(reverse("panel"))
 
 @login_required
 def post_main_update(request, slug):
@@ -138,11 +168,18 @@ def post_main_update(request, slug):
             form2.instance.author = get_author(request.user)
             form2.save()
             if form2.instance.has_own_web is False:
-                return redirect(reverse("index"))
+                return redirect(reverse("panel"))
             
             return redirect(reverse("post", kwargs={
                 'slug': form2.instance.web_name
             }))
+            
+    user = get_author(request.user)
+    if user.rank.create_new:
+        pass
+    else:
+        raise Http404
+    
     context = {
         'form':form2, 'title':title
     }

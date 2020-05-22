@@ -12,6 +12,8 @@ class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=50, null=True, blank=True)
     rank = models.ForeignKey("auth_user.Rangs", on_delete=models.SET_NULL, null=True)
+    cat_color = models.TextField(default="#007bff")
+    cat_text_color = models.TextField(default="#FFFFFF")
     
     def __str__(self):
         return str(self.user)
@@ -115,15 +117,42 @@ class Pictures(models.Model):
         return self.picture_title
     
 class Webs(models.Model):
-    web_name = models.CharField(max_length=50)
-    web_content = HTMLField(null=True, blank=True)
+    web_name = models.CharField(max_length=50, unique=True)
+    web_content = HTMLField()
     pictures = models.ManyToManyField("Pictures", blank=True)
     web_filles = models.ManyToManyField("Files", blank=True)
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
     
+    def get_absolute_url(self):
+        return reverse("webs", kwargs={"slug": self.web_name})
+    
+    def get_update_url(self):
+        return reverse("web_edit", kwargs={"slug": self.web_name})
+    
+    def get_delete_url(self):
+        return reverse("web_delete", kwargs={"slug": self.web_name})
+    
     def __str__(self):
         return self.web_name
+    
+class WebCategory(models.Model):
+    web_cat_name = models.CharField(max_length=25, unique=True)
+    webs = models.ManyToManyField("Webs")
+    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
+    
+    def get_absolute_url(self):
+        return reverse("webs_cat", kwargs={"slug": self.web_cat_name})
+    
+    def get_update_url(self):
+        return reverse("webs_cat_edit", kwargs={"slug": self.web_cat_name})
+    
+    def get_delete_url(self):
+        return reverse("webs_cat_delete", kwargs={"slug": self.web_cat_name})
+    
+    def __str__(self):
+        return self.web_cat_name
     
 class Files(models.Model):
     file_name = models.CharField(max_length=50)
