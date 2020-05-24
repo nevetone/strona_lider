@@ -12,7 +12,7 @@
 
     <div class="content-text">
 
-        <div class="col-xl-8 col-lg-9 col-md-10 col-sm-11 col-xs-12 row news-box">
+        <div class="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-xs-12 row news-box">
 
             <div class="category-text col-md-12">Nowości</div>
         {% for news in queryset2 %}
@@ -26,10 +26,10 @@
                     <img src="{{ news.thumbnail.url }}" alt="">
                 </div>
                 <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <p class="card-text">{{ news.overview }}</p>
+                    <p class="card-text">{{ news.overview|safe }}</p>
                 </div>
                 {% else %}
-              <p class="card-text">{{ news.overview }}</p>
+              <p class="card-text">{{ news.overview|safe }}</p>
               {% endif %}
 
               
@@ -63,7 +63,7 @@
 
               {% for news in queryset1 %}
             <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mt-1 mb-1 ">
-                <div class="card promoting-card">
+                <div class="card promoting-card news_card">
                     <div class="card-body d-flex flex-row">
                     <div>
                         <h4 class="card-title font-weight-bold mb-2">{{ news.title }}</h4>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="card-body">
                     <div class="collapse-content">
-                        <p class="card-text card-content" {% if not news.has_thumbnail %} style="font-size:1rem" {% endif %} >{{ news.overview }}</p>
+                        <p class="card-text card-content" {% if not news.has_thumbnail %} style="font-size:1rem" {% endif %} >{{ news.overview|safe }}</p>
                           {% if news.has_own_web and news.has_gallery %}
                           <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Zobacz Więcej!</a>
                           <a href="{{ news.get_absolute_gallery_url }}" class="btn btn-primary m-1">Galeria</a>

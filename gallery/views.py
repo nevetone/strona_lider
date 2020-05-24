@@ -57,9 +57,7 @@ def gallery_create(request):
                 imgs.save()
                 
             
-            return redirect(reverse("galeria", kwargs={
-                'slug': form.instance.gallery_name
-            }))
+            return redirect(reverse("gallery"))
             
     user = get_author(request.user)
     if user.rank.create_gallery:

@@ -52,7 +52,7 @@
                     {% endif %}
 
                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 float-left pb-2 post-overwiew">
-                    {{ post.overview|capfirst }}
+                    {{ post.overview|capfirst|safe }}
                 </div>
 
                 {% if post.content %}
@@ -106,7 +106,7 @@
                     {% endif %}
 
                 <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 pb-2">
-                    {{ post.overview|capfirst }}
+                    {{ post.overview|capfirst|safe }}
                 </div>
                 {% if post.content %}
                     <div class="col-xl-12 col-lg-10 col-md-12 col-sm-12 col-xs-12 content-news">{{ post.content|safe }}</div>

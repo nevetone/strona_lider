@@ -11,7 +11,7 @@ class WebCreateForm(forms.ModelForm):
     web_content = forms.CharField(widget=TinyMCE(attrs={'cols': 30, 'rows': 10}), required=True, label="Text na podstronie")
     has_pictures = forms.BooleanField(required=False, label="Czy posiada zdjęcia")
     pictures = forms.ModelMultipleChoiceField(queryset=Pictures.objects.order_by('-timestamp'), required = False, label='Wybierz Zdjęcia ( z L-Shift / L-Ctrl wybierasz kilka )')
-    has_files = forms.BooleanField(required=False, label="CZy posiada Załączniki")
+    has_files = forms.BooleanField(required=False, label="Czy posiada Załączniki")
     web_filles = forms.ModelMultipleChoiceField(queryset=Files.objects.order_by('-timestamp'), required = False, label='Wybierz Załączniki ( z L-Shift / L-Ctrl wybierasz kilka )')
     
     class Meta:
