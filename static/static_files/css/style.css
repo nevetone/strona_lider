@@ -88,10 +88,10 @@ body{
 }
 @media(min-height:1450px){
     .one-news-overview{
-    font-size: 1rem;
-    white-space: pre;
-    max-width: 100%;
-    display: block;
+        font-size: 1rem;
+        white-space: pre;
+        max-width: 100%;
+        display: block;
     }
     
 }
@@ -114,7 +114,7 @@ body{
     max-height: 500px;
     max-width: 100%;
     width: 100%;
-
+    
 }
 
 .card-content{
@@ -364,6 +364,24 @@ body{
     outline: none;
 }
 
+.pagination_first{
+    border: 2px solid #143361 !important;
+    border-radius: 6px;
+    padding: 5px 11px;
+    border: 2px solid;
+    font-size: 14px;
+    color: #143361;
+}
+
+.pagination_first:focus{
+    outline: none;
+}
+
+.pagination_first:hover{
+    text-decoration: none !important;
+    color: #fff;
+    background-color: #143361;
+}
 
 /* koniec pagination */
 .menu{
@@ -726,7 +744,11 @@ form .btn{
     left:50%;
     transform: translateX(-50%);
     width: 100%;
+    
+}
 
+.gallery-card{
+    position: relative;
 }
 
 .gallery-card-content{
@@ -804,6 +826,7 @@ form .btn{
     opacity: 1;
     z-index: 999999;
     max-height: 600px;
+    max-width: 100%;
     cursor: pointer;
     z-index: 1;
     box-shadow: 0 8px 4px -3px;
@@ -811,7 +834,7 @@ form .btn{
     left:50%;
     transform: translateX(-50%);
     border: black 2px solid;
-
+    
 }
 
 .show_image{
@@ -824,7 +847,7 @@ form .btn{
     height: auto;
     max-height: 95%;
     width: 95%;
-
+    
 }
 
 
@@ -902,7 +925,12 @@ form .btn{
     -moz-user-select: none; 
     -ms-user-select: none; 
     user-select: none; 
-  }
+}
+
+
+.gallery_images{
+    background-color: #d6d2c8;
+}
 /* koneic galeria */
 
 
@@ -1034,11 +1062,11 @@ form .btn{
 .loader-item.complete .inner-circle {
     background-color: rgba(34, 135, 34, 1);
     -webkit-animation-name: loader-fill;
-   /* Safari 4.0 - 8.0 */
+    /* Safari 4.0 - 8.0 */
     -webkit-animation-duration: 0.75s;
-   /* Safari 4.0 - 8.0 */
+    /* Safari 4.0 - 8.0 */
     -webkit-iteration-count: 1;
-   /* Safari 4.0 - 8.0 */
+    /* Safari 4.0 - 8.0 */
     animation-name: loader-fill;
     animation-duration: 0.75s;
     animation-iteration-count: 1;
@@ -1060,38 +1088,49 @@ form .btn{
 @keyframes ring {
     0% {
         transform: rotate(0deg);
-   }
+    }
     100% {
         transform: rotate(360deg);
-   }
+    }
 }
 @keyframes loader-fill {
     0% {
         background-color: transparent;
         transform: scale(0);
         -webkit-transform: scale(0);
-   }
+    }
     100% {
         background-color: #228722;
         transform: scale(1);
         -webkit-transform: scale(1);
-   }
+    }
 }
 @keyframes loader-fill-icon {
     0% {
         opacity: 0;
-   }
+    }
     100% {
         opacity: 1;
-   }
+    }
 }
 @keyframes loader-bullet-complete {
     0% {
         background-color: #f6f6f6;
-   }
+    }
     100% {
         background-color: #228722;
-   }
+    }
 }
 
 /* koniec complete  */
+
+.web-content{
+    font-size:0.8rem;
+}
+
+@media(min-width:1200px){
+    .web-content{
+        font-size:1.2rem;
+    }
+}
+

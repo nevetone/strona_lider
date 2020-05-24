@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.urls import reverse
 from .forms import LoginForm, RegistrationForm
-from news.models import Author, News, MainNews, Files, Webs, Pictures, Gallery
+from news.models import WebCategory ,Author, News, MainNews, Files, Webs, Pictures, Gallery
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.contrib.auth.models import User
@@ -21,6 +21,7 @@ def logout_view(request):
     return HttpResponseRedirect('%s' % reverse('login'))
 
 def login_view(request):
+    all_webs = WebCategory.objects.all()
     form = LoginForm(request.POST or None)
     if form.is_valid():
         username = form.cleaned_data['username']
@@ -31,11 +32,12 @@ def login_view(request):
     else:
         pass
     
-    context={"form":form,}
+    context={"form":form,'all_webs':all_webs,}
     return render(request, "login.html", context)
 
 @login_required
 def user_news_view(request):
+    all_webs = WebCategory.objects.all()
     qs = News.objects.order_by('-timestamp')
     qs2 = MainNews.objects.all()
     
@@ -46,11 +48,12 @@ def user_news_view(request):
         raise Http404
     
         
-    context={'news':qs, 'mainnews':qs2 }
+    context={'news':qs, 'mainnews':qs2,'all_webs':all_webs, }
     return render(request, "panel.html", context)
 
 @login_required
 def user_view(request):
+    all_webs = WebCategory.objects.all()
     autor = Author.objects.get(user = request.user)
     if autor.username:
         username = autor.username
@@ -58,12 +61,13 @@ def user_view(request):
         username = autor.user.username
     
     
-    context={'username':username,'autor':autor,}
+    context={'username':username,'autor':autor,'all_webs':all_webs,}
     return render(request, "main-panel.html", context)
 
 
 @login_required
 def user_gallery_view(request):
+    all_webs = WebCategory.objects.all()
     qs = Gallery.objects.order_by('-timestamp')
     
     user = get_author(request.user)
@@ -73,7 +77,7 @@ def user_gallery_view(request):
         raise Http404
     
         
-    context={'gallery':qs }
+    context={'gallery':qs,'all_webs':all_webs, }
     return render(request, "gallery-panel.html", context)
 
 
@@ -106,6 +110,7 @@ def change_tag_color(request):
 
 @login_required
 def user_create(request):
+    all_webs = WebCategory.objects.all()
     user = get_author(request.user)
     if user.rank.create_user:
         pass
@@ -122,6 +127,6 @@ def user_create(request):
         return redirect(reverse("panel"))
 
     context={
-        'form':form,
+        'form':form,'all_webs':all_webs,
     }
     return render(request, "register.html", context)

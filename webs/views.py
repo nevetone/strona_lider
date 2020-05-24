@@ -14,6 +14,7 @@ def get_author(user):
 
 @login_required
 def web_create(request):
+    all_webs = WebCategory.objects.all()
     template="web_create.html"
     form = WebCreateForm(request.POST or None, request.FILES or None)
     title = "Stwórz Podstronę"
@@ -33,12 +34,13 @@ def web_create(request):
         raise Http404
     
     context = {
-        'form':form, 'title':title
+        'form':form, 'title':title,'all_webs':all_webs,
     }
     return render(request, template, context)
 
 @login_required
 def web_edit(request, slug):
+    all_webs = WebCategory.objects.all()
     template="web_create.html"
     web = get_object_or_404(Webs, web_name=slug)
     form = WebCreateForm(request.POST or None, request.FILES or None, instance=web)
@@ -59,7 +61,7 @@ def web_edit(request, slug):
         raise Http404
     
     context = {
-        'form':form, 'title':title
+        'form':form, 'title':title, 'all_webs':all_webs,
     }
     return render(request, template, context)
 
@@ -78,6 +80,7 @@ def web_delete(request, slug):
 
 @login_required
 def web_view(request):
+    all_webs = WebCategory.objects.all()
     template="web-panel.html"
     webs = Webs.objects.order_by('-timestamp')
             
@@ -87,16 +90,17 @@ def web_view(request):
     else:
         raise Http404
     
-    context = {'webs':webs}
+    context = {'webs':webs, 'all_webs':all_webs,}
     return render(request, template, context)
 
 def webs(request, slug):
+    all_webs = WebCategory.objects.all()
     template="webs.html"
     web = get_object_or_404(Webs, web_name=slug)
     
 
     
-    context = {'web':web}
+    context = {'web':web, 'all_webs':all_webs,}
     return render(request, template, context)
 
 
@@ -104,6 +108,7 @@ def webs(request, slug):
 
 @login_required
 def webs_cat_create(request):
+    all_webs = WebCategory.objects.all()
     template="web_create.html"
     form = WebCatCreateForm(request.POST or None, request.FILES or None)
     title = "Stwórz Kategorię Strony"
@@ -115,12 +120,13 @@ def webs_cat_create(request):
             return redirect(reverse("web_cat_view"))
             
     context = {
-        'form':form, 'title':title
+        'form':form, 'title':title, 'all_webs':all_webs,
     }
     return render(request, template, context)
 
 @login_required
 def webs_cat_edit(request, slug):
+    all_webs = WebCategory.objects.all()
     template="web_create.html"
     web = get_object_or_404(WebCategory, web_cat_name=slug)
     form = WebCatCreateForm(request.POST or None, request.FILES or None, instance=web)
@@ -133,7 +139,7 @@ def webs_cat_edit(request, slug):
             return redirect(reverse("web_cat_view"))
             
     context = {
-        'form':form, 'title':title
+        'form':form, 'title':title, 'all_webs':all_webs,
     }
     return render(request, template, context)
 
@@ -145,11 +151,9 @@ def webs_cat_delete(request, slug):
 
 @login_required
 def web_cat_view(request):
+    all_webs = WebCategory.objects.all()
     template="web-cat-panel.html"
     webs = WebCategory.objects.order_by('-timestamp')
     
-    context = {'webs':webs}
+    context = {'webs':webs, 'all_webs':all_webs,}
     return render(request, template, context)
-
-
-

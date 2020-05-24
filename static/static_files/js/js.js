@@ -98,6 +98,8 @@ $(document).ready(function(){
         });
 
 
+$('table').css('width','100%');
+
 
 });
 

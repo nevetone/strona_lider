@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import News, MainNews, Author
+from .models import News, MainNews, Author, WebCategory
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import NewsForm, MainNewsForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+
 
 def get_author(user):
     qs = Author.objects.filter(user=user)
@@ -29,12 +30,14 @@ def index(request):
     except EmptyPage:
         paginated_querrysey = paginator.page(paginator.num_pages)
         
+    all_webs = WebCategory.objects.all()
     
     
     context={
         'queryset1':paginated_querrysey,
         'queryset2':queryset2,
         'page_request_var':page_request_var,
+        'all_webs':all_webs,
         
     }
     return render(request, template, context)
@@ -43,12 +46,14 @@ def news(request):
     template = 'news.html'
     queryset1 = News.objects.order_by('-timestamp')
     queryset2 = MainNews.objects.filter(featured=True)
-    context={'queryset1':queryset1, 'queryset2':queryset2,}
+    all_webs = WebCategory.objects.all()
+    context={'queryset1':queryset1, 'queryset2':queryset2,'all_webs':all_webs,}
     return render(request, template, context)
 
 def post(request, slug):
     template = 'one.html'
     
+    all_webs = WebCategory.objects.all()
     try:
         post = News.objects.get(web_name=slug)
     except:
@@ -72,12 +77,13 @@ def post(request, slug):
 
     print(main_post)
     context={
-         'main_post':main_post, 'post':content,
+         'main_post':main_post, 'post':content,'all_webs':all_webs,
     }
     return render(request, template, context)
 
 @login_required
 def post_create(request):
+    all_webs = WebCategory.objects.all()
     form = NewsForm(request.POST or None, request.FILES or None)
     title = "Stwórz Post"
     if request.method == "POST":
@@ -98,12 +104,13 @@ def post_create(request):
         raise Http404
     
     context = {
-        'form':form, 'title':title
+        'form':form, 'title':title,'all_webs':all_webs,
     }
     return render(request, "news_create.html", context)
 
 @login_required
 def post_update(request, slug):
+    all_webs = WebCategory.objects.all()
     post = get_object_or_404(News, web_name=slug)
     form = NewsForm(request.POST or None,request.FILES or None,instance=post)
     title = "Edytuj Post"
@@ -122,7 +129,7 @@ def post_update(request, slug):
         raise Http404
     
     context = {
-        'form':form, 'title':title
+        'form':form, 'title':title,'all_webs':all_webs,
     }
     return render(request, "news_create.html", context)
 
@@ -160,6 +167,7 @@ def post_freez(request, slug):
 
 @login_required
 def post_main_update(request, slug):
+    all_webs = WebCategory.objects.all()
     post2 = get_object_or_404(MainNews, web_name=slug)
     form2 = MainNewsForm(request.POST or None,request.FILES or None,instance=post2)
     title = "Edytuj Główny Post"
@@ -181,6 +189,8 @@ def post_main_update(request, slug):
         raise Http404
     
     context = {
-        'form':form2, 'title':title
+        'form':form2, 'title':title, 'all_webs':all_webs,
     }
     return render(request, "news_create.html", context)
+
+

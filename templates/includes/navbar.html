@@ -18,6 +18,64 @@
         <div class="collapse navbar-collapse" id="navbar4">
             <ul class="navbar-nav ml-auto pr-4">
                 <li class="nav-item px-md-2 {% if 'nowosci' in request.get_full_path %}active{% endif %} "> <a class="nav-link" href="{% url 'news' %}">Nowości</a> </li>
+
+
+                {% for web_cat in all_webs %}
+                <li class="nav-item px-md-2 dropdown d-menu">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ web_cat.web_cat_name|safe }}
+                        <svg  id="arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </a>
+                <div class="dropdown-menu shadow-sm sm-menu" aria-labelledby="dropdown01">
+
+                    {% for web in web_cat.webs.all %}
+                    {% if forloop.first %}
+                        {% if web_cat.web_cat_name == 'Dla Uczniów' or web_cat.web_cat_name == 'Dla Rodziców' or web_cat.web_cat_name == 'Dla Nauczycieli' %}
+                            <a class="dropdown-item" href="https://plan.lider24.eu">Plan Lekcji</a>
+                            <a class="dropdown-item" href="https://uonetplus.vulcan.net.pl/lublin">Dziennik Elektroniczny</a>
+                        {% elif web_cat.web_cat_name == 'O Nas' %}
+                            <a class="dropdown-item" href="{% url 'gallery' %}">Galeria</a>
+                            <a class="dropdown-item" href="#">Kontakt</a>
+                            <a class="dropdown-item" href="#">Nasi Absolwenci</a>
+                        {% endif %}
+                    {% endif %}
+                    <a class="dropdown-item" href="{{ web.get_absolute_url }}">{{ web.web_name }}</a>
+                    {% endfor %}
+
+                </div>
+                </li>
+                {% endfor %}
+
+
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} 
+
+
+                    <a class="dropdown-item" href="https://plan.lider24.eu">Plan Lekcji</a>
+                    <a class="dropdown-item" href="https://uonetplus.vulcan.net.pl/lublin">Dziennik Elektroniczny</a>
+
+
                 <li class="nav-item px-md-2 dropdown d-menu">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dla Uczniów
                         <svg  id="arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -25,13 +83,13 @@
                         </svg>
                     </a>
                 <div class="dropdown-menu shadow-sm sm-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Plan Lekcji</a>
+                    <a class="dropdown-item" href="https://plan.lider24.eu">Plan Lekcji</a>
                     <a class="dropdown-item" href="#">Liceum</a>
                     <a class="dropdown-item" href="#">Technikum</a>
                     <a class="dropdown-item" href="#">Medyczna Szk. Polic.</a>
                     <a class="dropdown-item" href="#">Szkoła Policealna</a>
                     <a class="dropdown-item" href="#">LO dla dorosłych</a>
-                    <a class="dropdown-item" href="#">Dziennik Elektroniczny</a>
+                    <a class="dropdown-item" href="https://uonetplus.vulcan.net.pl/lublin">Dziennik Elektroniczny</a>
                     <a class="dropdown-item" href="#">Kursy</a>
                     <a class="dropdown-item" href="#">Esport</a>
                     <a class="dropdown-item" href="#">Informacje dla Uczniów <br /> + Załączniki</a>
@@ -46,7 +104,7 @@
                 <div class="dropdown-menu shadow-sm sm-menu" aria-labelledby="dropdown02">
                     <a class="dropdown-item" href="#">Informacje dla Rodziców</a>
                     <a class="dropdown-item" href="#">Załączniki</a>
-                    <a class="dropdown-item" href="#">Dziennik Elektroniczny</a>
+                    <a class="dropdown-item" href="https://uonetplus.vulcan.net.pl/lublin">Dziennik Elektroniczny</a>
                     
                 </div>
                 </li>
@@ -59,7 +117,7 @@
                 <div class="dropdown-menu shadow-sm sm-menu" aria-labelledby="dropdown03">
                     <a class="dropdown-item" href="#">Informacje dla Nauczycieli</a>
                     <a class="dropdown-item" href="#">Załączniki</a>
-                    <a class="dropdown-item" href="#">Dziennik Elektroniczny</a>
+                    <a class="dropdown-item" href="https://uonetplus.vulcan.net.pl/lublin">Dziennik Elektroniczny</a>
                 </div>
                 </li>
                 <li class="nav-item px-md-2 dropdown d-menu">
@@ -76,8 +134,5 @@
                     <a class="dropdown-item" href="#">Nasi Absolwenci</a>
                     <a class="dropdown-item" href="{% url 'gallery' %}">Galeria</a>
                 </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+                </li> 
+                {% endcomment %}

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from tinymce import HTMLField
-
+import os
 
 # Create your models here.
 User = get_user_model()
@@ -159,8 +159,26 @@ class Files(models.Model):
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
     
+    @property
+    def filesize(self):
+        x = self.file.size
+        y = 512000
+        if x < y:
+            value = round(x/1000, 2)
+            ext = ' kb'
+        elif x < y*1000:
+            value = round(x/1000000, 2)
+            ext = ' Mb'
+        else:
+            value = round(x/1000000000, 2)
+            ext = ' Gb'
+        return str(value)+ext
+    
+    
     def get_delete_url(self):
         return reverse("file_delete", kwargs={"slug": str(self.file)})
+
     
     def __str__(self):
         return self.file_name
+    

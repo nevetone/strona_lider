@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from news.models import Gallery, Pictures, Files
+from news.models import Gallery, Pictures, Files, WebCategory
 from django.urls import reverse
 from news.forms import GalleryForm, ImagesCount
 from django.contrib.auth.decorators import login_required
@@ -17,17 +17,19 @@ def get_author(user):
 
 # Create your views here.
 def gallery_view(request):
+    all_webs = WebCategory.objects.all()
     template = "gallery.html"
     gallery = Gallery.objects.order_by('-timestamp')
     
     
     context={
-        'all_gallery':gallery,
+        'all_gallery':gallery, 'all_webs':all_webs,
     }
     return render(request, template, context)
 
 # Create your views here.
 def one_gallery(request, slug):
+    all_webs = WebCategory.objects.all()
     template = "one_gallery.html"
     gallery_images = get_object_or_404(Gallery, gallery_name=slug)
     images = []
@@ -37,7 +39,7 @@ def one_gallery(request, slug):
         images.append(image)
     
     context={
-        'images':images, 'gallery':gallery_images, 'iamges_count':iamges_count
+        'images':images, 'gallery':gallery_images, 'iamges_count':iamges_count, 'all_webs':all_webs,
     }
     return render(request, template, context)
 
@@ -45,6 +47,7 @@ def one_gallery(request, slug):
 
 @login_required
 def gallery_create(request):
+    all_webs = WebCategory.objects.all()
     form = GalleryForm(request.POST or None, request.FILES or None)
     title = "Stwórz Galerię"
     if request.method == "POST":
@@ -66,13 +69,14 @@ def gallery_create(request):
         raise Http404
     
     context = {
-        'form':form, 'title':title
+        'form':form, 'title':title, 'all_webs':all_webs,
     }
     return render(request, "news_create.html", context)
 
 
 @login_required
 def gallery_update(request, slug):
+    all_webs = WebCategory.objects.all()
     gallery = get_object_or_404(Gallery, gallery_name=slug)
     form = GalleryForm(request.POST or None,request.FILES or None,instance=gallery)
     title = "Edytuj Galerię"
@@ -91,7 +95,7 @@ def gallery_update(request, slug):
         raise Http404
     
     context = {
-        'form':form, 'title':title
+        'form':form, 'title':title, 'all_webs':all_webs,
     }
     return render(request, "news_create.html", context)
 
@@ -115,7 +119,8 @@ def gallery_delete(request, slug):
 # images
 @login_required
 def add_image(request):
-    context={}
+    all_webs = WebCategory.objects.all()
+    context={'all_webs':all_webs,}
             
     user = get_author(request.user)
     if user.rank.adding_images:
@@ -154,7 +159,7 @@ def send_form_ajax(request):
 @login_required
 def images_view(request):
     images = Pictures.objects.order_by('-timestamp')
-    
+    all_webs = WebCategory.objects.all()
     
     user = get_author(request.user)
     if user.rank.adding_images:
@@ -164,7 +169,7 @@ def images_view(request):
     
     
     context={
-        'images':images,
+        'images':images, 'all_webs':all_webs,
     }
     return render(request, 'images-panel.html', context)
 
@@ -189,7 +194,8 @@ def image_delete(request, slug):
 
 @login_required
 def add_file(request):
-    context={}
+    all_webs = WebCategory.objects.all()
+    context={'all_webs':all_webs,}
     
     user = get_author(request.user)
     if user.rank.create_files:
@@ -227,7 +233,7 @@ def send_form_ajax_file(request):
 @login_required
 def file_view(request):
     files = Files.objects.order_by('-timestamp')
-    
+    all_webs = WebCategory.objects.all()
     
     user = get_author(request.user)
     if user.rank.create_files:
@@ -236,7 +242,7 @@ def file_view(request):
         raise Http404
     
     context={
-        'files':files,
+        'files':files, 'all_webs':all_webs,
     }
     return render(request, 'file-panel.html', context)
 

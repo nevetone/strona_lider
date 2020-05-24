@@ -28,7 +28,7 @@
             </thead>
             <tbody>
                 <tr>{% for one in webs %}
-                    <td>{{ one.web_name }}</td>
+                    <td>{{ one.web_cat_name }}</td>
                     {% if one.author.username %}
                     <td><span class="text-warning">{{ one.author.username }}</span></td>
                     {% else %}

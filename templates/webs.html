@@ -3,15 +3,43 @@
 <div class="container-fluid content">
 {% include 'includes/navbar.html' %}
 <div class="content-text mt-5 pt-5">
+<div class="col-xl-8 col-lg-8 col-md-10 col-sm-12 col-xs-12 row m-0 p-0" style="position:relative; left:50%; transform: translateX(-50%);">
+<div class="col-sm-12">
+<h3 class="text-secondary">{{ web.web_name }}</h3>
+</div>
+<div class="col-sm-12">
+    {{ web.web_content|safe }}
+</div>
 
+{% if web.web_filles.all %}
+<div class="web-content">
+<table class="table table-lg">
+  <thead>
+    <tr>
+      <th scope="col">Nazwa Załącznika</th>
+      <th scope="col">Pobierz / Pokarz</th>
+      <th scope="col">Data Opublikowania</th>
+      <th scope="col">Waga Pliku</th>
+    </tr>
+  </thead>
+  <tbody>
 
+{% for file in web.web_filles.all %}
 
+    <tr>
+      <td class="text-secondary">{{ file.file_name }}</td>
+      <td style="text-align:center"><a class="text-danger text-decoration-none" href="{{ file.file.url }}"><i class="fas fa-file-download"></i></a></td>
+      <td style="text-align:center">{{ file.timestamp }}</td>
+      <td style="text-align:center">{{ file.filesize }}</td>
+    </tr>
 
-{{ web.web_name }}
+{% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
 
-
-
-
+</div>
 </div>
 {% include 'includes/footer.html' %}
 </div>

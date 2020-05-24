@@ -1,6 +1,6 @@
 {% extends 'extends/base.html' %}
 {% block content %}
-<div class="container-fluid content">
+<div class="container-fluid content gallery_images">
 {% include 'includes/navbar.html' %}
 
 <div class="show_image_tab ">
@@ -33,11 +33,15 @@
     </div>
 </div>
 
-<div class="col-sm-12 row pt-5 pl-5 mt-5 noselect">
-<div class="col-sm-12 m-0 p-0">
-<a href="{% url 'gallery' %}" class="btn btn-dark text-white"> Wróć do Galerii </a>
+<div class="col-sm-12 row mt-5 noselect bg-dark2 p-0 pt-3 ml-0 mr-0">
+<div class="col-sm-12 m-0 p-0 row">
+<div class="col-sm-3 mt-3 mb-3">
+<a href="{% url 'gallery' %}" class="btn btn-secondary form-control text-white"> Wróć do Galerii </a>
 </div>
-<h4> Galeria: <span class="text-danger">{{ gallery.gallery_name }}</span> (<span class="images_count">{{ iamges_count }}</span>)</h4>
+<div class="col-sm-9 mt-3 mb-3">
+<h4 class="text-white m-0 p-0"> Galeria: <span class="text-secondary">{{ gallery.gallery_name }}</span> (<span class="images_count">{{ iamges_count }}</span>)</h4>
+</div>
+</div>
 </div>
 
 <div class="noselect gallery-content col-lg-10 col-md-11 col-sm-12 col-xs-12 p-0 m-0 pt-2 row">
