@@ -11,8 +11,8 @@
                 
             <div class="col-sm-12 filter" style="display:none">
 
-                <form action="" method="GET" class="w-100 col-sm-12 mb-3">
-                    
+                <form action="" method="POST" class="w-100 col-sm-12 mb-3">
+                    {% csrf_token %}
 
                     <label for="title">Sortuj po słowach w tytule</label>
                     <input type="text" name="title" if="title" class="form-control" placeholder="Słowo">
@@ -70,6 +70,9 @@
             </div>
           </div>
           {% endfor %}
+          {% if message %}
+          <h3 class="w-100 text-secondary mt-3" style="text-align:center">{{ message }}</h3>
+          {% endif %}
           {% for news in queryset1 %}
         <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mt-1 mb-1 ">
             <div class="card promoting-card news_card">

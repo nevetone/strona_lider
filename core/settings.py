@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'news',
     'auth_user',
     'gallery',
+    'webs',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -139,7 +140,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/static_files/'),]
 
 
 TINYMCE_DEFAULT_CONFIG = {
-    'width' : "900",
+    'width' : "auto",
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',

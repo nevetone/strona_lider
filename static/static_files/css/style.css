@@ -545,9 +545,11 @@ code img{
 }
 
 #mceu_30{
+    position: relative;
     width: auto;
     max-width: 100%;
 }
+
 
 /* form */
 

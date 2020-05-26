@@ -42,51 +42,40 @@ def index(request):
     }
     return render(request, template, context)
 
+
+def get_cat(cat):
+    for category in Category.objects.all():
+        if category.title == cat:
+            return category
+
 def news(request):
     template = 'news.html'
     categ = Category.objects.all()
-    queryset1 = []
-    if request.method == "GET":
-        cat = request.GET.get('category')
-        title = request.GET.get('title')
+    queryset1 = News.objects.order_by('-timestamp')
+    
+    if request.method == "POST":
+        cat = request.POST.get('category')
+        title = request.POST.get('title')
         
-        if cat is None and cat == "" and title is None and author is None and overview is None:
-            queryset1 = News.objects.order_by('-timestamp')
+        if cat and title == "":
+            queryset1 = News.objects.filter(category=get_cat(cat))
+        elif title and cat == "":
+            queryset1 = News.objects.filter(title__icontains = title)
+        elif title and cat:
+            queryset1 = News.objects.filter(title__icontains = title).filter(category=get_cat(cat))
         else:
-            if cat is not None or cat != "":
-                qs = News.objects.order_by('-timestamp')
-                for item in qs:
-                    for x in item.category.all():
-                        if x.title == cat:
-                            queryset1.append(item)
-            else:
-                queryset1 = News.objects.order_by('-timestamp')
-            
-            
-            if title is not None or title != "":
-                pomocnicza = 0
-                qs = queryset1
-                if cat is None or cat == "":
-                    queryset1 = News.objects.filter(title__icontains = title)
-                else:
-                    for item in qs:
-                        if title.lower() in item.title.lower():
-                            pomocnicza = pomocnicza + 1
-                        else:
-                            del queryset1[pomocnicza]
-                            pomocnicza = pomocnicza + 1
-                        
-            
-            
-            else:
-                queryset1 = News.objects.order_by('-timestamp')
-                    
+            queryset1 = News.objects.order_by('-timestamp')
         
+    
+    if not queryset1:
+        message = "Brak wyników"
+    else:
+        message = None
     
     
     queryset2 = MainNews.objects.filter(featured=True)
     all_webs = WebCategory.objects.all()
-    context={'queryset1':queryset1, 'queryset2':queryset2,'all_webs':all_webs,'categ':categ,}
+    context={'queryset1':queryset1, 'queryset2':queryset2,'all_webs':all_webs,'categ':categ,'message':message}
     return render(request, template, context)
 
 def post(request, slug):
