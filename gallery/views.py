@@ -136,6 +136,9 @@ def add_image(request):
 @login_required
 def send_form_ajax(request):
 
+    user = get_author(request.user)
+
+
     if request.is_ajax and request.method == "POST":
         
         clicked = str(request.POST.get('current_clicked'))
@@ -260,3 +263,40 @@ def file_delete(request, slug):
     
     
     return redirect(reverse("panel-file"))
+
+
+@login_required
+def add_mult_image(request):
+    user = get_author(request.user)
+    if user.rank.adding_images:
+        pass
+    else:
+        raise Http404
+    
+    if request.is_ajax and request.method == "POST":
+        images_name = request.POST.get('images_name')
+        for f in request.FILES.getlist('images_mult'):
+            images = Pictures(picture_title = images_name, picture=f, author = user)
+            images.save()
+            
+    return JsonResponse({'error':'false'}, status=200)
+        
+    return redirect(reverse("add_image"))
+
+@login_required
+def add_mult_file(request):
+    user = get_author(request.user)
+    if user.rank.create_files:
+        pass
+    else:
+        raise Http404
+    
+    if request.is_ajax and request.method == "POST":
+        files_name = request.POST.get('files_name')
+        for f in request.FILES.getlist('files_mult'):
+            files = Files(file_name = files_name, file=f, author = user)
+            files.save()
+            
+    return JsonResponse({'error':'false'}, status=200)
+        
+    return redirect(reverse("add_file"))

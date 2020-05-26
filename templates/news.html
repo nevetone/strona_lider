@@ -6,7 +6,27 @@
 <div class="content-text" style="margin-top:150px;">
     <div class="col-12">
         <div class="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-xs-12 row news-box">
-            filtr
+                <h3 class="show_filter mr-2 bg-dark2 text-white" style="border-radius:50%; width:35px; text-align:center; cursor: pointer;"><i class="fas fa-chevron-down"></i></h3>
+                <h3 class="text-secondary"> Filtr Nowości </h3>
+                
+            <div class="col-sm-12 filter" style="display:none">
+
+                <form action="" method="GET" class="w-100 col-sm-12 mb-3">
+                    
+
+                    <label for="title">Sortuj po słowach w tytule</label>
+                    <input type="text" name="title" if="title" class="form-control" placeholder="Słowo">
+                    <label for="category">Wybierz Kategorię</label>
+                    <select name="category" id="category" class="form-control">
+                    <option value="">--------</option>
+                    {% for cat in categ %}
+                        <option value="{{ cat.title }}">{{ cat.title }}</option>
+                    {% endfor %}
+                    </select>
+
+                    <input class="btn btn-dark form-control" type="submit" value="Wyszukaj" />
+                </form>
+            </div>
         </div>
     </div>
     <div class="col-xl-8 col-lg-10 col-md-11 col-sm-12 col-xs-12 row news-box">
@@ -98,3 +118,35 @@
 
 
 {% endblock content %}
+
+{% block jquery %}
+<script>
+$(document).ready(function(){
+
+var hidden = true;
+
+$('.show_filter').click(function(){
+    if(hidden == true){
+        $('.filter').fadeIn();
+        hidden = false;
+        $('.fa-chevron-down').css('-webkit-transform','rotate(180deg)'); 
+        $('.fa-chevron-down').css('-moz-transform','rotate(180deg)');
+        $('.fa-chevron-down').css('transform','rotate(180deg)');
+    }else{
+        $('.filter').fadeOut();
+        hidden = true;
+        $('.fa-chevron-down').css('-webkit-transform','rotate(0deg)'); 
+        $('.fa-chevron-down').css('-moz-transform','rotate(0deg)');
+        $('.fa-chevron-down').css('transform','rotate(0deg)');
+    }
+});
+
+    
+
+
+
+});
+
+
+</script>
+{% endblock jquery %}

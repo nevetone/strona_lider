@@ -9,10 +9,12 @@
 <div class="col-sm-12 ml-0 pl-0 mb-3">
 <a href="{% url 'panel' %}" class="btn btn-dark ml-0" >Wróc do Panelu</a>
 </div>
-<h3 class="text-secondary"> Dodaj Pliki </h3>
 
-   
+<div class="col-sm-12 show_succ"></div>
 
+
+<div class="col-sm-12 get_hidden_on_succ" >
+<h3 class="text-secondary"> Dodaj pliki pojedyńczo </h3>
 <form method="POST" action="{% url 'add_file' %}" class="form_count">
 {% csrf_token %} 
 <label for="file_count"> Ile chcesz wgrać Plików </label>
@@ -21,7 +23,19 @@
 </form>
 
 
+<h3 class="text-secondary">Dodaj wiele plików o tej samej nazwie</h3>
+<form method="POST" action="{% url 'add_mult_file' %}" class="form_mult">
+{% csrf_token %} 
+<label for="files_name">Podaj nazwę dla wszystkich plików</label><br />
+<input id="files_name" name="files_name" type="text" class="form-control" />
+<label for="files_mult">Wybierz pliki</label>
+<input id="files_mult" name="files_mult" class="m-0 files_mult form-control-file" type="file" required multiple />
 
+<input type="submit" class="btn btn-group-sm btn-primary m-1" value="Wykonaj" />
+</form>
+
+
+</div>
 </div>
 </div>
 {% include "includes/footer.html" %}
@@ -54,7 +68,7 @@ $(document).ready(function(){
                             $('.form'+data.clicked).fadeOut(function(){
                                 this.remove();
                                 if($( ".md-form" ).length == 0){
-                                    $('.html_form').append(`
+                                    $('.show_succ').append(`
                                     <div class="loader-item complete col-sm-12 row">
                                         <p class="complete">Dodano Wszystkie</p>
                                         <div class="outer-circle">
@@ -105,7 +119,7 @@ $(document).ready(function(){
                     opacity: 1,
                 });
                 };
-                $('.form_count').css('display', 'none');
+                $('.get_hidden_on_succ').css('display', 'none');
             }
         });
 
@@ -119,7 +133,44 @@ $(document).ready(function(){
         return false;
     });
 
-    
+
+
+
+
+    $(".form_mult").submit(function(e) {
+        e.preventDefault();
+        var formData2  = new FormData(this);
+        $.ajax({
+            data: formData2,
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            success: function(data){
+                $('.get_hidden_on_succ').fadeOut(function(){
+                    this.remove();
+                        $('.show_succ').append(`
+                        <div class="loader-item complete col-sm-12 row">
+                            <p class="complete">Dodano Wszystkie</p>
+                            <div class="outer-circle">
+                            <div class="inner-circle"></div>
+                            <i class="icon fas fa-check"></i>
+                            </div>
+                        </div>
+                        `);
+                });
+            }, 
+            error: function(data){
+                
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        });
+        return false;
+    });
+
+
+
+
 
 });
 

@@ -3,8 +3,9 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from tinymce import HTMLField
 import os
+from django.utils import timezone
 
-# Create your models here.
+    
 User = get_user_model()
 
 
@@ -28,7 +29,7 @@ class News(models.Model):
     title = models.CharField(max_length=100)
     overview = models.CharField(max_length=400)
     content = HTMLField(null=True, blank=True)
-    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
     has_thumbnail = models.BooleanField(default=False)
     thumbnail = models.ImageField(null=True, blank=True)
@@ -87,7 +88,7 @@ class Gallery(models.Model):
     category = models.ManyToManyField("Category", blank=True)
     overview = models.CharField(max_length=1000, default="Nie posiada opisu")
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
-    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
     
     def get_absolute_url(self):
         return reverse("galeria_one", kwargs={"slug": self.gallery_name})
@@ -105,7 +106,7 @@ class Pictures(models.Model):
     picture_title = models.CharField(max_length=50)
     picture = models.ImageField()
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
-    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
     has_gallery = models.BooleanField(default=False)
     to_gallery = models.BooleanField(default=False)
     
@@ -121,7 +122,7 @@ class Webs(models.Model):
     pictures = models.ManyToManyField("Pictures", blank=True)
     web_filles = models.ManyToManyField("Files", blank=True)
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
-    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
     
     def get_absolute_url(self):
         return reverse("webs", kwargs={"slug": self.web_name})
@@ -138,7 +139,7 @@ class Webs(models.Model):
 class WebCategory(models.Model):
     web_cat_name = models.CharField(max_length=25, unique=True)
     webs = models.ManyToManyField("Webs")
-    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
     
     def get_absolute_url(self):
@@ -157,7 +158,7 @@ class Files(models.Model):
     file_name = models.CharField(max_length=50)
     file = models.FileField()
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
-    timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
     
     @property
     def filesize(self):

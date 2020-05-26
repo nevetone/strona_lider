@@ -45,13 +45,20 @@
                     <span class="badge badge-primary" style="background-color:{{ post.author.cat_color|safe }}; color:{{ post.author.cat_text_color|safe }};">{{ cat.title }}</span>
                 {% endfor %}
                 </h3>
+
+                    {% if post.has_gallery %}
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 float-left">
+                        <a class="btn btn-dark form-control" href="{% url 'galeria_one' slug=post.gallery.gallery_name %}"> Galeria </a>
+                    </div>
+                    {% endif %}
+
                     {% if post.author.username %}
                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 float-left"><p>Autor: <span class="text-danger">{{ post.author.username }}</span> | {{ post.timestamp }}  </p></div>
                     {% else %}
                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 float-left"><p>Autor: <span class="text-danger">{{ post.author.user.username }}</span> | {{ post.timestamp }}  </p></div>
                     {% endif %}
 
-                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 float-left pb-2 post-overwiew">
+                <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left pb-2 post-overwiew">
                     {{ post.overview|capfirst|safe }}
                 </div>
 

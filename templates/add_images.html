@@ -9,19 +9,34 @@
 <div class="col-sm-12 ml-0 pl-0 mb-3">
 <a href="{% url 'panel' %}" class="btn btn-dark ml-0" >Wróc do Panelu</a>
 </div>
-<h3 class="text-secondary"> Dodaj Zdjęcia </h3>
 
-   
 
+<div class="col-sm-12 show_succ"></div>
+
+
+<div class="col-sm-12 get_hidden_on_succ" >
+<h3 class="text-secondary"> Dodaj zdjęcia pojedyńczo</h3>
 <form method="POST" action="{% url 'add_image' %}" class="form_count">
 {% csrf_token %} 
 <label for="images_count"> Ile chcesz wgrać zdjęć </label>
 <input id="images_count" name="images_count" class="m-0 form-control"  type="number" min="1" max="100" required />
 <input type="submit" class="btn btn-group-sm btn-primary m-1" id="do_form" value="Wykonaj" />
 </form>
+<br />
+
+<h3 class="text-secondary">Dodaj wiele zdjęć o tej samej nazwie</h3>
+<form method="POST" action="{% url 'add_mult_image' %}" class="form_mult">
+{% csrf_token %} 
+<label for="images_name">Podaj nazwę dla wszystkich plików</label><br />
+<input id="images_name" name="images_name" type="text" class="form-control" />
+<label for="images_mult">Wybierz pdjęcia</label>
+<input id="images_mult" name="images_mult" class="m-0 images_mult form-control-file" type="file" accept="image/x-png,image/gif,image/jpeg" required multiple />
+
+<input type="submit" class="btn btn-group-sm btn-primary m-1" value="Wykonaj" />
+</form>
 
 
-
+</div>
 </div>
 </div>
 {% include "includes/footer.html" %}
@@ -54,7 +69,7 @@ $(document).ready(function(){
                             $('.form'+data.clicked).fadeOut(function(){
                                 this.remove();
                                 if($( ".md-form" ).length == 0){
-                                    $('.html_form').append(`
+                                    $('.show_succ').append(`
                                     <div class="loader-item complete col-sm-12 row">
                                         <p class="complete">Dodano Wszystkie</p>
                                         <div class="outer-circle">
@@ -105,7 +120,7 @@ $(document).ready(function(){
                     opacity: 1,
                 });
                 };
-                $('.form_count').css('display', 'none');
+                $('.get_hidden_on_succ').css('display', 'none');
             }
         });
 
@@ -119,7 +134,47 @@ $(document).ready(function(){
         return false;
     });
 
-    
+
+
+
+
+
+
+    $(".form_mult").submit(function(e) {
+        e.preventDefault();
+        var formData2  = new FormData(this);
+        $.ajax({
+            data: formData2,
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            success: function(data){
+                $('.get_hidden_on_succ').fadeOut(function(){
+                    this.remove();
+                        $('.show_succ').append(`
+                        <div class="loader-item complete col-sm-12 row">
+                            <p class="complete">Dodano Wszystkie</p>
+                            <div class="outer-circle">
+                            <div class="inner-circle"></div>
+                            <i class="icon fas fa-check"></i>
+                            </div>
+                        </div>
+                        `);
+                });
+            }, 
+            error: function(data){
+                
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        });
+        return false;
+    });
+
+
+
+
+
 
 });
 

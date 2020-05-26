@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import News, MainNews, Author, WebCategory
+from .models import News, MainNews, Author, WebCategory, Category
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import NewsForm, MainNewsForm
 from django.urls import reverse
@@ -44,10 +44,49 @@ def index(request):
 
 def news(request):
     template = 'news.html'
-    queryset1 = News.objects.order_by('-timestamp')
+    categ = Category.objects.all()
+    queryset1 = []
+    if request.method == "GET":
+        cat = request.GET.get('category')
+        title = request.GET.get('title')
+        
+        if cat is None and cat == "" and title is None and author is None and overview is None:
+            queryset1 = News.objects.order_by('-timestamp')
+        else:
+            if cat is not None or cat != "":
+                qs = News.objects.order_by('-timestamp')
+                for item in qs:
+                    for x in item.category.all():
+                        if x.title == cat:
+                            queryset1.append(item)
+            else:
+                queryset1 = News.objects.order_by('-timestamp')
+            
+            
+            if title is not None or title != "":
+                pomocnicza = 0
+                qs = queryset1
+                if cat is None or cat == "":
+                    queryset1 = News.objects.filter(title__icontains = title)
+                else:
+                    for item in qs:
+                        if title.lower() in item.title.lower():
+                            pomocnicza = pomocnicza + 1
+                        else:
+                            del queryset1[pomocnicza]
+                            pomocnicza = pomocnicza + 1
+                        
+            
+            
+            else:
+                queryset1 = News.objects.order_by('-timestamp')
+                    
+        
+    
+    
     queryset2 = MainNews.objects.filter(featured=True)
     all_webs = WebCategory.objects.all()
-    context={'queryset1':queryset1, 'queryset2':queryset2,'all_webs':all_webs,}
+    context={'queryset1':queryset1, 'queryset2':queryset2,'all_webs':all_webs,'categ':categ,}
     return render(request, template, context)
 
 def post(request, slug):
