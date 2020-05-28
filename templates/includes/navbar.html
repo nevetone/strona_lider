@@ -36,7 +36,7 @@
                             <a class="dropdown-item" href="https://uonetplus.vulcan.net.pl/lublin">Dziennik Elektroniczny</a>
                         {% elif web_cat.web_cat_name == "Informacje" %}
                             <a class="dropdown-item" href="{% url 'gallery' %}">Galeria</a>
-                            <a class="dropdown-item" href="#">Kontakt</a>
+                            <a class="dropdown-item" href="{% url 'contact' %}">Kontakt</a>
                             <a class="dropdown-item" href="#">Nasi Absolwenci</a>
                         {% endif %}
                     {% endif %}

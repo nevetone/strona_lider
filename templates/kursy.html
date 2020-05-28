@@ -1,0 +1,34 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+{% load static %}
+{% include 'includes/loading.html' %}
+<div class="container-fluid content">
+{% include "includes/navbar.html" %}
+    <div class="content-text d-flex justify-content-center">
+        <div class="col-xl-8 col-lg-9 col-md-10 col-sm-12 col-xs-12 mt-5 pt-5 mb-3">
+        <h3 class="text-secondary">Dodatkowe Kursy</h3>
+        <div class="w-100">
+            <img style="position:relative; width:100%;" src="http://www.pup.krasnik.pl/pup2013/uploads/logo-ps.jpg" />
+            <br />
+  <h3 class="text-secondary">Kwalifikacje zawodowe wykraczające podstawe programową</h3>
+  <h4><span class="text-danger">FRK.01.</span>- wykonywanie usług fryzjerskich</h4> 
+  <h4><span class="text-danger">FRK.04.</span> - wykonywanie zabiegów kosmetycznych</h4>   
+  <h4><span class="text-danger">HGT.09.</span> - Prowadzenie działalności turystycznej na obszarach wiejskich</h4> 
+  <h4><span class="text-danger">HGT.10.</span> - Prowadzenie gospodarstwa agroturystycznego</h4>   
+  <h4><span class="text-danger">HGT.01.</span> - Wykonywanie usług kelnerskich</h4> 
+  <h4><span class="text-danger">HGT.02.</span> - Przygotowywanie i wydawanie dań</h4> 
+  <h4><span class="text-danger">HGT.03.</span> - Obsługa gości w obiekcie świadczącym usługi hotelarskie</h4> 
+  <h4><span class="text-danger">HGT.06.</span> - Realizacja usug w recepcji</h4> 
+  <h4><span class="text-danger">HGT.07.</span> - Przygotowywanie imprez i usług turystycznych</h4> 
+  <h4><span class="text-danger">SPO.02.</span> - Świadczenie usług opiekuńczo-wspierających osobie staszej</h4> 
+  <h4><span class="text-danger">SPO.04.</span> - Świadczenie usług opiekuńczo-wspomagających rozwój dziecka</h4> 
+  <h4><span class="text-danger">INF.02.</span> - administrowanie i eksploatacja systemów komputerowych, urządzeń peryferyjnych i lokalnych sieci komputerowych</h4>
+  <h4><span class="text-danger">INF.03.</span> - tworzenie i administrowanie stronami i aplikacjami internetowymi oraz bazami danych</h4>
+            
+            
+        </div>
+        </div>
+    </div>
+{% include "includes/footer.html" %}
+</div>
+{% endblock content %}

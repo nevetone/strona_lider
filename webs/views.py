@@ -157,3 +157,30 @@ def web_cat_view(request):
     
     context = {'webs':webs, 'all_webs':all_webs,}
     return render(request, template, context)
+
+def contact(request):
+    template="kontakt.html"
+    all_webs = WebCategory.objects.all()
+    
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        title = request.POST.get('title')
+        message = request.POST.get('message')
+        send_coppy = request.POST.get('send_coppy')
+        
+
+    # zrobic wysylanie na email i zapisywanie
+    
+    
+    context ={'all_webs':all_webs,}
+    return render(request, template, context)
+
+def course(request):
+    template="kursy.html"
+    all_webs = WebCategory.objects.all()
+    
+    
+    
+    context ={'all_webs':all_webs,}
+    return render(request, template, context)

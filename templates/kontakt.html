@@ -1,0 +1,59 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+{% load static %}
+{% include 'includes/loading.html' %}
+<div class="container-fluid content">
+{% include "includes/navbar.html" %}
+    <div class="content-text d-flex justify-content-center">
+        <div class="col-xl-8 col-lg-9 col-md-10 col-sm-12 col-xs-12 mt-5 pt-5 mb-3">
+        
+        <h4 class="text-secondary">Kontakt</h4>
+        <div class="w-100 " style="text-align:center">
+
+        <div class="text-danger kontakt_cat"><i class="fas fa-map-marker-alt"></i>Adres</div>
+        <p> ul. Radziwiłłowska 5 - 20-080 Lublin</p>
+
+        <div class="text-danger kontakt_cat"><i class="fas fa-university"></i>Bank</div>
+        <p> Centrum Kształcenia „MENTOR” Sp. z o.o. konto w Spółdzielczym Banku Powiatowym w Piaskach o/Lublin <br />nr 48 8689 0007 7000 5509 2000 0010</p>
+
+        <div class="text-danger kontakt_cat"><i class="fas fa-phone-alt"></i>Telefon</div>
+        <p> 81 743 61 94 </p>
+        </div>
+        
+        <h4 class="text-secondary">Znajdź nas na mapie</h4>
+        <div class="w-100" style="text-align:center; height:500px">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9989.41723336547!2d22.5615073!3d51.2493855!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x11f39c0a518fc27b!2sSzko%C5%82y%20%22LIDER%22%20w%20Lublinie!5e0!3m2!1spl!2spl!4v1590696420281!5m2!1spl!2spl" style="positon:relative; width:100%; height:100%;" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+
+        <br />
+        <h4 class="text-secondary">Napisz do nas!</h4>
+        <div class="w-100">
+        <h5 class="text-secondary"> Pola z * są wymagane</h5>
+            <form action="" method="POST">
+            {% csrf_token %}
+
+            <label for="name" > Nazwa* </label>
+            <input type="text" id="name" name="name" class="form-control" required />
+
+            <label for="email" > Email* </label>
+            <input type="email" id="email" name="email" class="form-control" required />
+
+            <label for="title" > Temat* </label>
+            <input type="text" id="title" name="title" class="form-control" required />
+
+            <label for="message" > Wiadomość* </label>
+            <textarea name="message" rows="10" cols="30" id="message" class="form-control" required></textarea>
+
+            <label for="send_coppy" > Wyślij kopię dla siebie ( opcjonalnie ) </label>
+            <input class="form-check-inline" type="checkbox" id="send_coppy" name="send_coppy" />
+
+            <input type="submit" value="Wyślij" class="form-control bg-dark2 text-white" />
+
+            </form>
+        </div>
+
+        </div>
+    </div>
+{% include "includes/footer.html" %}
+</div>
+{% endblock content %}
