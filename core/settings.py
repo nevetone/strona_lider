@@ -23,9 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'mwpk!08p4j9gh57!tq)e%h(nkmf$x_d0(7v2#$xbc34-obnt(h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
-ALLOWED_HOSTS = ['192.168.1.28', '127.0.0.1', '79.191.12.74',]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 TEMPLATE_DIRS = [ 
     os.path.join(BASE_DIR, 'templates'),
@@ -54,6 +55,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -130,13 +132,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+
+
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/static_root/')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/static_files/'),]
-
-
 
 
 TINYMCE_DEFAULT_CONFIG = {

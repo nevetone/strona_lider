@@ -28,7 +28,7 @@
 <form method="POST" action="{% url 'add_mult_image' %}" class="form_mult">
 {% csrf_token %} 
 <label for="images_name">Podaj nazwę dla wszystkich plików</label><br />
-<input id="images_name" name="images_name" type="text" class="form-control" />
+<input id="images_name" name="images_name" type="text" class="form-control" required />
 <label for="images_mult">Wybierz pdjęcia</label>
 <input id="images_mult" name="images_mult" class="m-0 images_mult form-control-file" type="file" accept="image/x-png,image/gif,image/jpeg" required multiple />
 

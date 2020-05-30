@@ -197,3 +197,9 @@ def esport(request):
     
     context ={'all_webs':all_webs,}
     return render(request, template, context)
+
+
+
+def error_404_view(request, exception):
+    all_webs = WebCategory.objects.all()
+    return render(request,'404.html',{'all_webs':all_webs,})

@@ -6,6 +6,11 @@ from django.contrib.auth.decorators import login_required
 from news.models import Author
 from django.http import JsonResponse
 from django.http import Http404
+import os
+from django.core.files.base import ContentFile
+from django.utils import timezone
+from django.utils.crypto import get_random_string
+
 
 def get_author(user):
     qs = Author.objects.filter(user=user)
@@ -145,6 +150,30 @@ def send_form_ajax(request):
         image_name = request.POST.get('image'+clicked+'_name')
         image = request.FILES.get('image'+str(clicked))
         
+        
+        folder = 'wszystkie_pliki/zdjecia/'
+        BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        
+        try:
+            os.mkdir(os.path.join(BASE_PATH, folder))
+        except:
+            pass
+        
+        try:
+            os.mkdir(os.path.join(BASE_PATH, folder, image_name))
+        except:
+            pass
+        
+        name, extension = os.path.splitext(image.name)
+        currentYear = timezone.now().year
+        uploaded_filename = image_name+'_'+str(clicked)+'_'+str(currentYear)+'_'+get_random_string(length=10)+extension
+        full_filename = os.path.join(BASE_PATH, folder, image_name, uploaded_filename)
+        fout = open(full_filename, 'wb+')
+        file_content = ContentFile( image.read() )
+        for chunk in file_content.chunks():
+            fout.write(chunk)
+        fout.close()
+        
         save = Pictures(picture_title=image_name, picture=image, author=get_author(request.user))
         save.save()
         if image is not None and image_name is not None:
@@ -219,6 +248,30 @@ def send_form_ajax_file(request):
         file_name = request.POST.get('file'+clicked+'_name')
         file = request.FILES.get('file'+str(clicked))
         
+        folder = 'wszystkie_pliki/pliki/'
+        BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        
+        try:
+            os.mkdir(os.path.join(BASE_PATH, folder))
+        except:
+            pass
+        
+        try:
+            os.mkdir(os.path.join(BASE_PATH, folder, file_name))
+        except:
+            pass
+        
+        name, extension = os.path.splitext(file.name)
+        currentYear = timezone.now().year
+        uploaded_filename = file_name+'_'+str(clicked)+'_'+str(currentYear)+'_'+get_random_string(length=10)+extension
+        full_filename = os.path.join(BASE_PATH, folder, file_name, uploaded_filename)
+        fout = open(full_filename, 'wb+')
+        file_content = ContentFile( file.read() )
+        for chunk in file_content.chunks():
+            fout.write(chunk)
+        fout.close()
+        
+        
         save = Files(file_name=file_name, file=file, author=get_author(request.user))
         save.save()
         if file is not None and file_name is not None:
@@ -273,9 +326,34 @@ def add_mult_image(request):
     else:
         raise Http404
     
+    folder = 'wszystkie_pliki/zdjecia/'
+    BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    
+    try:
+        os.mkdir(os.path.join(BASE_PATH, folder))
+    except:
+        pass
+    
     if request.is_ajax and request.method == "POST":
         images_name = request.POST.get('images_name')
+        try:
+            os.mkdir(os.path.join(BASE_PATH, folder, images_name))
+        except:
+            pass
+        pomocnicza = 0
         for f in request.FILES.getlist('images_mult'):
+            
+            name, extension = os.path.splitext(f.name)
+            currentYear = timezone.now().year
+            uploaded_filename = images_name+'_'+str(pomocnicza)+'_'+str(currentYear)+'_'+get_random_string(length=10)+extension
+            full_filename = os.path.join(BASE_PATH, folder, images_name, uploaded_filename)
+            fout = open(full_filename, 'wb+')
+            file_content = ContentFile( f.read() )
+            for chunk in file_content.chunks():
+                fout.write(chunk)
+            fout.close()
+            pomocnicza = pomocnicza + 1
+ 
             images = Pictures(picture_title = images_name, picture=f, author = user)
             images.save()
             
@@ -291,9 +369,34 @@ def add_mult_file(request):
     else:
         raise Http404
     
+    folder = 'wszystkie_pliki/pliki/'
+    BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    
+    try:
+        os.mkdir(os.path.join(BASE_PATH, folder))
+    except:
+        pass
+    
     if request.is_ajax and request.method == "POST":
         files_name = request.POST.get('files_name')
+        try:
+            os.mkdir(os.path.join(BASE_PATH, folder, files_name))
+        except:
+            pass
+        pomocnicza = 0
         for f in request.FILES.getlist('files_mult'):
+            
+            name, extension = os.path.splitext(f.name)
+            currentYear = timezone.now().year
+            uploaded_filename = files_name+'_'+str(pomocnicza)+'_'+str(currentYear)+'_'+get_random_string(length=10)+extension
+            full_filename = os.path.join(BASE_PATH, folder, files_name, uploaded_filename)
+            fout = open(full_filename, 'wb+')
+            file_content = ContentFile( f.read() )
+            for chunk in file_content.chunks():
+                fout.write(chunk)
+            fout.close()
+            pomocnicza = pomocnicza + 1
+            
             files = Files(file_name = files_name, file=f, author = user)
             files.save()
             

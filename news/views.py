@@ -58,11 +58,11 @@ def news(request):
         title = request.POST.get('title')
         
         if cat and title == "":
-            queryset1 = News.objects.filter(category=get_cat(cat))
+            queryset1 = News.objects.filter(category=get_cat(cat)).order_by('-timestamp')
         elif title and cat == "":
-            queryset1 = News.objects.filter(title__icontains = title)
+            queryset1 = News.objects.filter(title__icontains = title).order_by('-timestamp')
         elif title and cat:
-            queryset1 = News.objects.filter(title__icontains = title).filter(category=get_cat(cat))
+            queryset1 = News.objects.filter(title__icontains = title).filter(category=get_cat(cat)).order_by('-timestamp')
         else:
             queryset1 = News.objects.order_by('-timestamp')
         

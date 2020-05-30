@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 from auth_user.views import user_create, change_tag_color, login_view, logout_view, user_view, user_gallery_view, change_username, user_news_view
 from gallery.views import add_mult_image, add_mult_file, gallery_view, gallery_create, gallery_delete, gallery_update, one_gallery, add_image, send_form_ajax, images_view, image_delete, add_file, send_form_ajax_file, file_view, file_delete
 from webs.views import esport, abso, course, contact, web_create, web_delete, web_edit, web_view, webs, webs_cat_create, webs_cat_edit,webs_cat_delete,web_cat_view
+from django.views.static import serve
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -78,19 +80,21 @@ urlpatterns = [
     
     path('galeria/', gallery_view, name="gallery"),
     
-    
-    
     path('galeria/<slug>/', one_gallery , name="galeria_one"),
     path('gallery/create/', gallery_create, name="galeria-create"),
     path('galeria/<slug>/delete/', gallery_delete, name="galeria-delete"),
     path('galeria/<slug>/update/', gallery_update, name="galeria-update"),
     
     path('panel/zmien_nazwe', change_username, name="change_username"),
-
+    
+    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 ]
 
+handler404 = 'webs.views.error_404_view'
 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    

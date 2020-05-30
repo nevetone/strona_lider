@@ -27,7 +27,7 @@
 <form method="POST" action="{% url 'add_mult_file' %}" class="form_mult">
 {% csrf_token %} 
 <label for="files_name">Podaj nazwę dla wszystkich plików</label><br />
-<input id="files_name" name="files_name" type="text" class="form-control" />
+<input id="files_name" name="files_name" type="text" class="form-control" required />
 <label for="files_mult">Wybierz pliki</label>
 <input id="files_mult" name="files_mult" class="m-0 files_mult form-control-file" type="file" required multiple />
 
