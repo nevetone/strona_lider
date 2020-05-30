@@ -1,0 +1,65 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+{% load static %}
+{% include 'includes/loading.html' %}
+<div class="container-fluid content">
+{% include "includes/navbar.html" %}
+    <div class="content-text d-flex justify-content-center bg-dark2">
+        <div class="col-xl-10 col-lg-10 col-md-11 col-sm-12 col-xs-12 m-0 mt-5 pt-5 mb-3">
+            <div class="w-100 col-sm-12">
+            <div class="w-100 gamepad co-sm-12">
+            <i class="fas fa-10x fa-gamepad"></i>
+            </div>
+
+            <div class="col-sm-12 w-100 align_center">
+            <h3 class="text-secondary">E-SPORT W TECHNIKUM "LIDER" w  Lublinie</h4>
+            </div>
+
+            <div class="col-sm-12 w-100">
+                <h4 class="text-white align_center">Jako pierwsza szkołą w regionie (a druga w Polsce) od 2016r prowadziny klasy esportowe jako dodatkowe zajęcia pozalekcyjne na profilu Technik Informatyk.</h4>
+                <h5 class="text-secondary mt-3">Obecnie mamy drużyny, które trenują gry:</h5>
+                <ul class="text-danger">
+                    <li>Counter-Strike: Global Offensive (CS GO)</li>
+                    <li>League of Legends (LOL)</li>
+                </ul>
+                <h5 class="text-secondary mt-3">Od przyszłego roku w planach mamy poszerzenie oferty dla naszych uczniów o grę</h5>
+                <ul class="text-danger">
+                    <li>FIFA</li>
+                </ul>
+
+                <h6 class="text-secondary mt-3">
+                Oczywiście kształcenie uczniów klasy informatycznej o specjalności „gry komputerowe" nie ogranicza się tylko do grania. Nasi uczniowie realizują normalny program nauczania technikum informatycznego.<br />
+                Szkoła posiada 4 klimatyzowane pracownie komputerowe (łącznie 70 komputerów). <br />
+                Nasi esportowcy mają do dyspozycji pracownią informatyczną z szybkim łączem internetowym oraz 20 komputerów, których parametry umożliwiają płynną grę w aktualne gry komputerowe. Nie zabrakło oczywiście przystosowanych do grania podkładek, myszek, klawiatur oraz wygodnych foteli.
+                </h6>
+            </div>
+
+            <div class="col-sm-12 w-100 mt-3 row m-0 p-0">
+            <h4 class="text-secondary col-12">Kilka zdjęć ( rok 2017 )</h4>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 esport-image mb-3">
+                    <img src="{% static 'images/esport/20170306_084445.jpg' %}" />
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 esport-image mb-3">
+                    <img src="{% static 'images/esport/20170306_084510.jpg' %}" />
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 esport-image mb-3">
+                    <img src="{% static 'images/esport/20170306_084515.jpg' %}" />
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 esport-image mb-3">
+                    <img src="{% static 'images/esport/20170306_084524.jpg' %}" />
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 esport-image mb-3">
+                    <img src="{% static 'images/esport/20170306_084537.jpg' %}" />
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 esport-image mb-3">
+                    <img src="{% static 'images/esport/20170306_084600.jpg' %}" />
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+{% include "includes/footer.html" %}
+</div>
+{% endblock content %}
+

@@ -14,6 +14,10 @@ body{
     position: relative;
 }
 
+.align_center{
+    text-align: center;
+}
+
 /* loading screen */
 .loading_screen{
     height: 100vh;
@@ -913,7 +917,7 @@ form .btn{
     position: relative;
     width: auto;
     height: auto;
-    max-height: 800px;
+    max-height: 700px;
     max-width: 100%;
     padding-bottom: 20px;
     padding: 0;
@@ -1164,3 +1168,73 @@ form .btn{
 
 
 /* koniec kotnakt */
+
+/* abso */
+
+
+
+
+.abso-image img{
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    border: 2px solid black;
+}
+
+.abso-image h4{
+    position: relative;
+    width: 100%;
+    height: 85%;
+    z-index: 1;
+    border: 2px solid black;
+}
+
+.abso-text{
+    position: relative;
+    bottom: 10%;
+    left: 0;
+    height: 10%;
+    width: 100%;
+    background-color:rgba(0,0,0,0.75);
+    z-index: 2;
+    text-align: center;
+}
+
+
+
+.abso-new-text{
+    position: relative;
+    bottom: 20%;
+    left: 0;
+    height: 20%;
+    width: 100%;
+    background-color:rgba(0,0,0,0.75);
+    z-index: 2;
+    text-align: center;
+}
+
+/* koniec abso */
+
+
+/* esport */
+
+.gamepad{
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 30%;
+    color: #26272b;
+    font-size:auto;
+    line-height: 0;
+}
+
+.fa-gamepad{
+    filter: drop-shadow(0px 4px 5px #0a0a0a);
+}
+
+.esport-image img{
+    position: relative;
+    width: 100%;
+}
+
+/* koniec esport */

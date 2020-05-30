@@ -179,8 +179,21 @@ def contact(request):
 def course(request):
     template="kursy.html"
     all_webs = WebCategory.objects.all()
+    context ={'all_webs':all_webs,}
+    return render(request, template, context)
+
+
+def abso(request):
+    template="abso.html"
+    all_webs = WebCategory.objects.all()
     
-    
+    context ={'all_webs':all_webs,}
+    return render(request, template, context)
+
+
+def esport(request):
+    template="esport.html"
+    all_webs = WebCategory.objects.all()
     
     context ={'all_webs':all_webs,}
     return render(request, template, context)

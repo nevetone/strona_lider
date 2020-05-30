@@ -37,7 +37,7 @@
                         {% elif web_cat.web_cat_name == "Informacje" %}
                             <a class="dropdown-item" href="{% url 'gallery' %}">Galeria</a>
                             <a class="dropdown-item" href="{% url 'contact' %}">Kontakt</a>
-                            <a class="dropdown-item" href="#">Nasi Absolwenci</a>
+                            <a class="dropdown-item" href="{% url 'abso' %}">Nasi Absolwenci</a>
                         {% endif %}
                     {% endif %}
                     <a class="dropdown-item" href="{{ web.get_absolute_url }}">{{ web.web_name }}</a>

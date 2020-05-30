@@ -1,0 +1,48 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+{% load static %}
+{% include 'includes/loading.html' %}
+<div class="container-fluid content">
+{% include "includes/navbar.html" %}
+    <div class="content-text d-flex justify-content-center">
+        <div class="col-xl-8 col-lg-9 col-md-10 col-sm-12 col-xs-12 m-0 mt-5 pt-5 mb-3">
+        <h3 class="text-secondary">Nasi uczniowie którzy osiągneli sukces</h3>
+        <div class="w-100 col-sm-12 row">
+
+            <div class="col-lg-4 col-xl-3 col-md-4 col-sm-6 col-xs-12 mt-3 abso-image">
+                <img src="{% static 'images/abso/PlatiniumHD.jpg' %}" alt="PlatiniumHD" onmouseover="this.src='{% static 'images/abso/PlatinumHDdpi.png' %}';" onmouseout="this.src='{% static 'images/abso/PlatiniumHD.jpg' %}';"  />
+                <p class="abso-text text-white">Edyta Szymańska</p>
+            </div>
+
+            <div class="col-lg-4 col-xl-3 col-md-4 col-sm-6 col-xs-12 mt-3 abso-image">
+                <img src="{% static 'images/abso/KoziolW.jpg' %}" onmouseover="this.src='{% static 'images/abso/uWioli.png' %}';" onmouseout="this.src='{% static 'images/abso/KoziolW.jpg' %}';"  />
+                <p class="abso-text text-white">Wioletta Kozioł</p>
+            </div>
+
+            <div class="col-lg-4 col-xl-3 col-md-4 col-sm-6 col-xs-12 mt-3 abso-image">
+                <img src="{% static 'images/abso/BogutaSz.jpg' %}" onmouseover="this.src='{% static 'images/abso/Cukrownia.png' %}';" onmouseout="this.src='{% static 'images/abso/BogutaSz.jpg' %}';"  />
+                <p class="abso-text text-white">Szymon Boguta</p>
+            </div>
+
+            <div class="col-lg-4 col-xl-3 col-md-4 col-sm-6 col-xs-12 mt-3 abso-image">
+                <img src="{% static 'images/abso/PyrakD.jpg' %}" onmouseover="this.src='{% static 'images/abso/Zwyciezca_konkursu_kelnerskiego.png' %}';" onmouseout="this.src='{% static 'images/abso/PyrakD.jpg' %}';"  />
+                <p class="abso-text text-white">Dawid Pyrak</p>
+            </div>
+
+            <div class="col-lg-4 col-xl-3 col-md-4 col-sm-6 col-xs-12 mt-3 abso-image">
+                <img src="{% static 'images/abso/TrukW.jpg' %}" onmouseover="this.src='{% static 'images/abso/okrasa.jpg' %}';" onmouseout="this.src='{% static 'images/abso/TrukW.jpg' %}';"  />
+                <p class="abso-text text-white">Wojciech Truk</p>
+            </div>
+
+            <div class="col-lg-4 col-xl-3 col-md-4 col-sm-6 col-xs-12 mt-3 abso-image">
+                <img src="{% static 'images/abso/black.png' %}" />
+                <p class="abso-new-text text-white">To miejsce czeka na Ciebie!</p>
+            </div>
+
+        </div>
+        </div>
+    </div>
+{% include "includes/footer.html" %}
+</div>
+{% endblock content %}
+
