@@ -26,8 +26,8 @@ class Category(models.Model):
         return self.title
 
 class News(models.Model):
-    title = models.CharField(max_length=100)
-    overview = models.CharField(max_length=400)
+    title = models.CharField(max_length=150)
+    overview = models.CharField(max_length=500)
     content = HTMLField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
@@ -35,7 +35,7 @@ class News(models.Model):
     thumbnail = models.ImageField(null=True, blank=True)
     category = models.ManyToManyField("Category")
     has_own_web = models.BooleanField(default=False)
-    web_name = models.CharField(max_length=50, unique=True)
+    web_name = models.CharField(max_length=100, unique=True)
     has_gallery = models.BooleanField(default=False)
     gallery = models.ForeignKey("Gallery", on_delete=models.SET_NULL, null=True, blank=True)
     
@@ -58,8 +58,8 @@ class News(models.Model):
 
     
 class MainNews(models.Model):
-    title = models.CharField(max_length=100)
-    overview = models.CharField(max_length=1000)
+    title = models.CharField(max_length=200)
+    overview = models.TextField(max_length=2000)
     content = HTMLField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now=True, auto_now_add=False)
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
@@ -67,7 +67,7 @@ class MainNews(models.Model):
     thumbnail = models.ImageField(null=True, blank=True)
     category = models.ManyToManyField("Category")
     has_own_web = models.BooleanField(default=False)
-    web_name = models.CharField(max_length=50, blank=True )
+    web_name = models.CharField(max_length=100, blank=True )
     featured = models.BooleanField(default=False, null=True, blank=True)
     has_gallery = models.BooleanField(default=False)
     gallery = models.ForeignKey("Gallery", on_delete=models.SET_NULL, null=True, blank=True)
@@ -107,6 +107,7 @@ class Pictures(models.Model):
     picture = models.ImageField()
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
+    images_in = models.TextField(null=True, blank=True)
     has_gallery = models.BooleanField(default=False)
     to_gallery = models.BooleanField(default=False)
     

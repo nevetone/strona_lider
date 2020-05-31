@@ -13,7 +13,7 @@
         <h4> {{ title }} </h4>
         <h5 class="text-secondary"> Pola z * są wymagane, a bez opcjonalne </h5>
         {{ form.media }}
-        <form method="POST" action="." enctype="multipart/form-data">
+        <form method="POST" action="." enctype="multipart/form-data" class="form">
                 {% csrf_token %}
                 {{ form|crispy }}
             <button type="submit" class="btn btn-dark btn-block">Zapisz</button>
@@ -29,3 +29,38 @@
     {% include "includes/footer.html" %}
 </div>
 {% endblock content %}
+
+{% block jquery %}
+<script>
+
+$(document).ready(function(){
+    var href = location.href;
+    var last = href.match(/([^\/]*)\/*$/)[1];
+    if(last != 'update'){
+        $('#id_has_thumbnail').click(function(){
+            value = $('#id_has_thumbnail').is(':checked');
+            if( value == true){
+                $("#id_thumbnail").prop('required',true);
+            }else{
+                $("#id_thumbnail").prop('required',false);
+            };
+        });
+
+        value = $('#id_has_thumbnail').is(':checked');
+        if( value == true){
+            $("#id_thumbnail").prop('required',true);
+        }else{
+            $("#id_thumbnail").prop('required',false);
+        };
+    };
+        $("#id_title").keyup(function(e){
+        var val = $(this).val();
+        val = val.replace(/[^\w]+/g, "");
+        $("#id_web_name").val(val);
+        });
+
+});
+
+
+</script>
+{% endblock jquery %}

@@ -12,8 +12,8 @@ class TinyMCEWidget(TinyMCE):
 class NewsForm(forms.ModelForm):
 
     content = forms.CharField(widget=TinyMCE(attrs={'cols': 30, 'rows': 10}), required=False, label="Text na podstronie")
-    title = forms.CharField(required = True, label='Tytuł')
-    overview = forms.CharField(required = True, label='Wiadomość')
+    title = forms.CharField(required = True, label='Tytuł ( Nie używać "/" w tekscie )')
+    overview = forms.CharField(required = True, label='Wiadomość',widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
     has_thumbnail = forms.BooleanField(required = False, label='Czy posiada zdjęcie główne')
     thumbnail = forms.ImageField(required = False, label='Zdjęcie główne ( jeżeli posiada zdjęcie )')
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
@@ -30,8 +30,8 @@ class NewsForm(forms.ModelForm):
 
 class MainNewsForm(forms.ModelForm):
     content = forms.CharField(widget=TinyMCE(attrs={'cols': 30, 'rows': 10}), required=False, label="Text na podstronie")
-    title = forms.CharField(required = True, label='Tytuł')
-    overview = forms.CharField(required = True, label='Wiadomość')
+    title = forms.CharField(required = True, label='Tytuł ( Nie używać "/" w tekscie )')
+    overview = forms.CharField(required = True, label='Wiadomość', widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
     has_thumbnail = forms.BooleanField(required = False, label='Czy posiada zdjęcie główne')
     thumbnail = forms.ImageField(required = False, label='Zdjęcie główne ( jeżeli posiada zdjęcie )')
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
@@ -48,18 +48,29 @@ class MainNewsForm(forms.ModelForm):
 
 
 class GalleryForm(forms.ModelForm):
-    gallery_name = forms.CharField(required = True, label='Nazwa Galerii')
+    gallery_name = forms.CharField(required = True, label='Nazwa Galerii ( Nie używać "/" w tekscie )')
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
-    pictures = forms.ModelMultipleChoiceField(queryset=Pictures.objects.order_by('-timestamp'), required = True, label='Wybierz Zdjęcia ( z L-Shift / L-Ctrl wybierasz kilka )')
+    pictures = forms.ModelMultipleChoiceField(queryset=Pictures.objects.filter(has_gallery = False).order_by('-timestamp'), required = True, label='Wybierz Zdjęcia ( z L-Shift / L-Ctrl wybierasz kilka ) nie posiadające galerii')
+    #pictures_in = forms.ModelMultipleChoiceField(queryset=Pictures.objects.filter(images_in = gallery_name_f()).order_by('-timestamp'), required = False, label='Obecne Zdjęcia w Galerii / zaznacz aby usunać ( z L-Shift / L-Ctrl wybierasz kilka )')
     overview = forms.CharField(required = True, label='Opis Galerii')
     
     class Meta:
         model = Gallery
         fields = ('gallery_name','overview','pictures','category')
-        
-        
+
+
+
+class EditGalleryForm(forms.ModelForm):
+    gallery_name = forms.CharField(required = True, label='Nazwa Galerii ( Nie używać "/" w tekscie )')
+    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required = True, label='Wybierz Kategorię ( z L-Shift / L-Ctrl wybierasz kilka )')
+    overview = forms.CharField(required = True, label='Opis Galerii')
+    
+    class Meta:
+        model = Gallery
+        fields = ('gallery_name','overview','category')
+
 class ImageForm(forms.ModelForm):
-    picture_title = forms.CharField(label='Nazwa Zdjęcia')
+    picture_title = forms.CharField(label='Nazwa Zdjęcia ( Nie używać "/" w tekscie )')
     picture = forms.ImageField(label='Zdjęcie') 
     to_gallery = forms.BooleanField(label='Czy będzie w Galerii')  
     class Meta:

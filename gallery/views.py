@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from news.models import Gallery, Pictures, Files, WebCategory
 from django.urls import reverse
-from news.forms import GalleryForm, ImagesCount
+from news.forms import GalleryForm, ImagesCount, EditGalleryForm
 from django.contrib.auth.decorators import login_required
 from news.models import Author
 from django.http import JsonResponse
@@ -62,6 +62,7 @@ def gallery_create(request):
             gallery = Gallery.objects.get(gallery_name = form.instance.gallery_name )
             for imgs in gallery.pictures.all():
                 imgs.has_gallery = True
+                imgs.images_in = form.instance.gallery_name
                 imgs.save()
                 
             
@@ -79,25 +80,34 @@ def gallery_create(request):
     return render(request, "news_create.html", context)
 
 
+    
+
 @login_required
 def gallery_update(request, slug):
-    all_webs = WebCategory.objects.all()
-    gallery = get_object_or_404(Gallery, gallery_name=slug)
-    form = GalleryForm(request.POST or None,request.FILES or None,instance=gallery)
-    title = "Edytuj Galerię"
-    if request.method == "POST":
-        if form.is_valid():
-            form.instance.author = get_author(request.user)
-            form.save()
-            return redirect(reverse("galeria", kwargs={
-                'slug': form.instance.gallery_name
-            }))
-            
     user = get_author(request.user)
     if user.rank.create_gallery:
         pass
     else:
         raise Http404
+    all_webs = WebCategory.objects.all()
+    gallery = get_object_or_404(Gallery, gallery_name=slug)
+    form = EditGalleryForm(request.POST or None,request.FILES or None,instance=gallery)
+    title = "Edytuj Galerię"
+    if request.method == "POST":
+        if form.is_valid():
+            form.instance.author = get_author(request.user)
+            gallery = Gallery.objects.get(gallery_name = form.instance.gallery_name )
+            gallery_images = gallery.pictures.all()
+            form.save()
+            for imgs in gallery.pictures.all():
+                imgs.has_gallery = True
+                imgs.images_in = form.instance.gallery_name
+                imgs.save()
+                
+            return redirect(reverse("galeria_one", kwargs={
+                'slug': form.instance.gallery_name
+            }))
+            
     
     context = {
         'form':form, 'title':title, 'all_webs':all_webs,
@@ -107,17 +117,20 @@ def gallery_update(request, slug):
 
 @login_required
 def gallery_delete(request, slug):
-    gallery = get_object_or_404(Gallery, gallery_name=slug)
-    gallery.delete()
-    
-            
     user = get_author(request.user)
     if user.rank.create_gallery:
         pass
     else:
         raise Http404
     
-    return redirect(reverse("galeria-delete"))
+    gallery = get_object_or_404(Gallery, gallery_name=slug)
+    for x in gallery.pictures.all():
+        x.images_in = ""
+        x.has_gallery = False
+        x.save()
+    gallery.delete()
+    
+    return redirect(reverse("panel-gallery"))
 
 
 
@@ -151,7 +164,7 @@ def send_form_ajax(request):
         image = request.FILES.get('image'+str(clicked))
         
         
-        folder = 'wszystkie_pliki/zdjecia/'
+        folder = 'wszystkie_pliki/zdjecia/'+str(timezone.now().year)+'/'
         BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         
         try:
@@ -248,7 +261,7 @@ def send_form_ajax_file(request):
         file_name = request.POST.get('file'+clicked+'_name')
         file = request.FILES.get('file'+str(clicked))
         
-        folder = 'wszystkie_pliki/pliki/'
+        folder = 'wszystkie_pliki/pliki/'+str(timezone.now().year)+'/'
         BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         
         try:
@@ -264,7 +277,7 @@ def send_form_ajax_file(request):
         name, extension = os.path.splitext(file.name)
         currentYear = timezone.now().year
         uploaded_filename = file_name+'_'+str(clicked)+'_'+str(currentYear)+'_'+get_random_string(length=10)+extension
-        full_filename = os.path.join(BASE_PATH, folder, file_name, uploaded_filename)
+        full_filename = os.path.join(BASE_PATH, folder ,file_name, uploaded_filename)
         fout = open(full_filename, 'wb+')
         file_content = ContentFile( file.read() )
         for chunk in file_content.chunks():
@@ -326,7 +339,7 @@ def add_mult_image(request):
     else:
         raise Http404
     
-    folder = 'wszystkie_pliki/zdjecia/'
+    folder = 'wszystkie_pliki/zdjecia/'+str(timezone.now().year)+'/'
     BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     
     try:
@@ -369,7 +382,7 @@ def add_mult_file(request):
     else:
         raise Http404
     
-    folder = 'wszystkie_pliki/pliki/'
+    folder = 'wszystkie_pliki/pliki/'+str(timezone.now().year)+'/'
     BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     
     try:
