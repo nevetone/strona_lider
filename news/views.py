@@ -138,8 +138,22 @@ def post_create(request):
 
 @login_required
 def post_update(request, slug):
+    user = get_author(request.user)
+    
+    if user.rank.create_new:
+        pass
+    else:
+        raise Http404
     all_webs = WebCategory.objects.all()
     post = get_object_or_404(News, web_name=slug)
+    
+    
+    if post.author.user != request.user:
+        if user.rank.create_user == True:
+            pass
+        else:
+            raise Http404
+    
     form = NewsForm(request.POST or None,request.FILES or None,instance=post)
     title = "Edytuj Post"
     if request.method == "POST":
@@ -150,11 +164,7 @@ def post_update(request, slug):
                 'slug': form.instance.web_name
             }))
             
-    user = get_author(request.user)
-    if user.rank.create_new:
-        pass
-    else:
-        raise Http404
+
     
     context = {
         'form':form, 'title':title,'all_webs':all_webs,
@@ -163,38 +173,53 @@ def post_update(request, slug):
 
 @login_required
 def post_delete(request, slug):
-    post = get_object_or_404(News, web_name=slug)
-    post.delete()
-    
-            
     user = get_author(request.user)
     if user.rank.create_new:
         pass
     else:
         raise Http404
+    
+    post = get_object_or_404(News, web_name=slug)
+    if post.author.user != request.user:
+        if user.rank.create_user == True:
+            post.delete()
+            return redirect(reverse("panel-news"))
+        raise Http404
+    else:
+        post.delete()
+
+
     
     
     return redirect(reverse("panel-news"))
 
 @login_required
 def post_freez(request, slug):
+    user = get_author(request.user)
+    if user.rank.create_new and user.rank.create_user == True:
+        pass
+    else:
+        raise Http404
+    
     post = get_object_or_404(MainNews, web_name=slug)
     post.featured = False
     post.has_own_web = False
     post.save()
     
             
-    user = get_author(request.user)
-    if user.rank.create_new:
-        pass
-    else:
-        raise Http404
+
     
     
     return redirect(reverse("panel"))
 
 @login_required
 def post_main_update(request, slug):
+    user = get_author(request.user)
+    if user.rank.create_new and user.rank.create_user == True:
+        pass
+    else:
+        raise Http404
+    
     all_webs = WebCategory.objects.all()
     post2 = get_object_or_404(MainNews, web_name=slug)
     form2 = MainNewsForm(request.POST or None,request.FILES or None,instance=post2)
@@ -210,11 +235,7 @@ def post_main_update(request, slug):
                 'slug': form2.instance.web_name
             }))
             
-    user = get_author(request.user)
-    if user.rank.create_new:
-        pass
-    else:
-        raise Http404
+
     
     context = {
         'form':form2, 'title':title, 'all_webs':all_webs,
