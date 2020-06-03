@@ -55,12 +55,13 @@
                 <th scope="col">Nazwa</th>
                 <th scope="col">Autor</th>
                 <th scope="col">Data</th>
-                <th scope="col">Galeria</th>
+                <th scope="col" class="gallery-th">Galeria</th>
                 <th scope="col">Zarządzanie</th>
             </tr>
             </thead>
             <tbody>
-                <tr>{% for one in images %}
+              {% for one in images %}
+                  <tr class="{{ one.id }}">
                     <td>{{ one.picture_title }}</td>
                     {% if one.author.username %}
                     <td><span class="text-warning">{{ one.author.username }}</span></td>
@@ -68,12 +69,16 @@
                     <td><span class="text-warning">{{ one.author.user.username }}</span></td>
                     {% endif %}
                     <td>{{ one.timestamp }}</td>
-                    <td class="align_center">{% if one.has_gallery %}<span class="text-success"><i class="fas fa-check-square"></i></span>{% else %}<span class="text-danger"><i class="far fa-times-circle"></i></span>{% endif %}</td>
+                    <td class="align_center gallery-td">{% if one.has_gallery %}<span class="text-success"><i class="fas fa-check-square"></i></span>{% else %}<span class="text-danger"><i class="far fa-times-circle"></i></span>{% endif %}</td>
                     <td>
                         <button type="button" id="{{ one.picture_title }}" name="{{ one.picture.url }}" class="name_{{ one.picture_title }} btn btn-primary form-control get_name" data-toggle="modal" data-target="#exampleModal">
                         Pokarz Link
                         </button>
-                        <a class="btn btn-danger btn-block" href="{% url 'image_delete' slug=one.picture %}">Usuń</a>
+                        
+                        <form class="del_button" method="POST" action="{% url 'image_delete' slug=one.picture %}">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-danger btn-block mt-0" value="Usuń" name="{{ one.picture_title }}" />
+                        </form>                   
                     </td>
                 </tr>{% endfor %}
             </tbody>
@@ -97,9 +102,11 @@
         </button>
       </div>
       <div class="modal-body">
-        
+        <p id="coppy_data"></p>
       </div>
       <div class="modal-footer">
+        <p id="coppy_data_success" class="text-success"></p>
+        <button type="button" class="btn btn-primary float-left" id="coppy">Kopiuj</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
       </div>
     </div>
@@ -117,9 +124,85 @@ $(document).on('click','.get_name',function(){
     var id = $(this).attr('id'); 
     var url = $(this).attr('name');
     $('.image_name').text(id);
-    $('.modal-body').text(window.location.hostname+url)
+    $('#coppy_data').text(window.location.hostname+url)
 });
 
+
+
+$('.del_button').submit(function(e) {
+    $.ajax({
+        data: $(this).serialize(),
+        type: $(this).attr('method'),
+        url: $(this).attr('action'),
+        success: function(data){
+          $('.'+data.image).fadeOut(function(){
+            $('.'+data.image).remove();
+          });
+        },
+    });
+    e.preventDefault();
+    return false;
+});
+
+
+
+
+var win = $(this);
+if (win.width() <= 820) { 
+  $(".gallery-td").each(function() {
+      $(this).hide();
+  });
+  $(".gallery-th").each(function() {
+      $(this).hide();
+  });
+  };
+if (win.width() >= 820) {
+  $(".gallery-td").each(function() {
+      $(this).show();
+  });
+  $(".gallery-th").each(function() {
+      $(this).show();
+  });
+};
+
+
+$(window).on('resize', function(){
+      var win = $(this);
+      if (win.width() <= 820) { 
+        $(".gallery-td").each(function() {
+            $(this).hide();
+        });
+        $(".gallery-th").each(function() {
+            $(this).hide();
+        });
+       };
+      if (win.width() >= 820) {
+        $(".gallery-td").each(function() {
+            $(this).show();
+        });
+        $(".gallery-th").each(function() {
+            $(this).show();
+        });
+       };
+});
+
+document.getElementById('coppy').addEventListener('click', function(){
+    var textarea = document.createElement('textarea');
+    textarea.textContent = $('#coppy_data').text();
+    document.body.appendChild(textarea);
+    var selection = document.getSelection();
+    var range = document.createRange();
+    range.selectNode(textarea);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand('copy')
+    selection.removeAllRanges();
+    document.body.removeChild(textarea);
+  
+$($('#coppy_data_success').text('Zapisano!')).fadeIn("fast", function() {
+    $(this).delay(1000).fadeOut("slow");
+});
+})
 
 
 });

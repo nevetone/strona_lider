@@ -58,7 +58,8 @@
             </tr>
             </thead>
             <tbody>
-                <tr>{% for one in files %}
+                {% for one in files %}
+                  <tr class="{{ one.id }}">
                     <td>{{ one.file_name }}</td>
                     {% if one.author.username %}
                     <td><span class="text-warning">{{ one.author.username }}</span></td>
@@ -70,7 +71,10 @@
                         <button type="button" id="{{ one.file_name }}" name="{{ one.file.url }}" class="name_{{ one.file_name }} btn btn-primary form-control get_name" data-toggle="modal" data-target="#exampleModal">
                         Pokarz Link
                         </button>
-                        <a class="btn btn-danger btn-block" href="{% url 'file_delete' slug=one.file %}">Usuń</a>
+                        <form class="del_button" method="POST" action="{% url 'file_delete' slug=one.file %}">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-danger btn-block mt-0" value="Usuń" name="{{ one.file_name }}" />
+                        </form>   
                     </td>
                 </tr>{% endfor %}
             </tbody>
@@ -121,6 +125,21 @@ $(document).on('click','.get_name',function(){
 });
 
 
+
+$('.del_button').submit(function(e) {
+    $.ajax({
+        data: $(this).serialize(),
+        type: $(this).attr('method'),
+        url: $(this).attr('action'),
+        success: function(data){
+          $('.'+data.file).fadeOut(function(){
+            $('.'+data.file).remove();
+          });
+        },
+    });
+    e.preventDefault();
+    return false;
+});
 
 
 

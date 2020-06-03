@@ -265,14 +265,19 @@ def image_delete(request, slug):
     else:
         raise Http404
     images = get_object_or_404(Pictures, picture=slug)
+    image_to_del = get_object_or_404(Pictures, picture=slug)
     
     if images.author.user != request.user:
         if user.rank.create_user == True:
-            images.delete()
+            pass
         else:
             raise Http404
     else:
+        pass
+
+    if request.is_ajax and request.method == "POST":
         images.delete()
+        return JsonResponse({'image':image_to_del.id}, status=200)
     
     return redirect(reverse("panel-images"))
 
@@ -400,14 +405,19 @@ def file_delete(request, slug):
     else:
         raise Http404
     files = get_object_or_404(Files, file=slug)
+    files_to_del = get_object_or_404(Files, file=slug)
     
     if files.author.user != request.user:
         if user.rank.create_user == True:
-            files.delete()
+            pass
         else:
             raise Http404
     else:
+        pass
+    
+    if request.is_ajax and request.method == "POST":
         files.delete()
+    return JsonResponse({'file':files_to_del.id}, status=200)
     
     return redirect(reverse("panel-file"))
 

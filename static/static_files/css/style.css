@@ -672,13 +672,17 @@ form .btn{
 }
 
 .panel-tab{
-    font-size:0.6rem;
+    font-size:0.5rem;
 }
 
 @media(min-width:800px){
     .panel-tab{
         font-size: 1rem;
     }
+}
+
+.get_name{
+    overflow: hidden;
 }
 
 /* koniec user panel */
