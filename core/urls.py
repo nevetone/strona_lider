@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from auth_user.views import user_create, change_tag_color, login_view, logout_view, user_view, user_gallery_view, change_username, user_news_view
 from gallery.views import add_mult_image, add_mult_file, gallery_view, gallery_create, gallery_delete, gallery_update, one_gallery, add_image, send_form_ajax, images_view, image_delete, add_file, send_form_ajax_file, file_view, file_delete
-from webs.views import esport, abso, course, contact, web_create, web_delete, web_edit, web_view, webs, webs_cat_create, webs_cat_edit,webs_cat_delete,web_cat_view
+from webs.views import messages, esport, abso, course, contact, web_create, web_delete, web_edit, web_view, webs, webs_cat_create, webs_cat_edit,webs_cat_delete,web_cat_view
 from django.views.static import serve
 from django.conf.urls import url
 
@@ -42,6 +42,7 @@ urlpatterns = [
     
     path('panel/change_color', change_tag_color, name="change_tag_color"),
     path('panel/user_create', user_create, name="user_create"),
+    path('panel/messages', messages, name="messages"),
     
     
     path('panel/<slug>/wstrzymaj/', post_freez, name="post-freez"),

@@ -12,6 +12,14 @@
 
 {% if autor.rank.create_new %}
 <div class="col-sm-12 row news-buttons ">
+<a href="{% url 'messages' %}" class="panel-button draw text-decoration-none news-buttons">
+Wiadomości
+</a>
+</div>
+{% endif %}
+
+{% if autor.rank.create_new %}
+<div class="col-sm-12 row news-buttons ">
 <a href="{% url 'panel-news' %}" class="panel-button draw text-decoration-none news-buttons">
 Zarządzaj Nowościami
 </a>

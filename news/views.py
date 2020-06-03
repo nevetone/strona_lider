@@ -80,6 +80,8 @@ def news(request):
 
 def post(request, slug):
     template = 'one.html'
+    user = get_author(request.user)
+    
     
     all_webs = WebCategory.objects.all()
     try:
@@ -103,9 +105,8 @@ def post(request, slug):
     else:
         raise Http404
 
-    print(main_post)
     context={
-         'main_post':main_post, 'post':content,'all_webs':all_webs,
+         'main_post':main_post, 'post':content,'all_webs':all_webs,'user1':user
     }
     return render(request, template, context)
 
