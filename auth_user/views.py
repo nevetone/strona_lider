@@ -90,7 +90,7 @@ def user_view(request):
         username = autor.user.username
     
     
-    context={'username':username,'autor':autor,'all_webs':all_webs,}
+    context={'username':username,'autor':autor,'all_webs':all_webs, }
     return render(request, "main-panel.html", context)
 
 
@@ -98,6 +98,7 @@ def user_view(request):
 def user_gallery_view(request):
     all_webs = WebCategory.objects.all()
     qs = Gallery.objects.order_by('-timestamp')
+    qs3 = []
     
     user = get_author(request.user)
     if user.rank.create_gallery:
@@ -105,8 +106,34 @@ def user_gallery_view(request):
     else:
         raise Http404
     
+    if request.method == "POST":
+        gallery_name = request.POST.get('gallery_name')
+        user_cat = request.POST.get('user_cat')
         
-    context={'gallery':qs,'all_webs':all_webs, }
+        
+        if user_cat and user_cat != "" and gallery_name:
+            aut = User.objects.get(username = user_cat)
+            aut2 = Author.objects.get(user = aut)
+            qs = Gallery.objects.filter(author = aut2).filter(gallery_name__icontains = gallery_name).order_by('-timestamp')
+        elif user_cat and user_cat != "" and not gallery_name:
+            aut = User.objects.get(username = user_cat)
+            aut2 = Author.objects.get(user = aut)
+            qs = Gallery.objects.filter(author = aut2).order_by('-timestamp')
+        elif gallery_name and not user_cat and user_cat == "" :
+            qs = Gallery.objects.filter(gallery_name__icontains = gallery_name).order_by('-timestamp')
+        else:
+            qs = Gallery.objects.order_by('-timestamp')
+    
+    for item in qs:
+        if item.author.username == user.username or item.author.username == user.user.username:
+            qs3.append(item)
+    
+    if user.rank.create_user == True:
+        qs3 = qs
+    
+    all_users = Author.objects.all()
+    all_cat = Category.objects.all()
+    context={'gallery':qs3,'all_webs':all_webs, 'user1':user, 'all_users':all_users, 'all_cat':all_cat}
     return render(request, "gallery-panel.html", context)
 
 

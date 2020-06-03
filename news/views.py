@@ -153,6 +153,8 @@ def post_update(request, slug):
             pass
         else:
             raise Http404
+    else:
+        pass
     
     form = NewsForm(request.POST or None,request.FILES or None,instance=post)
     title = "Edytuj Post"

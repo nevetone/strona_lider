@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from news.models import Gallery, Pictures, Files, WebCategory
+from news.models import Gallery, Pictures, Files, WebCategory, Category
 from django.urls import reverse
 from news.forms import GalleryForm, ImagesCount, EditGalleryForm
 from django.contrib.auth.decorators import login_required
 from news.models import Author
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.http import Http404
 import os
@@ -25,8 +26,6 @@ def gallery_view(request):
     all_webs = WebCategory.objects.all()
     template = "gallery.html"
     gallery = Gallery.objects.order_by('-timestamp')
-    
-    
     context={
         'all_gallery':gallery, 'all_webs':all_webs,
     }
@@ -64,8 +63,6 @@ def gallery_create(request):
                 imgs.has_gallery = True
                 imgs.images_in = form.instance.gallery_name
                 imgs.save()
-                
-            
             return redirect(reverse("gallery"))
             
     user = get_author(request.user)
@@ -91,6 +88,15 @@ def gallery_update(request, slug):
         raise Http404
     all_webs = WebCategory.objects.all()
     gallery = get_object_or_404(Gallery, gallery_name=slug)
+    
+    if gallery.author.user != request.user:
+        if user.rank.create_user == True:
+            pass
+        else:
+            raise Http404
+    else:
+        pass
+    
     form = EditGalleryForm(request.POST or None,request.FILES or None,instance=gallery)
     title = "Edytuj Galerię"
     if request.method == "POST":
@@ -107,8 +113,6 @@ def gallery_update(request, slug):
             return redirect(reverse("galeria_one", kwargs={
                 'slug': form.instance.gallery_name
             }))
-            
-    
     context = {
         'form':form, 'title':title, 'all_webs':all_webs,
     }
@@ -124,12 +128,23 @@ def gallery_delete(request, slug):
         raise Http404
     
     gallery = get_object_or_404(Gallery, gallery_name=slug)
-    for x in gallery.pictures.all():
-        x.images_in = ""
-        x.has_gallery = False
-        x.save()
-    gallery.delete()
     
+    if gallery.author.user != request.user:
+        if user.rank.create_user == True:
+            for x in gallery.pictures.all():
+                x.images_in = ""
+                x.has_gallery = False
+                x.save()
+            gallery.delete()
+        else:
+            raise Http404
+    else:
+        if user.rank.create_user == True:
+            for x in gallery.pictures.all():
+                x.images_in = ""
+                x.has_gallery = False
+                x.save()
+            gallery.delete()
     return redirect(reverse("panel-gallery"))
 
 
@@ -153,17 +168,17 @@ def add_image(request):
 
 @login_required
 def send_form_ajax(request):
-
     user = get_author(request.user)
-
-
+    if user.rank.adding_images:
+        pass
+    else:
+        raise Http404
+    user = get_author(request.user)
     if request.is_ajax and request.method == "POST":
         
         clicked = str(request.POST.get('current_clicked'))
         image_name = request.POST.get('image'+clicked+'_name')
         image = request.FILES.get('image'+str(clicked))
-        
-        
         folder = 'wszystkie_pliki/zdjecia/'+str(timezone.now().year)+'/'
         BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         
@@ -192,19 +207,14 @@ def send_form_ajax(request):
         if image is not None and image_name is not None:
             return JsonResponse({'clicked':clicked, 'error':'false',}, status=200)
 
-    user = get_author(request.user)
-    if user.rank.adding_images:
-        pass
-    else:
-        raise Http404
-    
     return redirect(reverse("add_image"))
 
 
 @login_required
 def images_view(request):
-    images = Pictures.objects.order_by('-timestamp')
+    qs = Pictures.objects.order_by('-timestamp')
     all_webs = WebCategory.objects.all()
+    qs3 = []
     
     user = get_author(request.user)
     if user.rank.adding_images:
@@ -213,22 +223,56 @@ def images_view(request):
         raise Http404
     
     
+    if request.method == "POST":
+        image_name = request.POST.get('image_name')
+        user_cat = request.POST.get('user_cat')
+
+        
+        if user_cat and user_cat != "" and image_name:
+            aut = User.objects.get(username = user_cat)
+            aut2 = Author.objects.get(user = aut)
+            qs = Pictures.objects.filter(author = aut2).filter(picture_title__icontains = image_name).order_by('-timestamp')
+        elif user_cat and user_cat != "" and not image_name:
+            aut = User.objects.get(username = user_cat)
+            aut2 = Author.objects.get(user = aut)
+            qs = Pictures.objects.filter(author = aut2).order_by('-timestamp')
+        elif image_name and not user_cat and user_cat == "" :
+            qs = Pictures.objects.filter(picture_title__icontains = image_name).order_by('-timestamp')
+        else:
+            qs = Pictures.objects.order_by('-timestamp')
+    
+    for item in qs:
+        if item.author.username == user.username or item.author.username == user.user.username:
+            qs3.append(item)
+    
+    if user.rank.create_user == True:
+        qs3 = qs
+    
+    all_users = Author.objects.all()
+    all_cat = Category.objects.all()
+    
+    
     context={
-        'images':images, 'all_webs':all_webs,
+        'images':qs3, 'all_webs':all_webs,'user1':user, 'all_users':all_users, 'all_cat':all_cat
     }
     return render(request, 'images-panel.html', context)
 
 @login_required
 def image_delete(request, slug):
-    images = get_object_or_404(Pictures, picture=slug)
-    images.delete()
-    
     user = get_author(request.user)
     if user.rank.adding_images:
         pass
     else:
         raise Http404
+    images = get_object_or_404(Pictures, picture=slug)
     
+    if images.author.user != request.user:
+        if user.rank.create_user == True:
+            images.delete()
+        else:
+            raise Http404
+    else:
+        images.delete()
     
     return redirect(reverse("panel-images"))
 
@@ -239,14 +283,16 @@ def image_delete(request, slug):
 
 @login_required
 def add_file(request):
-    all_webs = WebCategory.objects.all()
-    context={'all_webs':all_webs,}
-    
     user = get_author(request.user)
     if user.rank.create_files:
         pass
     else:
         raise Http404
+    
+    all_webs = WebCategory.objects.all()
+    context={'all_webs':all_webs,}
+    
+
     
     
     return render(request, "add_file.html", context)
@@ -301,8 +347,9 @@ def send_form_ajax_file(request):
 
 @login_required
 def file_view(request):
-    files = Files.objects.order_by('-timestamp')
+    qs = Files.objects.order_by('-timestamp')
     all_webs = WebCategory.objects.all()
+    qs3 = []
     
     user = get_author(request.user)
     if user.rank.create_files:
@@ -310,23 +357,57 @@ def file_view(request):
     else:
         raise Http404
     
+    
+    
+    if request.method == "POST":
+        file_name = request.POST.get('file_name')
+        user_cat = request.POST.get('user_cat')
+
+        
+        if user_cat and user_cat != "" and file_name:
+            aut = User.objects.get(username = user_cat)
+            aut2 = Author.objects.get(user = aut)
+            qs = Files.objects.filter(author = aut2).filter(file_name__icontains = file_name).order_by('-timestamp')
+        elif user_cat and user_cat != "" and not file_name:
+            aut = User.objects.get(username = user_cat)
+            aut2 = Author.objects.get(user = aut)
+            qs = Files.objects.filter(author = aut2).order_by('-timestamp')
+        elif file_name and not user_cat and user_cat == "" :
+            qs = Files.objects.filter(file_name__icontains = file_name).order_by('-timestamp')
+        else:
+            qs = Files.objects.order_by('-timestamp')
+    
+    for item in qs:
+        if item.author.username == user.username or item.author.username == user.user.username:
+            qs3.append(item)
+    
+    if user.rank.create_user == True:
+        qs3 = qs
+    
+    all_users = Author.objects.all()
+    all_cat = Category.objects.all()
+    
     context={
-        'files':files, 'all_webs':all_webs,
+        'files':qs3, 'all_webs':all_webs,'user1':user, 'all_users':all_users, 'all_cat':all_cat
     }
     return render(request, 'file-panel.html', context)
 
 @login_required
 def file_delete(request, slug):
-    files = get_object_or_404(Files, file=slug)
-    files.delete()
-    
-    
     user = get_author(request.user)
     if user.rank.create_files:
         pass
     else:
         raise Http404
+    files = get_object_or_404(Files, file=slug)
     
+    if files.author.user != request.user:
+        if user.rank.create_user == True:
+            files.delete()
+        else:
+            raise Http404
+    else:
+        files.delete()
     
     return redirect(reverse("panel-file"))
 
