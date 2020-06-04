@@ -6,7 +6,6 @@
 {% include "includes/navbar.html" %}
     <div class="content-text d-flex justify-content-center">
         <div class="col-xl-8 col-lg-9 col-md-10 col-sm-12 col-xs-12 mt-5 pt-5 mb-3">
-        
         <h4 class="text-secondary">Kontakt</h4>
         <div class="w-100 " style="text-align:center">
 
@@ -26,16 +25,17 @@
         </div>
 
         <br />
-        <h4 class="text-secondary">Napisz do nas!</h4>
+        <h4 class="text-secondary title-1">Napisz do nas!</h4>
+        <h3 class="text-success col-sm-12 message_back pl-0" style="display:none"></h3>
         <div class="w-100">
-        <h5 class="text-secondary"> Pola z * są wymagane</h5>
-            <form action="" method="POST">
+        <h5 class="text-secondary title-2"> Pola z * są wymagane</h5>
+            <form id="messageform" action="{% url 'contact' %}" method="POST">
             {% csrf_token %}
 
             <label for="name" > Nazwa* </label>
             <input type="text" id="name" name="name" class="form-control" required />
 
-            <label for="email" > Email* </label>
+            <label for="email" class="email_label"> Email* <span class="email_label_message text-danger" style="display:none;">  </span></label>
             <input type="email" id="email" name="email" class="form-control" required />
 
             <label for="title" > Temat* </label>
@@ -57,3 +57,45 @@
 {% include "includes/footer.html" %}
 </div>
 {% endblock content %}
+
+
+{% block jquery %}
+<script>
+$(document).ready(function(){
+
+
+
+  $('#messageform').on('submit', function(e){
+    e.preventDefault();
+    $.ajax({
+    data: $(this).serialize(),
+    type: $(this).attr('method'),
+    url: $(this).attr('action'),
+        error: function(data){
+            $('#email').css('border', 'red solid 3px');
+            $('.email_label_message').text(data.message);
+            $('.email_label_message').fadeIn(300).fadeOut(2000);
+            },
+        success: function(data){
+            $('.message_back').text(data.message);
+            $('.message_back').fadeIn(300);
+            $('#name').val("");
+            $('#email').val("");
+            $('#title').val("");
+            $('#message').text("");
+            $('#send_coppy').prop('checked', false);
+            $('#messageform').remove();
+            $('.title-1').remove();
+            $('.title-2').remove();
+        },
+    });
+    return false;
+    
+  });
+
+
+
+
+});
+</script>
+{% endblock jquery %}

@@ -4,14 +4,49 @@
 {% include 'includes/loading.html' %}
 <div class="container-fluid content">
 {% include "includes/navbar.html" %}
-    <div class="content-text panel-view">
-        <div class="col-xl-9 col-lg-10 col-md-10 col-sm-12 col-xs-12 ">
-            <div class="col-sm-12 pt-3">
-                <div class="row col-sm-12 mt-5">
+    <div class="content-text panel-view d-flex justify-content-center">
+        <div class="col-xl-9 col-lg-10 col-md-10 col-sm-12 col-xs-12">
+            <div class="w-100 pt-3 ">
+                <div class="row col-sm-12 mt-5 ">
                 <a class="btn btn-secondary float-left mt-3" href='{% url 'panel' %}'> Wróć do Opcji </a>
                 </div>
-                    <h4 class="text-secondary mt-3"> Wiadomości </h4>
+                    
+                <div class="col-sm-12 pl-0 ml-0 mr-0 pr-0">
+                    <h4 class="text-white mt-3 w-100 pl-0">Wiadomości </h4>
+                    <h5 class="text-secondary w-100 pl-0">Nieprzeczytane ({{ messages.all.count }})</h5>
+                    <div class="col-sm-12 row pl-0 ml-0 mr-0 pr-0 text-white border border-secondary ">
 
+                    {% for message in messages %}
+                    <div class="col-sm-2 border border-secondary center_text p-0">
+                    <span class="text-truncate {% if message.read %}text-success {% else %}text-danger {% endif %}">
+                    {% if message.read %}Przeczytane{% else %}Nieprzeczytane{% endif %}
+                    </span>
+                    </div>
+
+                    <div class="col-sm-6 border border-secondary center_text p-0">
+                    <span class="text-truncate">
+                    {{ message.title }}
+                    </span>
+                    </div>
+
+                    <div class="col-sm-2 border border-secondary center_text p-0">
+                    <span class="">
+                    {{ message.timestamp }}
+                    </span>
+                    </div>
+
+                    <div class="col-sm-2 p-0 border border-secondary">
+                    
+                    <a href="" class="form-control btn btn-primary m-0">Odpisz</a>
+                    <a href="" class="form-control btn btn-dark m-0">Przeczytaj</a>
+                    <a href="" class="form-control btn btn-danger m-0">Usuń</a>
+                    
+                    </div>
+
+                    {% endfor %}
+
+                    </div>
+                </div>
             </div> 
         </div> 
     </div>

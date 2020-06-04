@@ -1242,3 +1242,20 @@ form .btn{
 }
 
 /* koniec esport */
+
+/* panel messages  */
+
+
+
+@media(min-width: 576px){
+    .center_text span{
+        position: absolute;
+        top:50%;
+        transform: translateY(-50%);
+        text-align: center;
+        width: 100%;
+    
+    }
+}
+
+/* koniec panel messages */

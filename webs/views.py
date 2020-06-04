@@ -4,6 +4,8 @@ from django.http import Http404
 from django.urls import reverse
 from news.models import Webs, Author, WebCategory
 from .forms import WebCreateForm, WebCatCreateForm
+from django.http import JsonResponse
+from auth_user.models import Messages
 # Create your views here.
 
 def get_author(user):
@@ -158,22 +160,43 @@ def web_cat_view(request):
     context = {'webs':webs, 'all_webs':all_webs,}
     return render(request, template, context)
 
+
+def validateEmail(email):
+    from django.core.validators import validate_email
+    from django.core.exceptions import ValidationError
+    try:
+        validate_email( email )
+        return True
+    except ValidationError:
+        return False
+
+
 def contact(request):
     template="kontakt.html"
     all_webs = WebCategory.objects.all()
+    context ={'all_webs':all_webs,}
     
-    if request.method == "POST":
-        name = request.POST.get('name')
+    if request.is_ajax and request.method == "POST":
+        nickname = request.POST.get('name')
         email = request.POST.get('email')
         title = request.POST.get('title')
         message = request.POST.get('message')
         send_coppy = request.POST.get('send_coppy')
         
-
-    # zrobic wysylanie na email i zapisywanie
+        if send_coppy:
+            send_coppy = True
+        else:
+            send_coppy = False
+            
+        
+        if validateEmail(email):
+            if nickname and email and title and message:
+                messages = Messages(title = title, message = message, sender_nickname=nickname, sender_email=email, send_back=send_coppy)
+                messages.save()
+                return JsonResponse({'message':'Wiadomość została wysłana, wktótce odpiszemy!'}, status=200)
+        else:
+            return JsonResponse({'message':'Sprawdź poprawność emaila'}, status=400)
     
-    
-    context ={'all_webs':all_webs,}
     return render(request, template, context)
 
 def course(request):
@@ -204,10 +227,3 @@ def error_404_view(request, exception):
     all_webs = WebCategory.objects.all()
     return render(request,'404.html',{'all_webs':all_webs,})
 
-
-def messages(request):
-    template="panel-messages.html"
-    all_webs = WebCategory.objects.all()
-    
-    context ={'all_webs':all_webs,}
-    return render(request, template, context)

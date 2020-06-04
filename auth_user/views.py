@@ -7,7 +7,8 @@ from news.models import WebCategory, Category, Author, News, MainNews, Files, We
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.contrib.auth.models import User
-from .models import Rangs
+from .models import Rangs, Messages
+from django.http import JsonResponse
 # Create your views here.
 
 def get_author(user):
@@ -186,3 +187,23 @@ def user_create(request):
         'form':form,'all_webs':all_webs,
     }
     return render(request, "register.html", context)
+
+
+@login_required
+def messages(request):
+    template="panel-messages.html"
+    all_webs = WebCategory.objects.all()
+    user = get_author(request.user)
+    
+    if user.rank.write_messages:
+        pass
+    else:
+        raise Http404
+    
+    messages = Messages.objects.all()
+    
+    
+    context ={'all_webs':all_webs, 'messages':messages}
+    return render(request, template, context)
+
+
