@@ -10,7 +10,7 @@
 <h4 class="text-center w-100 text-white"> Menu </h4>
 
 
-{% if autor.rank.create_new %}
+{% if autor.rank.write_messages %}
 <div class="col-sm-12 row news-buttons ">
 <a href="{% url 'messages' %}" class="panel-button draw text-decoration-none news-buttons">
 Wiadomości <br /><span class="badge badge-primary">Nieprzeczytane ({{ messages_count }})</span>
