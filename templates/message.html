@@ -1,0 +1,68 @@
+{% extends 'extends/base.html' %}
+{% block content %}
+{% load static %}
+{% include 'includes/loading.html' %}
+<div class="container-fluid content">
+{% include "includes/navbar.html" %}
+    <div class="content-text panel-view d-flex justify-content-center">
+        <div class="col-xl-8 col-lg-8 col-md-10 col-sm-12 col-xs-12 mt-5 pt-5">
+        <a class="btn btn-secondary float-left" href='{% url 'messages' %}'> Wróć do Wiadomości </a>
+        <h4 class="text-secondary mt-5"> {{ message.title|capfirst }} </h4>
+        
+        {% if action == 'write' %}
+        <div class="col-sm-12 pl-0 bg-dark">
+            <span class="text-white">Email:</span><span class="text-danger"> {{ message.sender_email }}</span>
+        </div>
+        <div class="col-sm-12 pl-0 bg-dark">
+            <span class="text-white">Nazwa Użytkownika:</span><span class="text-danger"> {{ message.sender_nickname }}</span>
+        </div>
+        <div class="col-sm-12 pl-0 bg-dark">
+            <span class="text-white">Status:</span><span class="{% if message.sended %}text-success {% else %}text-danger{% endif %}"> {% if message.sended %}Odpisane {% else %}Nieodpisane{% endif %} </span>
+        </div>
+
+        {% if not message.sended %}
+        {% if action == 'read' %}
+        <a href="{% url 'message_write' slug=message.id %}" class=" btn btn-primary mt-1 mb-1" >Odpisz</a>
+        {% endif %}
+        {% endif %}
+
+        <div class="col-sm-12 text-white pl-0 mt-2">
+            <h5>Wiadomość:</h5>
+            {{ message.message }}
+        </div>
+        
+        <div class="col-sm-12 text-white pl-0 mt-4">
+        <h3 class="text-secondary"> Odpisz jako <span class="text-danger">{{ user1.username }}</span></h3>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <textarea class="form-control" name="write_message"></textarea>
+            <input type="submit" class="form-control btn btn-dark" value="Wyślij" />
+
+        </form>
+        </div>
+
+        {% else %}
+        <div class="col-sm-12 pl-0 bg-dark">
+            <span class="text-white">Email:</span><span class="text-danger"> {{ message.sender_email }}</span>
+        </div>
+        <div class="col-sm-12 pl-0 bg-dark">
+            <span class="text-white">Nazwa Użytkownika:</span><span class="text-danger"> {{ message.sender_nickname }}</span>
+        </div>
+        <div class="col-sm-12 pl-0 bg-dark">
+            <span class="text-white">Status:</span><span class="{% if message.sended %}text-success {% else %}text-danger{% endif %}"> {% if message.sended %}Odpisane {% else %}Nieodpisane{% endif %} </span>
+        </div>
+        {% if not message.sended %}
+        <a href="{% url 'message_write' slug=message.id %}" class=" btn btn-primary mt-1 mb-1" >Odpisz</a>
+        {% endif %}
+        <div class="col-sm-12 text-white pl-0 mt-2">
+            <h5>Wiadomość:</h5>
+            {{ message.message }}
+        </div>
+
+        {% endif %}
+
+        </div>
+    </div>
+{% include "includes/footer.html" %}
+</div>
+{% endblock content %}

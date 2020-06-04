@@ -13,7 +13,7 @@
 {% if autor.rank.create_new %}
 <div class="col-sm-12 row news-buttons ">
 <a href="{% url 'messages' %}" class="panel-button draw text-decoration-none news-buttons">
-Wiadomości
+Wiadomości <br /><span class="badge badge-primary">Nieprzeczytane ({{ messages_count }})</span>
 </a>
 </div>
 {% endif %}

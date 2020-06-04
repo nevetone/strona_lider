@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 # Create your models here.
 class Rangs(models.Model):
@@ -25,8 +26,12 @@ class Messages(models.Model):
     send_back = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now)
     read = models.BooleanField(default=False)
+    sended = models.BooleanField(default=False)
     
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse("read", kwargs={"slug": self.title})
     
     

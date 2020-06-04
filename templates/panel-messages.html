@@ -14,38 +14,45 @@
                 <div class="col-sm-12 pl-0 ml-0 mr-0 pr-0">
                     <h4 class="text-white mt-3 w-100 pl-0">Wiadomości </h4>
                     <h5 class="text-secondary w-100 pl-0">Nieprzeczytane ({{ messages.all.count }})</h5>
-                    <div class="col-sm-12 row pl-0 ml-0 mr-0 pr-0 text-white border border-secondary ">
+                    
 
                     {% for message in messages %}
-                    <div class="col-sm-2 border border-secondary center_text p-0">
+                    <div class="col-sm-12 row pl-0 ml-0 mr-0 pr-0 mb-2 text-white border border-secondary ">
+                    <div class="col-sm-2 border border-secondary center_text p-0 ">
+                    <div class="text-truncate w-100">
                     <span class="text-truncate {% if message.read %}text-success {% else %}text-danger {% endif %}">
                     {% if message.read %}Przeczytane{% else %}Nieprzeczytane{% endif %}
                     </span>
+                    <br />
+                    <span class="text-truncate {% if message.sended %}text-success {% else %}text-danger {% endif %}">
+                    {% if message.sended %}Odpisane{% else %}Nieodpisane{% endif %}
+                    </span>
+                    </div>
                     </div>
 
                     <div class="col-sm-6 border border-secondary center_text p-0">
-                    <span class="text-truncate">
+                    <p class="text-truncate">
                     {{ message.title }}
                     </span>
                     </div>
 
                     <div class="col-sm-2 border border-secondary center_text p-0">
-                    <span class="">
+                    <p>
                     {{ message.timestamp }}
-                    </span>
+                    </p>
                     </div>
 
                     <div class="col-sm-2 p-0 border border-secondary">
                     
-                    <a href="" class="form-control btn btn-primary m-0">Odpisz</a>
-                    <a href="" class="form-control btn btn-dark m-0">Przeczytaj</a>
-                    <a href="" class="form-control btn btn-danger m-0">Usuń</a>
+                    <a href="{% url 'message_write' slug=message.id %}" class="form-control btn btn-primary m-0">Odpisz</a>
+                    <a href="{% url 'message_read' slug=message.id %}" class="form-control btn btn-dark m-0">Przeczytaj</a>
+                    <a href="{% url 'message_delete' slug=message.id %}" class="form-control btn btn-danger m-0">Usuń</a>
                     
                     </div>
-
+                    </div>
                     {% endfor %}
 
-                    </div>
+                    
                 </div>
             </div> 
         </div> 

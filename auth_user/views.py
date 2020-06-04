@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect
+from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.urls import reverse
@@ -89,9 +89,9 @@ def user_view(request):
         username = autor.username
     else:
         username = autor.user.username
+    messages_count = Messages.objects.filter(read = False).count()
     
-    
-    context={'username':username,'autor':autor,'all_webs':all_webs, }
+    context={'username':username,'autor':autor,'all_webs':all_webs,'messages_count':messages_count }
     return render(request, "main-panel.html", context)
 
 
@@ -200,10 +200,78 @@ def messages(request):
     else:
         raise Http404
     
-    messages = Messages.objects.all()
+    messages = Messages.objects.order_by('read')
     
     
     context ={'all_webs':all_webs, 'messages':messages}
     return render(request, template, context)
 
+@login_required
+def message_read(request, slug):
+    template = "message.html"
+    all_webs = WebCategory.objects.all()
+    user = get_author(request.user)
+    
+    if user.rank.write_messages:
+        pass
+    else:
+        raise Http404
+    
+    message = get_object_or_404(Messages, id = slug)
+    message.read = True
+    message.save()
+    
+    
+    context = {
+        'all_webs':all_webs, 'action':'read', 'message':message
+    }
+    return render(request, template, context)
+
+
+@login_required
+def message_write(request, slug):
+    template = "message.html"
+    all_webs = WebCategory.objects.all()
+    user = get_author(request.user)
+    
+    if user.rank.write_messages:
+        pass
+    else:
+        raise Http404
+    
+
+    message = get_object_or_404(Messages, id = slug)
+    
+    if request.method == "POST":
+        message_write = request.POST.get('write_message')
+        message.read = True
+        message.sended = True
+        message.save()
+        
+        # tworzenie i wysywalnie na email wiadomosci
+        
+        return redirect(reverse("messages"))
+        
+    
+    context = {
+        'all_webs':all_webs, 'action':'write', 'message':message, 'user1':user,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def message_delete(request, slug):
+    template = "message.html"
+    user = get_author(request.user)
+    if user.rank.write_messages:
+        pass
+    else:
+        raise Http404
+    message = get_object_or_404(Messages, id = slug)
+    message.delete()
+    
+    
+    return redirect(reverse("messages"))
+        
+    
 

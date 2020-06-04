@@ -1245,11 +1245,23 @@ form .btn{
 
 /* panel messages  */
 
-
+.center_text p{
+    margin:10px;
+}
 
 @media(min-width: 576px){
-    .center_text span{
+
+    .center_text div{
         position: absolute;
+        top:50%;
+        transform: translateY(-50%);
+        text-align: center;
+        width: 100%;
+    
+    }
+    .center_text p{
+        position: absolute;
+        margin:0;
         top:50%;
         transform: translateY(-50%);
         text-align: center;
