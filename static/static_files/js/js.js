@@ -37,13 +37,13 @@ $(document).ready(function(){
         function show_image(){
 
             $('.image-big-src').attr('src', all_src[parseInt(current_picture.substring(5))-1]);
-            $('.current_iamge').text(current_picture.substring(5));
+            $('.current_image').text(current_picture.substring(5));
             $('.max_images').text(all_numbers.length);
         };
 
 
 
-        $('.gallery-image').click(function(){
+        $('.gallery-images').click(function(){
 
             if(active === false){
                 active = true;
@@ -71,7 +71,7 @@ $(document).ready(function(){
         $('.arrow_next').click(function(){
             number = parseInt(current_picture.substring(5))+1;
             if( number <= all_numbers.length ){
-                current_picture = 'iamge'+number.toString();
+                current_picture = 'image'+number.toString();
                 show_image();
             }
         });
@@ -79,7 +79,7 @@ $(document).ready(function(){
         $('.arrow_back').click(function(){
             number = parseInt(current_picture.substring(5))-1;
             if( number >= all_numbers[0] ){
-                current_picture = 'iamge'+number.toString();
+                current_picture = 'image'+number.toString();
                 show_image();
             }
         });

@@ -9,7 +9,7 @@
 
             {% if post.has_thumbnail %}
                 <div class="col-xl-8 col-lg-8 col-md-10 col-sm-12 col-xs-12 p-3 news-image float-left">
-                    <img class="card-img-top rounded-0" src="{{ post.thumbnail.url }}" alt="Card image cap">
+                    <img class="card-img-top rounded-0" src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
                 </div>
                 {% if user.is_authenticated %}
                 {% if main_post is True %}

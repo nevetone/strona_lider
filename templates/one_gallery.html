@@ -13,7 +13,7 @@
         
         </div>
         <div class="ml-1 mr-1 noselect" style="font-size:2.5rem;">
-        <span class="current_iamge"></span> / <span class="max_images"></span>
+        <span class="current_image"></span> / <span class="max_images"></span>
         </div>
         <div class="arrow_next ml-3 mr-3" style="font-size:2.5rem;">
         <i class="fas fa-arrow-right"></i>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="image-big col-sm-12 noselect">
-            <img class="image-big-src" src="" />
+            <img class="image-big-src" src="" alt="img-big" />
         </div>
         <div class="image-title">
 
@@ -34,25 +34,28 @@
 </div>
 
 <div class="col-sm-12 row mt-5 noselect bg-dark2 p-0 pt-3 ml-0 mr-0">
-<div class="col-sm-12 m-0 p-0 row">
-<div class="col-sm-3 mt-3 mb-3">
-<a href="{% url 'gallery' %}" class="btn btn-secondary form-control text-white"> Wróć do Galerii </a>
-</div>
-<div class="col-sm-9 mt-3 mb-3">
-<h4 class="text-white m-0 p-0"> Galeria: <span class="text-secondary">{{ gallery.gallery_name }}</span> (<span class="images_count">{{ iamges_count }}</span>)</h4>
-</div>
-</div>
+    <div class="col-sm-12 m-0 p-0 row">
+        <div class="col-sm-3 mt-3 mb-3">
+            <a href="{% url 'gallery' %}" class="btn btn-primary form-control text-white"> Wróć do Galerii </a>
+        </div>
+        <div class="col-sm-9 mt-3 mb-3 gallery_title">
+            <h4 class="text-white m-0 p-0"> Galeria: <span class="text-secondary">{{ gallery.gallery_name }}</span> (<span class="images_count">{{ iamges_count }}</span>)</h4>
+        </div>
+    </div>
 </div>
 
-<div class="noselect gallery-content col-lg-10 col-md-11 col-sm-12 col-xs-12 p-0 m-0 pt-2 row">
-{% for iamge in images %}
-<div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12 gallery-image float-left mb-3">
 
-<img src="{{ iamge.picture.url }}" id="image{{ forloop.counter }}" class="gallery-image col-sm-12 p-0" />
+<div class="col-sm-12 d-flex justify-content-center">
+<div class="noselect col-lg-10 col-md-11 col-sm-12 col-xs-12 p-0 m-0 pt-2 row">
+{% for image in images %}
+<div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12 gallery-image mb-3">
+
+
+<img src="{{ image.picture.url }}" id="image{{ forloop.counter }}" class="gallery-images col-sm-12 p-0" alt="{{ image.picture_title }}" />
 
 </div>
 {% endfor %}
-
+</div>
 
 </div>
 {% include 'includes/footer.html' %}

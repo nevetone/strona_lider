@@ -38,7 +38,7 @@
             <div class="card-body row">
                 {% if news.has_thumbnail is True %}
                 <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 main-news-image">
-                    <img src="{{ news.thumbnail.url }}" alt="">
+                    <img src="{{ news.thumbnail.url }}" alt="{{ news.title }}">
                 </div>
                 <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <p class="card-text">{{ news.overview|safe }}</p>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="view overlay">
                     {% if news.has_thumbnail %}
-                    <img class="card-img-top rounded-0" src="{{ news.thumbnail.url }}" alt="Card image cap">
+                    <img class="card-img-top rounded-0" src="{{ news.thumbnail.url }}" alt="{{ news.title }}">
                     {% endif %}
                 <a href="#!">
                     <div class="mask rgba-white-slight"></div>
