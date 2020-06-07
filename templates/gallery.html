@@ -8,34 +8,39 @@
 
 <div class="col-lg-4 col-xl-4 col-md-6 col-sm-12 col-xs-12 gallery-card m-0 mb-3">
     <a href="{{ gallery.get_absolute_url }}" class="text-decoration-none">
-    <div class="gallery-card-content p-2 row m-0">
-        <div class="col-xs-12 gallery-card-image m-0">
-        <img src="{% for image in gallery.pictures.all %}{% if forloop.first %}{{ image.picture.url }}{% endif %}{% endfor %}" alt="{{ gallery.gallery_name|capfirst }}">
-        </div>
 
 
-        <div class="col-xs-12 gallery-card-date p-1 m-0 text-left">
-        <h6 class="text-secondary p-0 m-0">
-                {% if news.author.username %}
-                Autor: <span class="text-danger">{{ gallery.author.username }}</span>
-                {% else %}
-                Autor: <span class="text-danger">{{ gallery.author.user.username }}</span>
-                {% endif %}
-        </h6>
-        </div>
-        <div class="col-xs-12 gallery-card-date p-1 m-0 text-left">
-        <h6 class="text-secondary m-0">{{ gallery.timestamp }}</h6>
-        </div>
-        <div class="col-xs-12 gallery-card-title p-1 m-0 text-left">
-        <h5 class="m-0">{{ gallery.gallery_name|upper }}
-            {% for cat in gallery.category.all %}
-            <span class="badge badge-pill badge-info" style="background-color:{{ gallery.author.cat_color|safe }}; color:{{ gallery.author.cat_text_color|safe }};">{{ cat }}</span>
-            {% endfor %}
-        </h5>
-        </div>
-        <div class="col-xs-12 gallery-card-overview p-1 m-0 text-left">
-        <h6>{{ gallery.overview|capfirst }}</h6>
-        </div>
+        <div class="gallery-card-content p-2 m-0">
+            <div class="col-xs-12 gallery-card-image m-0">
+            <img src="{% for image in gallery.pictures.all %}{% if forloop.first %}{{ image.picture.url }}{% endif %}{% endfor %}" alt="{{ gallery.gallery_name|capfirst }}">
+            </div>
+
+
+            <div class="col-xs-12 gallery-card-date p-1 m-0 text-left row">
+            <h6 class="text-secondary p-0 m-0">
+                    {% if news.author.username %}
+                    Autor: <span class="text-danger">{{ gallery.author.username }}</span>
+                    {% else %}
+                    Autor: <span class="text-danger">{{ gallery.author.user.username }}</span>
+                    {% endif %}
+            </h6>
+            </div>
+            <div class="col-xs-12 gallery-card-date p-1 m-0 text-left">
+            <h6 class="text-secondary m-0">{{ gallery.timestamp }}</h6>
+            </div>
+            <div class="col-xs-12 gallery-card-title p-1 m-0 text-left">
+            <h5 class="m-0">{{ gallery.gallery_name|upper }}
+                {% for cat in gallery.category.all %}
+                <span class="badge badge-pill badge-info" style="background-color:{{ gallery.author.cat_color|safe }}; color:{{ gallery.author.cat_text_color|safe }};">{{ cat }}</span>
+                {% endfor %}
+            </h5>
+            </div>
+            <div class="col-xs-12 gallery-card-overview p-1 m-0 text-left">
+            <h6>{{ gallery.overview|capfirst }}</h6>
+            </div>
+
+
+
     </div>
     </a>
 </div>

@@ -20,7 +20,6 @@ def get_author(user):
     return None
 
 
-
 # Create your views here.
 def gallery_view(request):
     all_webs = WebCategory.objects.all()
@@ -37,13 +36,13 @@ def one_gallery(request, slug):
     template = "one_gallery.html"
     gallery_images = get_object_or_404(Gallery, gallery_name=slug)
     images = []
-    iamges_count = gallery_images.pictures.count()
+    images_count = gallery_images.pictures.count()
     
     for image in gallery_images.pictures.all():
         images.append(image)
     
     context={
-        'images':images, 'gallery':gallery_images, 'iamges_count':iamges_count, 'all_webs':all_webs,
+        'images':images, 'gallery':gallery_images, 'images_count':images_count, 'all_webs':all_webs,
     }
     return render(request, template, context)
 
@@ -161,7 +160,6 @@ def add_image(request):
     else:
         raise Http404
     
-    
     return render(request, "add_images.html", context)
 
 
@@ -222,7 +220,6 @@ def images_view(request):
     else:
         raise Http404
     
-    
     if request.method == "POST":
         image_name = request.POST.get('image_name')
         user_cat = request.POST.get('user_cat')
@@ -280,8 +277,6 @@ def image_delete(request, slug):
         return JsonResponse({'image':image_to_del.id}, status=200)
     
     return redirect(reverse("panel-images"))
-
-
 
 
 # files
@@ -361,8 +356,6 @@ def file_view(request):
         pass
     else:
         raise Http404
-    
-    
     
     if request.method == "POST":
         file_name = request.POST.get('file_name')

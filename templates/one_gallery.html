@@ -2,35 +2,32 @@
 {% block content %}
 <div class="container-fluid content gallery_images">
 {% include 'includes/navbar.html' %}
+{% load static %}
 
-<div class="show_image_tab ">
-    <div class="show_image col-sm-12 p-1">
+<div class="col-sm-12 bg-dark2 box_big text-white">
+<div class="col-sm-12 mt-5 mb-5 h-100 noselect" > 
 
-        <div class="row col-sm-12 m-0 p-0">
+<div class="col-sm-12 box_menu row m-0 mb-2">
 
-        <div class="arrow_back ml-3 mr-3" style="font-size:2.5rem;">
-        <i class="fas fa-arrow-left"></i>
-        
-        </div>
-        <div class="ml-1 mr-1 noselect" style="font-size:2.5rem;">
-        <span class="current_image"></span> / <span class="max_images"></span>
-        </div>
-        <div class="arrow_next ml-3 mr-3" style="font-size:2.5rem;">
-        <i class="fas fa-arrow-right"></i>
-        
-        </div>
-        <div class="close-image noselect" style="text-align:right; font-size:2.5rem;">
-            <div class="close_image"><i class="fas fa-times-circle"></i></div>
-        </div>
-        </div>
+<div class="box_arrow back_arrow"><i class="fas fa-2x fa-chevron-circle-left"></i></div>
 
-        <div class="image-big col-sm-12 noselect">
-            <img class="image-big-src" src="" alt="img-big" />
-        </div>
-        <div class="image-title">
+<div class="box_menu_content">( <span class="images_count_box">X</span> / <span class="max_images">{{ images_count }}</span> )</div>
 
-        </div>
-    </div>
+<div class="box_arrow next_arrow"><i class="fas fa-2x fa-chevron-circle-right"></i></div>
+
+</div>
+
+<div class="col-sm-12 box_image">
+
+
+<img class="box_image_big" src="" alt="image_big" />
+
+<div class="box_exit d-flex justify-content-center mt-3">
+<i class="fas fa-2x fa-times-circle"></i>
+</div>
+</div>
+
+</div>
 </div>
 
 <div class="col-sm-12 row mt-5 noselect bg-dark2 p-0 pt-3 ml-0 mr-0">
@@ -39,25 +36,94 @@
             <a href="{% url 'gallery' %}" class="btn btn-primary form-control text-white"> Wróć do Galerii </a>
         </div>
         <div class="col-sm-9 mt-3 mb-3 gallery_title">
-            <h4 class="text-white m-0 p-0"> Galeria: <span class="text-secondary">{{ gallery.gallery_name }}</span> (<span class="images_count">{{ iamges_count }}</span>)</h4>
+            <h4 class="text-white m-0 p-0"> Galeria: <span class="text-secondary">{{ gallery.gallery_name }}</span> (<span class="images_count">{{ images_count }}</span>)</h4>
         </div>
     </div>
 </div>
 
+<div class="col-12 d-flex justify-content-center">
+<div class="col-xl-10 col-lg-10 col-md-11 col-sm-12 col-xs-12 row">
 
-<div class="col-sm-12 d-flex justify-content-center">
-<div class="noselect col-lg-10 col-md-11 col-sm-12 col-xs-12 p-0 m-0 pt-2 row">
-{% for image in images %}
-<div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12 gallery-image mb-3">
-
-
-<img src="{{ image.picture.url }}" id="image{{ forloop.counter }}" class="gallery-images col-sm-12 p-0" alt="{{ image.picture_title }}" />
-
+{% for image in gallery.pictures.all %}
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-xs-12 mt-3 mb-3 image_box">
+    <img class="card-img-top" id="id{{ forloop.counter0 }}" src="{{ image.picture.url }}" alt="{{ image.picture_title }}">
 </div>
 {% endfor %}
+
+
+
+
+
 </div>
+</div>
+
+
 
 </div>
 {% include 'includes/footer.html' %}
 </div>
 {% endblock content %}
+
+{% block jquery %}
+<script>
+$(document).ready(function(){
+
+var max_images = $('.max_images').text();
+var src ="";
+var id = 0;
+
+
+$('.card-img-top').click(function(){
+    src = $(this).attr('src');
+    id = $(this).attr('id');
+    id = parseInt(id.substring(2,5));
+    
+
+    $('.box_image_big').attr('src', src);
+    $('.box_big').fadeIn();
+    $('.images_count_box').text(id+1);
+
+
+});
+
+
+
+$('.back_arrow').click(function(){
+    src = $('#id'+(id-1).toString()).attr('src');
+    $('.box_image_big').attr('src', src);
+    id = id-1;
+    if(id <=0){
+        id = 0;
+    }
+    $('.images_count_box').text(id+1);
+
+});
+
+$('.next_arrow').click(function(){
+    src = $('#id'+(id+1).toString()).attr('src');
+    $('.box_image_big').attr('src', src);
+    id = id+1;
+    if(id >= parseInt(max_images)-1){
+        id = parseInt(max_images)-1;
+    }
+    $('.images_count_box').text(id+1);
+});
+
+
+
+$('.box_exit').click(function(){
+    $('.box_big').fadeOut();
+});
+
+
+
+
+{% comment %} document.oncontextmenu = new Function("return false;"); {% endcomment %}
+
+
+});
+
+
+
+</script>
+{% endblock jquery %}

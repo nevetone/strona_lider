@@ -43,60 +43,6 @@ $(document).ready(function(){
 
 
 
-        $('.gallery-images').click(function(){
-
-            if(active === false){
-                active = true;
-
-                tab = $(".show_image_tab")
-                src = $(this).attr('src');
-                
-                current_picture = this.id;
-
-                get_images();
-                show_image();
-
-
-
-                $(tab).css({
-                    display: 'block',
-                });
-                $(tab).animate({
-                    opacity:1,
-                },200);
-
-        }
-        });
-        
-        $('.arrow_next').click(function(){
-            number = parseInt(current_picture.substring(5))+1;
-            if( number <= all_numbers.length ){
-                current_picture = 'image'+number.toString();
-                show_image();
-            }
-        });
-        
-        $('.arrow_back').click(function(){
-            number = parseInt(current_picture.substring(5))-1;
-            if( number >= all_numbers[0] ){
-                current_picture = 'image'+number.toString();
-                show_image();
-            }
-        });
-
-
-
-        $('.close_image').click(function(){
-            all = [];
-            all_src = [];
-            all_numbers = [];
-            active = false;
-            $(".show_image_tab").css({
-                display: 'none',
-                opacity:0,
-            });
-        });
-
 
 $('table').css('width','100%');
 
