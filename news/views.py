@@ -80,8 +80,11 @@ def news(request):
 
 def post(request, slug):
     template = 'one.html'
-    user = get_author(request.user)
     
+    if request.user.is_authenticated:
+        user = get_author(request.user)
+    else:
+        user = None
     
     all_webs = WebCategory.objects.all()
     try:
