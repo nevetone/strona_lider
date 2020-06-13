@@ -32,6 +32,19 @@ TEMPLATE_DIRS = [
     os.path.join(BASE_DIR, 'templates'),
 ]
 
+
+DEFAULT_FROM_EMAIL = "Test Site <NevetForTests@gmail.com>"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'NevetForTests@gmail.com'
+EMAIL_HOST_PASSWORD = 'ymxtlamlfbevluct'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+SITE_URL = "http://test-store.pl"
+if DEBUG:
+    SITE_URL = 'http://192.168.1.28:80'
+    
+    
 # Application definition
 
 INSTALLED_APPS = [

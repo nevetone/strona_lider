@@ -6,6 +6,8 @@ from news.models import Webs, Author, WebCategory
 from .forms import WebCreateForm, WebCatCreateForm
 from django.http import JsonResponse
 from auth_user.models import Messages
+from django.core.mail import send_mail
+
 # Create your views here.
 
 def get_author(user):
@@ -193,6 +195,8 @@ def contact(request):
             if nickname and email and title and message:
                 messages = Messages(title = title, message = message, sender_nickname=nickname, sender_email=email, send_back=send_coppy)
                 messages.save()
+                if send_coppy:
+                    send_mail(title, message, 'nevetfortests@gmail.com', [email])
                 return JsonResponse({'message':'Wiadomość została wysłana, wktótce odpiszemy!'}, status=200)
         else:
             return JsonResponse({'message':'Sprawdź poprawność emaila'}, status=400)

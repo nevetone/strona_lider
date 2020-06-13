@@ -9,6 +9,10 @@ from django.http import Http404
 from django.contrib.auth.models import User
 from .models import Rangs, Messages
 from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import EmailMultiAlternatives
 # Create your views here.
 
 def get_author(user):
@@ -194,6 +198,7 @@ def messages(request):
     template="panel-messages.html"
     all_webs = WebCategory.objects.all()
     user = get_author(request.user)
+    messages_count = Messages.objects.filter(read = False).count()
     
     if user.rank.write_messages:
         pass
@@ -203,7 +208,7 @@ def messages(request):
     messages = Messages.objects.order_by('read')
     
     
-    context ={'all_webs':all_webs, 'messages':messages}
+    context ={'all_webs':all_webs, 'messages':messages, 'messages_count':messages_count}
     return render(request, template, context)
 
 @login_required
@@ -241,14 +246,24 @@ def message_write(request, slug):
     
 
     message = get_object_or_404(Messages, id = slug)
+    message.read = True
+    message.save()
     
     if request.method == "POST":
         message_write = request.POST.get('write_message')
-        message.read = True
         message.sended = True
         message.save()
+        context = {
+            'all_webs':all_webs, 'message':message, 'user1':user, 'message_write':message_write,
+        }
+        subject, from_email, to = message.title, 'nevetfortests@gmail.com', message.sender_email
         
-        # tworzenie i wysywalnie na email wiadomosci
+        message_html = render_to_string("messages/send_back.html", context)
+        plain_message = strip_tags(message_html)
+
+        msg = EmailMultiAlternatives(subject, plain_message, from_email, [to])
+        msg.attach_alternative(message_html, "text/html")
+        msg.send()
         
         return redirect(reverse("messages"))
         
@@ -272,6 +287,7 @@ def message_delete(request, slug):
     
     
     return redirect(reverse("messages"))
-        
-    
+
+
+
 
